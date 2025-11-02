@@ -75,7 +75,7 @@ const SystemSidebar = () => {
         </ul>
 
         {/* Logout */}
-        <div className="mt-25 ">
+        <div className="mt-25 pb-25 ">
           <button className="flex items-center gap-4 py-2 px-2 w-full text-[#FF1100] hover:bg-[#7AA3CC] font-inter font-medium cursor-pointer rounded-[8px] transition-all duration-200">
             <Image src={LogoutIcon} alt="log out" className="w-6 h-6" />
             Log Out
