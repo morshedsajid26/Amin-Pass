@@ -18,13 +18,13 @@ import logo from "@/public/Aminpass.png";
 
 const navitems = [
   { name: "Overview", link: "/systemowner/home", icon: homeIcon },
-  { name: "Tenant Permission", link: "/systemowner/hom", icon: VisibilityIcon },
+  { name: "Tenant Permission", link: "/systemowner/permission/control", icon: VisibilityIcon },
   { name: "Tenants", link: "/systemowner/tenante/management", icon: UserIcon },
-  { name: "Plan Activation", link: "/systemowner/hom", icon: ActivationIcon },
-  { name: "Audit Logs", link: "/systemowner/logs", icon: AuditIcon },
-  { name: "Support & SLA", link: "/systemowner/", icon: SupportIcon },
+  { name: "Plan Activation", link: "/systemowner/plan/activation", icon: ActivationIcon },
+  { name: "Audit Logs", link: "/systemowner/audit/logs", icon: AuditIcon },
+  { name: "Support & SLA", link: "/systemowner/support/management", icon: SupportIcon },
   { name: "Geolocation", link: "/systemowner/", icon: GeolocationIcon },
-  { name: "Settings", link: "/systemowner/", icon: SettingsIcon },
+  { name: "Settings", link: "/systemowner/platform/settings", icon: SettingsIcon },
 ];
 
 const SystemSidebar = () => {
@@ -44,16 +44,16 @@ const SystemSidebar = () => {
       {/* 🔹 Sidebar */}
       <div
         className={`fixed 2xl:static top-0 left-0 z-40 max-h-screen w-[241px] shrink-0 flex flex-col pl-2.5 pr-5 py-7 bg-[#F1F1F1] rounded-r-3xl 2xl:rounded-3xl shadow-lg
-        transition-transform duration-300 ease-in-out overflow-scroll hide-scrollbar
+        transition-transform  duration-300 ease-in-out overflow-scroll hide-scrollbar
         ${isOpen ? "translate-x-0 " : "-translate-x-full 2xl:translate-x-0"}`}
       >
         {/* Logo */}
-        <div className="flex justify-center">
+        <div className="flex justify-center ">
           <Image src={logo} alt="logo" />
         </div>
 
         {/* Nav Items */}
-        <ul className="flex flex-col gap-6 mt-[90px]">
+        <ul className="flex flex-col gap-6 mt-[90px] ">
           {navitems.map((item, index) => {
             const isActive = pathname === item.link;
             return (
@@ -75,7 +75,7 @@ const SystemSidebar = () => {
         </ul>
 
         {/* Logout */}
-        <div className="mt-25 pb-25 ">
+        <div className="mt-25 pb-11 ">
           <button className="flex items-center gap-4 py-2 px-2 w-full text-[#FF1100] hover:bg-[#7AA3CC] font-inter font-medium cursor-pointer rounded-[8px] transition-all duration-200">
             <Image src={LogoutIcon} alt="log out" className="w-6 h-6" />
             Log Out

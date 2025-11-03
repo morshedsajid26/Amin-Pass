@@ -12,6 +12,7 @@ const Dropdown = ({
   spanClass,
   optionClass,
   labelClass,
+  icon
 }) => {
   const [selected, setSelected] = useState("");
   const [show, setShow] = useState(false);
@@ -56,7 +57,7 @@ const Dropdown = ({
           />
 
           {/* Arrow Icon */}
-          <div className="w-6 h-6  flex items-center justify-center absolute top-1/2 -translate-y-1/2 right-6 text-[#000000]">
+          <div className={`w-6 h-6  flex items-center justify-center absolute top-1/2 -translate-y-1/2 right-6 text-[#000000] ${icon}`}>
             {show ? <FaCaretUp /> : <FaCaretDown />}
           </div>
         </div>

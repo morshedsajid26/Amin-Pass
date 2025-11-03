@@ -1,9 +1,12 @@
+"use client"
 import Dropdown from '@/src/components/Dropdown'
 import InputField from '@/src/components/InputField'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import { FaPlus } from 'react-icons/fa'
 
 const AddTenant = () => {
+    const router= useRouter();
   return (
     <>
     <div>
@@ -107,7 +110,9 @@ const AddTenant = () => {
 
 
     <div className='mt-30 flex items-center gap-5 justify-center'>
-        <button className='border border-[#7AA3CC] font-bold font-inter px-20 py-3 rounded-md text-[#000000]  cursor-pointer '>
+        <button 
+        onClick={()=> router.back()}
+        className='border border-[#7AA3CC] font-bold font-inter px-20 py-3 rounded-md text-[#000000]  cursor-pointer '>
              
               Close
             </button>

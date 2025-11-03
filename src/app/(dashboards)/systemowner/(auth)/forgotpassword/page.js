@@ -1,10 +1,10 @@
 import React from 'react'
-import Management from './Management'
+import ForgotPass from './ForgotPass'
 
 const page = () => {
   return (
     <div>
-      <Management/>
+      <ForgotPass/>
     </div>
   )
 }
