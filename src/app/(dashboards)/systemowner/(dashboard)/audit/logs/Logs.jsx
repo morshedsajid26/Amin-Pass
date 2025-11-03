@@ -78,7 +78,7 @@ const Logs = () => {
 
   const handleExportCSV = () => {
     const headers = TableHeads.map((h) => h.Title);
-    const rows = baseOnTitle.map((row) =>
+    const rows = TableRows.map((row) =>
       TableHeads.map((h) => row[h.key]).join(",")
     );
 
