@@ -3,12 +3,12 @@ import React, { useState } from 'react'
 import { FaRegEyeSlash } from 'react-icons/fa';
 import { IoEyeOutline } from 'react-icons/io5';
 
-const Password = ({label,placeholder,className}) => {
+const Password = ({label,placeholder,className,labelClass,icon}) => {
 
      const [showPass, setShowPass] = useState(false);
   return (
      <div className={`flex flex-col gap-2  w-full ${className}`}>
-            <label className="font-inter text-[#333333] ">
+            <label className={`font-inter text-[#333333] ${labelClass}`}>
               {label}
             </label>
             <div className="relative">
@@ -19,7 +19,7 @@ const Password = ({label,placeholder,className}) => {
               />
               <div
                 onClick={() => setShowPass(!showPass)}
-                className="w-6 h-6  flex items-center justify-center absolute top-1/2 -translate-y-1/2 right-4 text-[#6D6E73]">
+                className={`w-6 h-6  flex items-center justify-center absolute top-1/2 -translate-y-1/2 right-4 text-[#6D6E73] ${icon}`}>
                 {showPass ? (
                   <IoEyeOutline className="text-[#005FA8] w-6 h-6 " />
                 ) : (

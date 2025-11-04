@@ -1,12 +1,10 @@
 import React from 'react'
-import Settings from './Settings'
-import Link from 'next/link'
+import SignIn from './SignIn'
 
 const page = () => {
   return (
     <div>
-       
-      <Settings/>
+      <SignIn/>
     </div>
   )
 }

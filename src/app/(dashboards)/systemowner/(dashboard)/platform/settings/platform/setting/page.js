@@ -1,12 +1,14 @@
+
 import React from 'react'
-import Settings from './Settings'
+
 import Link from 'next/link'
+import PassSettings from './PassSettings'
 
 const page = () => {
   return (
     <div>
        
-      <Settings/>
+      <PassSettings/>
     </div>
   )
 }

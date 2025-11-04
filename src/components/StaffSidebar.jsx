@@ -5,29 +5,26 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FiMenu, FiX } from "react-icons/fi";
 
-import homeIcon from "@/public/homeIcon.png";
+
 import UserIcon from "@/public/UserIcon.png";
-import VisibilityIcon from "@/public/VisibilityIcon.png";
-import SupportIcon from "@/public/SupportIcon.png";
+import RewardIcon from "@/public/RewardIcon.png";
+import AddIcon from "@/public/AddIcon.png";
 import SettingsIcon from "@/public/SettingsIcon.png";
-import GeolocationIcon from "@/public/GeolocationIcon.png";
-import AuditIcon from "@/public/AuditIcon.png";
-import ActivationIcon from "@/public/ActivationIcon.png";
+import NotificationIcon from "@/public/NotificationIcon.png";
+import TransactionIcon from "@/public/TransactionIcon.png";
 import LogoutIcon from "@/public/LogoutIcon.png";
 import logo from "@/public/Aminpass.png";
 
 const navitems = [
-  { name: "Overview", link: "/systemowner/home", icon: homeIcon },
-  { name: "Tenant Permission", link: "/systemowner/permission/control", icon: VisibilityIcon },
-  { name: "Tenants", link: "/systemowner/tenante/management", icon: UserIcon },
-  { name: "Plan Activation", link: "/systemowner/plan/activation", icon: ActivationIcon },
-  { name: "Audit Logs", link: "/systemowner/audit/logs", icon: AuditIcon },
-  { name: "Support & SLA", link: "/systemowner/support/management", icon: SupportIcon },
-  { name: "Geolocation", link: "/systemowner/geo/location", icon: GeolocationIcon },
+    { name: "Customer", link: "/staff/customer/platform", icon: UserIcon },
+  { name: "Add Redeem", link: "/staff/home", icon: AddIcon },
+  { name: "Reward", link: "/systemowner/permission/control", icon: RewardIcon },
+  { name: "Transaction", link: "/systemowner/plan/activation", icon: TransactionIcon },
+  { name: "Push Notification", link: "/systemowner/audit/logs", icon: NotificationIcon },
   { name: "Settings", link: "/systemowner/platform/settings", icon: SettingsIcon },
 ];
 
-const SystemSidebar = () => {
+const StaffSidebar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -94,4 +91,4 @@ const SystemSidebar = () => {
   );
 };
 
-export default SystemSidebar;
+export default StaffSidebar;

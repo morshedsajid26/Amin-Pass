@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function Table({ TableHeads, TableRows }) {
+export default function Table({ TableHeads, TableRows,headClass,tableClass }) {
   return (
-    <table className="w-full my-9 border-collapse bg-white rounded-2xl overflow-hidden">
+    <table className={`w-full my-9 border-collapse bg-white rounded-2xl overflow-hidden ${tableClass}`}>
       {/* ==== TABLE HEADER ==== */}
       <thead>
         <tr className="">
@@ -11,7 +11,7 @@ export default function Table({ TableHeads, TableRows }) {
               key={idx}
               className={`text-center border-b border-l border-[#000000]/10 font-medium font-inter text-[#000000] py-[22px]   text-[24px]
                 ${idx === 0 ? "rounded-tl-2xl" : ""}
-                ${idx === TableHeads.length - 1 ? "rounded-tr-2xl" : ""}`}
+                ${idx === TableHeads.length - 1 ? "rounded-tr-2xl" : ""} ${headClass}`}
               style={{ width: head.width }}
             >
               {head.Title}

@@ -4,6 +4,7 @@ import React from 'react'
 import InputField from '@/src/components/InputField'
 import Password from '@/src/components/Password'
 import { FcGoogle } from "react-icons/fc";
+import Link from 'next/link';
 
 
 const SignIn = () => {
@@ -13,7 +14,7 @@ const SignIn = () => {
 
         
 
-      <h3 className='font-inter font-medium text-[32px] text-[#333333] mb-6 mt-'>Login to Account</h3>
+      <h3 className='font-inter font-medium text-[32px] text-[#333333] mb-6 mt-'>Signin to Account</h3>
 
       <p className='font-inter  text-[#333333]'>Please enter your email and password to continue</p>
 
@@ -31,17 +32,30 @@ const SignIn = () => {
 
       <div className="flex justify-between items-center  w-full ">
           <div className="flex items-center gap-2.5">
-            <input type="checkbox" className=" accent-[#005FA8]" />
+            <input type="checkbox" className="w-4 h-4 accent-[#005FA8]" />
             <p className="text-[#333333] font-inter ">Remember Password</p>
           </div>
-          <a href="/systemowner/forgotpassword" className="text-[#333333] hover:text-[#005FA8] font-inter hover:underline">Forgot Password?</a>
+        
         </div>
 
 
 
+      <Link className='w-full' href=''>
       <button className='bg-[#7AA3CC] text-[#010101] font-semibold text-[20px] w-full font-inter py-3 rounded-[8px] cursor-pointer mt-12'>
-        Log In
+        Sign In
       </button>
+      
+      </Link>
+
+      <p className='font-inter '>
+        Don’t have an account? 
+        
+        <a href="/staff/signup"
+        className='font-bold'
+        >
+         Sign up
+        </a>
+      </p>
 
      
       

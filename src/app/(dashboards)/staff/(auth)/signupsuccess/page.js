@@ -1,12 +1,10 @@
 import React from 'react'
-import Settings from './Settings'
-import Link from 'next/link'
+import Success from './Success'
 
 const page = () => {
   return (
     <div>
-       
-      <Settings/>
+      <Success/>
     </div>
   )
 }
