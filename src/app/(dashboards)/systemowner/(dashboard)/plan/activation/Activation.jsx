@@ -72,7 +72,7 @@ const Activation = () => {
               <Dropdown
                 label="Select Plan "
                 placeholder="Starter"
-                labelClass={`text-[24px] `}
+                labelClass={`text-2xl `}
                 className={`   gap-2  font-inter `}
                 inputClass="text-base border rounded-2xl  py-3 px-4"
                 options={["Starter", "Grow", "Business"]}
@@ -81,7 +81,7 @@ const Activation = () => {
 
               <InputField
                 label={`Price`}
-                labelClass={`text-[24px] `}
+                labelClass={`text-2xl `}
                 className={``}
                 placeholder={`Price`}
                 inputClass="text-base border rounded-2xl  py-3 px-4"
@@ -90,7 +90,7 @@ const Activation = () => {
               <Dropdown
                 label="Location Select"
                 placeholder="1"
-                labelClass={`text-[24px] `}
+                labelClass={`text-2xl `}
                 className={`   gap-2  font-inter `}
                 inputClass="text-base border rounded-2xl  py-3 px-4"
                 options={["1", "2", "3"]}
@@ -100,7 +100,7 @@ const Activation = () => {
               <Dropdown
                 label="Card Select"
                 placeholder="1"
-                labelClass={`text-[24px] `}
+                labelClass={`text-2xl `}
                 className={`   gap-2  font-inter `}
                 inputClass="text-base border rounded-2xl  py-3 px-4"
                 options={["1", "2", "3"]}
@@ -110,7 +110,7 @@ const Activation = () => {
               <Dropdown
                 label="Plan "
                 placeholder="Active"
-                labelClass={`text-[24px] `}
+                labelClass={`text-2xl `}
                 className={`   gap-2  font-inter `}
                 inputClass="text-base border rounded-2xl  py-3 px-4"
                 options={["Active", "Inctive"]}

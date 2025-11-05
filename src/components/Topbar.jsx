@@ -6,12 +6,13 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import Dropdown from "./Dropdown";
+import { TfiReload } from "react-icons/tfi";
 
 const Topbar = () => {
   const pathname = usePathname();
   return (
     <div className=" flex items-center justify-between ">
-      {pathname === "/systemowner/home" ? (
+      {pathname === "/systemowner/home" || "/businessowner/home" ? (
         <div className="relative ml-[10%]">
           <input
             type="text"
@@ -23,19 +24,30 @@ const Topbar = () => {
       ) : (
         <div className="h-[60px]" />
       )}
+
+      {pathname === "/staff/customer/platform" ? (
+        <div className="flex items-center gap-2">
+        <p className="font-inter text-[#656565]">Offline Mode (save locally)</p>
+        <TfiReload />
+      </div>
+      ) : (
+        <div className="h-[60px]" />
+      )}
+      
       
       
       <div className="flex items-center justify-between  ">
 
       {pathname === "/systemowner/home" ? (
         <Dropdown
-          className="w-[20%] font-inter font-medium text-[24px]  "
+          className="w-[20%] font-inter font-medium text-2xl  "
           options={["EN", "NL", "FR", "BN"]}
           placeholder="EN"
         />
       ) : (
         <div className="h-[60px]" />
       )}
+      
 
       <div className="flex items-center gap-10  ">
         <IoMdNotificationsOutline className="h-8 w-8 text-[#020202]" />

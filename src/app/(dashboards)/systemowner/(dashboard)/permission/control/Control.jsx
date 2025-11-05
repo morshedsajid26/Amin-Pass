@@ -64,7 +64,7 @@ const Control = () => {
 
 <div className='border-b border-black/20'>
 
-        <h3 className='py-2 px-2 font-inter  flex items-center gap-4 cursor-pointer  transition-all duration-200 text-[20px] border-b-2 w-[13%]'>
+        <h3 className='py-2 px-2 font-inter  flex items-center gap-4 cursor-pointer  transition-all duration-200 text-xl border-b-2 w-[13%]'>
           Tenants Permission
         </h3>
 </div>
@@ -77,7 +77,7 @@ const Control = () => {
           {TableHeads.map((head, idx) => (
             <th
               key={idx}
-              className={`text-start border-[#000000]/10 font-medium font-inter text-[#000000] py-[22px]   text-[24px]
+              className={`text-start border-[#000000]/10 font-medium font-inter text-[#000000] py-[22px]   text-2xl
                  `}
               
             >
@@ -94,7 +94,7 @@ const Control = () => {
             {TableHeads.map((head, headIdx) => (
               <td
                 key={headIdx}
-                className="border-t border-b border-[#000000]/10 py-[22px] font-inter text-[20px] text-[#000000]"
+                className="border-t border-b border-[#000000]/10 py-[22px] font-inter text-xl text-[#000000]"
               >
                 
                 {head.render ? head.render(row, rowIdx) : row[head.key]}

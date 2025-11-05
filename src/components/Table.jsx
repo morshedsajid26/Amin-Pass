@@ -9,7 +9,7 @@ export default function Table({ TableHeads, TableRows,headClass,tableClass }) {
           {TableHeads.map((head, idx) => (
             <th
               key={idx}
-              className={`text-center border-b border-l border-[#000000]/10 font-medium font-inter text-[#000000] py-[22px]   text-[24px]
+              className={`text-center border-b border-l border-[#000000]/10 font-medium font-inter text-[#000000] py-[22px]   text-2xl
                 ${idx === 0 ? "rounded-tl-2xl" : ""}
                 ${idx === TableHeads.length - 1 ? "rounded-tr-2xl" : ""} ${headClass}`}
               style={{ width: head.width }}
@@ -27,7 +27,7 @@ export default function Table({ TableHeads, TableRows,headClass,tableClass }) {
             {TableHeads.map((head, headIdx) => (
               <td
                 key={headIdx}
-                className="border-b border-l border-[#000000]/10 py-[22px] text-center px-3 font-inter text-[20px] text-[#000000]"
+                className="border-b border-l border-[#000000]/10 py-[22px] text-center px-3 font-inter text-xl text-[#000000]"
               >
                 {/* If render function exists, use it — otherwise show plain data */}
                 {head.render ? head.render(row, rowIdx) : row[head.key]}

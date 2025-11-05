@@ -42,7 +42,7 @@ const OTP = () => {
               ref={(el) => (inputs.current[i] = el)}
               onChange={(e) => handleChange(e, i)}
               onKeyDown={(e) => handleKeyDown(e, i)}
-              className="appearance-none w-[47px] h-[49px] border border-[#7AA3CC] rounded-[10px] text-center outline-none text-[20px] font-inter font-bold text-[#005FA8]"
+              className="appearance-none w-[47px] h-[49px] border border-[#7AA3CC] rounded-[10px] text-center outline-none text-xl font-inter font-bold text-[#005FA8]"
             />
           ))}
         </div>

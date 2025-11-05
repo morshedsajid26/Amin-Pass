@@ -109,7 +109,7 @@ const Home = () => {
             {TableHeads.map((head, headIdx) => (
               <td
                 
-                className="borde border-[#7AA3CC]/20 py-[22px] text-center px-3 font-inter text-[20px] text-[#000000]"
+                className="borde border-[#7AA3CC]/20 py-[22px] text-center px-3 font-inter text-xl text-[#000000]"
               >
                
                 {head.render ? head.render(row, rowIdx) : row[head.key]}

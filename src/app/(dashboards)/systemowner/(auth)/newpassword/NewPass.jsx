@@ -23,7 +23,7 @@ const NewPass = () => {
         />
 
         <Link href="/systemowner/success" className="w-full ">
-          <button className="bg-[#7AA3CC] text-[#000000] w-full font-semibold font-inter  py-3 rounded-[8px] mt-5 cursor-pointer">
+          <button className="bg-[#7AA3CC] text-[#000000] w-full font-semibold font-inter  py-3 rounded-lg mt-5 cursor-pointer">
             Update Password
           </button>
         </Link>

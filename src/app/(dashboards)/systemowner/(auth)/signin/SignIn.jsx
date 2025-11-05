@@ -39,7 +39,7 @@ const SignIn = () => {
 
 
 
-      <button className='bg-[#7AA3CC] text-[#010101] font-semibold text-[20px] w-full font-inter py-3 rounded-[8px] cursor-pointer mt-12'>
+      <button className='bg-[#7AA3CC] text-[#010101] font-semibold text-xl w-full font-inter py-3 rounded-lg cursor-pointer mt-12'>
         Log In
       </button>
 
