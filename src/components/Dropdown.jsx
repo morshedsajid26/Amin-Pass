@@ -38,7 +38,7 @@ const Dropdown = ({
   return (
     <div
       ref={dropdownRef}
-      className={`flex flex-col  relative ${className}`}
+      className={`flex flex-col   relative ${className}`}
     >
       {/* Label */}
       <label className={`font-inter text-[#000000]  ${labelClass}`}>

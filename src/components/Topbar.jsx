@@ -12,7 +12,7 @@ const Topbar = () => {
   const pathname = usePathname();
   return (
     <div className=" flex items-center justify-between ">
-      {pathname === "/systemowner/home" || "/businessowner/home" ? (
+      {pathname === "/systemowner/home"  ? (
         <div className="relative ml-[10%]">
           <input
             type="text"

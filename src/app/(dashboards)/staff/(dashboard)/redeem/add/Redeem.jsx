@@ -1,5 +1,6 @@
 "use client"
 import Bredcumb from '@/src/components/Bredcumb'
+import Link from 'next/link';
 import React, { useRef } from 'react'
 
 const Redeem = () => {
@@ -41,9 +42,13 @@ const Redeem = () => {
             />
           ))}
         </div>
-        <button className='bg-[#7AA3CC] text-[#010101] font-semibold text-xl  font-inter py-3 px-10 rounded-lg cursor-pointer gap-10'>
+
+      <Link className='' href= '/staff/redeem/add/redeem'>
+        <button className='bg-[#7AA3CC] text-[#010101] font-semibold text-xl font-inter py-3 px-10 rounded-lg cursor-pointer gap-10'>
         Search
       </button>
+      
+      </Link>
 
       </div>
 

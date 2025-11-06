@@ -478,7 +478,7 @@ const Management = () => {
       
       setEditOpen(true);
     } else {
-      // বর্তমানে OFF → enable করলেই কাজ করবে
+      
       setEnabled(true);
     }
   };
