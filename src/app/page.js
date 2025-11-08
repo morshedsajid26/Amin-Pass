@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import Banner from './(landing page)/Banner'
 import FeaturedItem from './(landing page)/FeaturedItem'
 import ProductShow from './(landing page)/ProductShow'
+import Works from './(landing page)/Works'
 
 const page = () => {
   return (
@@ -11,6 +12,7 @@ const page = () => {
       <Banner/>
       <FeaturedItem/>
       <ProductShow/>
+      <Works/>
     </div>
   )
 }
