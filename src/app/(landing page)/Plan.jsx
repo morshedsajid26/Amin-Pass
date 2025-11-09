@@ -100,7 +100,7 @@ const Plan = () => {
   return (
     <div className="pb-25">
       <Container>
-        <h3 className="font-inter font-bold text-[32px] text-center">
+        <h3 className="font-inter font-bold text-[48px] text-center">
           Our Pricing Plan
         </h3>
         <p className="font-inter text-center mt-2 mb-9 text-gray-600">
