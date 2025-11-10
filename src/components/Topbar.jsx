@@ -50,7 +50,7 @@ const Topbar = () => {
       
 
       <div className="flex items-center gap-10  ">
-        <IoMdNotificationsOutline className="h-8 w-8 text-[#020202]" />
+        <IoMdNotificationsOutline className="h-8 w-8 text-[#020202] dark:text-white" />
 
         <Image src={Avatar} alt="profile" />
       </div>

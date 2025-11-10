@@ -9,20 +9,34 @@ import reward from "@/public/reward.png";
 
 import TenantsGrowthChart from '@/src/components/TenantsGrowthChart';
 import SupportTicketChart from '@/src/components/SupportTicketChart';
+import CustomerVisitChart from '@/src/components/CustomerVisitChart';
+import ProgressBar from '@/src/components/ProgressBar';
+import StatusProgressChart from '@/src/components/StatusProgressChart';
 
 
 const Home = () => {
+  const data = [
+  { title: "Free Coffee", claims: 820, unit: "Claims" },
+  { title: "10% Off", claims: 650 },
+  { title: "Bonus Point", claims: 350 },
+];
+
+const statusData = [
+  { title: "Claimed", value: 95},
+  { title: "Expired", value: 95 },
+  { title: "Pending", value: 30},
+];
  
   return (
     <div className='grid grid-cols-8 gap-10'>
 
-      <div className='bg-[#F9F9F9] rounded-2xl col-span-2 p-5 flex flex-col items-center gap-2'>
+      <div className='bg-[#F9F9F9] dark:bg-transparent rounded-2xl col-span-2 p-5 flex flex-col items-center gap-2 dark:border dark:border-white'>
          
-            <Image src={tenants} alt='user'/>
-          <p className="font-inter text-[#121212]">
+            <Image src={tenants} alt='user' className='dark:invert'/>
+          <p className="font-inter text-[#121212] dark:text-white">
             Total Customers
           </p>
-          <p className="font-inter font-semibold text-[#121212]">
+          <p className="font-inter font-semibold text-[#121212] dark:text-white">
             324
           </p>
       </div>
@@ -60,7 +74,21 @@ const Home = () => {
 
       <div className=' rounded-2xl col-span-8'>
         <h2 className="text-2xl mb-4 font-inter font-medium ">Customer Visit & Reward Redeemptions</h2>
-        <TenantsGrowthChart/>
+        <CustomerVisitChart/>
+      </div>
+
+      <div className=' col-span-4'>
+        <h3 className="font-medium text-2xl mb-6 font-inter">
+        Top Performing Chart
+      </h3>
+<ProgressBar data={data}/>
+      </div>
+
+      <div className=' col-span-4'>
+        <h3 className="font-medium text-2xl mb-6 font-inter">
+       Redeemption Breakdown
+      </h3>
+<StatusProgressChart data={statusData} />
       </div>
       
     </div>

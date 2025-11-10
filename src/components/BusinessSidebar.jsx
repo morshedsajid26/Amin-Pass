@@ -20,14 +20,14 @@ import logo from "@/public/Aminpass.png";
 
 const navitems = [
   { name: "Overview", link: "/businessowner/home", icon: homeIcon },
-  { name: "Rewards", link: "/staff/manage/reward", icon: RewardIcon },
+  { name: "Rewards", link: "/businessowner/manage/reward", icon: RewardIcon },
   { name: "Staff", link: "/systemowner/permission/control", icon: StaffIcon },
   { name: "Add Redeem", link: "/staff/redeem/add", icon: AddIcon },
-  { name: "Analytics", link: "/systemowner/geo/location", icon: analytics },
+  { name: "Analytics", link: "/businessowner/analytics/dashboard", icon: analytics },
   { name: "Branch", link: "/systemowner/geo/location", icon: branch },
   { name: "Customer", link: "/staff/customer/platform", icon: UserIcon },
    { name: "Subscription", link: "/systemowner/geo/location", icon: subscription },
-   { name: "Support", link: "/systemowner/support/management", icon: support },
+   { name: "Support", link: "/businessowner/platform/support", icon: support },
   { name: "Settings", link: "/systemowner/platform/settings", icon: SettingsIcon },
 ];
 
@@ -47,13 +47,13 @@ const BusinessSidebar = () => {
 
       {/* 🔹 Sidebar */}
       <div
-        className={`fixed 2xl:static top-0 left-0 z-40 max-h-screen w-[241px] shrink-0 flex flex-col pl-2.5 pr-5 py-7 bg-[#F1F1F1] rounded-r-3xl 2xl:rounded-3xl shadow-lg
+        className={`fixed 2xl:static top-0 left-0 z-40 max-h-screen w-[241px] shrink-0 flex flex-col pl-2.5 pr-5 py-7 bg-[#F1F1F1] dark:bg-[#141414]  rounded-r-3xl 2xl:rounded-3xl shadow-lg
         transition-transform  duration-300 ease-in-out overflow-scroll hide-scrollbar
         ${isOpen ? "translate-x-0 " : "-translate-x-full 2xl:translate-x-0"}`}
       >
         {/* Logo */}
         <div className="flex justify-center ">
-          <Image src={logo} alt="logo" />
+          <Image src={logo} alt="logo" className="dark:invert" />
         </div>
 
         {/* Nav Items */}
@@ -62,18 +62,28 @@ const BusinessSidebar = () => {
             const isActive = pathname === item.link;
             return (
               <Link
-                href={item.link}
-                key={index}
-                onClick={() => setIsOpen(false)} // auto close on mobile
-                className={`py-2 px-2 font-inter font-medium flex items-center gap-4 cursor-pointer rounded-lg transition-all duration-200 ${
-                  isActive
-                    ? "bg-[#7AA3CC]"
-                    : "text-[#000000] hover:bg-[#7AA3CC]"
-                }`}
-              >
-                <Image src={item.icon} alt={item.name} className="w-6 h-6" />
-                {item.name}
-              </Link>
+        href={item.link}
+        key={index}
+        onClick={() => setIsOpen(false)} // auto close on mobile
+        className={`py-2 px-2 font-inter font-medium flex items-center gap-4 rounded-lg cursor-pointer transition-all duration-200 group
+          ${
+            isActive
+              ? "bg-[#7AA3CC] text-black dark:text-black"
+              : "text-[#000000] dark:text-white hover:bg-[#7AA3CC] hover:text-black dark:hover:text-black"
+          }`}
+      >
+        <Image
+          src={item.icon}
+          alt={item.name}
+          className={`w-6 h-6 filter transition-all duration-200
+            ${
+              isActive
+                ? ""
+                : "dark:invert dark:brightness-200  dark:group-hover:invert-0 dark:group-hover:brightness-0"
+            }`}
+        />
+        {item.name}
+      </Link>
             );
           })}
         </ul>
@@ -81,7 +91,7 @@ const BusinessSidebar = () => {
         {/* Logout */}
         <div className="mt-25 pb-11 ">
           <button className="flex items-center gap-4 py-2 px-2 w-full text-[#FF1100] hover:bg-[#7AA3CC] font-inter font-medium cursor-pointer rounded-lg transition-all duration-200">
-            <Image src={LogoutIcon} alt="log out" className="w-6 h-6" />
+            <Image src={LogoutIcon} alt="log out" className="w-6 h-6 dark:invert" />
             Log Out
           </button>
         </div>

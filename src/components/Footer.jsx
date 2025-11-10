@@ -18,30 +18,30 @@ const Footer = () => {
             <div className='border-b border-t border-[#A6A6A6]/30 py-6 grid grid-cols-3 gap-20 justify-between mt-4'>
             <div>
                 <h3 className='font-inter font-medium text-[48px] text-[#7AA3CC]'>Aminpass</h3>
-                <p  className='font-inter text-[24px] text-[#1B1B1B] mt-4' >Rewarding loyalty,instantly and effortlessly.</p>
+                <p  className='font-inter text-2xl text-[#1B1B1B] mt-4' >Rewarding loyalty,instantly and effortlessly.</p>
             </div>
 
             <div className=' text-center'>
-                <p className='font-inter font-medium text-[20px] text-[#505050]'>
+                <p className='font-inter font-medium text-xl text-[#505050]'>
                     <a href="/privacy">Privacy Policy</a>
                     </p>
 
-                    <p className='font-inter font-medium text-[20px] text-[#505050] mt-4'>
+                    <p className='font-inter font-medium text-xl text-[#505050] mt-4'>
                     <a href="/termsCondition">Terms & Condition</a>
                     </p>
                 
 
             </div>
             <div >
-                <p className='flex items-center gap-4 font-inter font-medium text-[20px] text-[#505050]' >
+                <p className='flex items-center gap-4 font-inter font-medium text-xl text-[#505050]' >
                     <FaLocationDot className='h-6 w-6' />
                     One lake ST Rino, Nv8505
                 </p>
-                <p className='flex items-center gap-4 font-inter font-medium text-[20px] text-[#505050] my-5' >
+                <p className='flex items-center gap-4 font-inter font-medium text-xl text-[#505050] my-5' >
                     <IoLogoWhatsapp className='h-6 w-6' />
                     +8801960678545
                 </p>
-                <p className='flex items-center gap-4 font-inter font-medium text-[20px] text-[#505050]' >
+                <p className='flex items-center gap-4 font-inter font-medium text-xl text-[#505050]' >
                     <MdEmail className='h-6 w-6' />
                     example@gmail.com
                 </p>

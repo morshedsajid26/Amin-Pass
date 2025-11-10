@@ -14,8 +14,6 @@ const navitems = [
 ];
 
 const Navbar = () => {
-  const pathname = usePathname();
-  const [cookieOpen, setCookieOpen] = useState(false);
   return (
     <div>
       <Container>
@@ -40,48 +38,14 @@ const Navbar = () => {
             />
           </ul>
 
-          <button
-            onClick={() => setCookieOpen(true)}
-            className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl px-4 font-inter py-3 rounded-2xl cursor-pointer "
-          >
+          <Link href='/signup'>
+          
+          <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl px-4 font-inter py-3 rounded-2xl cursor-pointer ">
             Login for business
           </button>
+          </Link>
         </div>
       </Container>
-      {cookieOpen && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 ">
-          <div className="bg-linear-to-t from-[#F4F1EC] to-[#B3CBDB]  w-[37%] rounded-[15px] pt-[70px] px-12  ">
-            <div className="flex justify-between items-center pb-6">
-              <p className="font-inter font-semibold text-2xl">Manage Your Cookie preferences</p>
-
-              <div className="bg-white w-10 h-10 rounded-full flex items-center justify-center cursor-pointer">
-              <FiX 
-              onClick={() => setCookieOpen(false)}
-              className="w-5 h-5"/>
-
-              </div>
-            </div>
-
-            <div className="flex justify-center gap-8 py-10 border-t border-[#C2C2C2]">
-              <div className="">
-                <p className="font-inter font-medium text-[32px]">
-                  We use cookies. Please see our Privacy Policy for more details
-                </p>
-                <div className="mt-10 flex justify-end">
-                  <Link href='/'>
-                  <button
-                    
-                    className="font-inter  bg-[#7AA3CC] cursor-pointer text-[#121212] py-6 px-19  rounded-3xl font-bold"
-                  >
-                    Accept All
-                  </button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

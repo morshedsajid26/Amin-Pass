@@ -14,7 +14,7 @@ const FAQdropdown = ({question,answer,className}) => {
                           {dropdown? <MdArrowDropUp className='w-8 h-8 text-[#000000] ' />: <MdArrowDropDown className='w-8 h-8 text-[#000000] ' />}
                           
                       </div>
-                      <p className={`text-[#000000]  text-[20px]  font-inter  ${dropdown? "opacity-100 h-auto visible overflow-auto pb-4" : "opacity-0 h-0 invisible overflow-hidden"}`}>{answer}</p>
+                      <p className={`text-[#000000]  text-xl  font-inter  ${dropdown? "opacity-100 h-auto visible overflow-auto pb-4" : "opacity-0 h-0 invisible overflow-hidden"}`}>{answer}</p>
                       
                   </div>
     </div>

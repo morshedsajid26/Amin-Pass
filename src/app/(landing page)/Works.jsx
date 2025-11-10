@@ -14,15 +14,15 @@ const Works = () => {
       <div className='grid grid-cols-12 gap-10 mt-6'>
         <div className='bg-[#E9F0F5] col-span-4 rounded-2xl px-10 py-7 flex flex-col items-center text-center gap-4'>
             <Image src={works1} alt='works1'/>
-            <p className='font-inter font-medium text-[24px]'> Instantly design your loyalty card with your brand colors</p>
+            <p className='font-inter font-medium text-2xl'> Instantly design your loyalty card with your brand colors</p>
         </div>
         <div className='bg-[#E9F0F5] col-span-4 rounded-2xl px-10 py-7 flex flex-col items-center text-center gap-4'>
             <Image src={works2} alt='works1'/>
-            <p className='font-inter font-medium text-[24px]'> Watch How it works</p>
+            <p className='font-inter font-medium text-2xl'> Watch How it works</p>
         </div>
         <div className='bg-[#E9F0F5] col-span-4 rounded-2xl px-4 py-7 flex flex-col items-center text-center gap-4'>
             <Image src={works3} alt='works1'/>
-            <p className='font-inter font-medium text-[24px]'> Rewards unlock automatically once customers reach their goal</p>
+            <p className='font-inter font-medium text-2xl'> Rewards unlock automatically once customers reach their goal</p>
         </div>
 
       </div>

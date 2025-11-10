@@ -12,7 +12,7 @@ const ProductShow = () => {
        <div className='flex items-center  justify-between mt-6'>
          <div className='w-[35%]'>
                     <h3 className='font-inter font-semibold text-[40px]'>One Platform,All Loyalty</h3>
-                    <p className='font-inter  text-[20px] text-[#262626] mt-4'>From rewards to personalized offers- everything happens automatically. No more paper stamp cards, just smart, seamless technology that connects.</p>
+                    <p className='font-inter  text-xl text-[#262626] mt-4'>From rewards to personalized offers- everything happens automatically. No more paper stamp cards, just smart, seamless technology that connects.</p>
                     
         
                 </div>
