@@ -13,6 +13,7 @@ import Footer from "../components/Footer";
 import FAQ from "./(landing page)/FAQ";
 import Surprise from "./(landing page)/Surprise";
 import Plan from "./(landing page)/Plan";
+import Testimonial from "./(landing page)/Testimonial";
 
 const Page = () => {
   const [cookieOpen, setCookieOpen] = useState(false);
@@ -77,6 +78,7 @@ useEffect(() => {
         <Plan />
         <ReaLImpact />
         <RealConnection />
+        <Testimonial/>
         <FAQ />
         <Surprise />
         <Footer />
