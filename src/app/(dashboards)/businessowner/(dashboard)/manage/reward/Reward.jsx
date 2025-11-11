@@ -8,12 +8,23 @@ const Reward = () => {
     <div>
       <Bredcumb />
 
+      <div>
+        <div className="relative ml-[10%]">
+                  <input
+                    type="text"
+                    className="border outline-none border-[#000000] py-[14px] px-12 w-[462px] rounded-[15px] text-[#000000] placeholder:text-[#000000] font-inter"
+                    placeholder="Search"
+                  />
+                  <FaSearch className=" absolute top-1/2 left-6 -translate-y-1/2 text-[#7AA3CC]" />
+                </div>
       <Link href='/businessowner/manage/reward/management' className="flex justify-end mb-10">
       <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl  font-inter py-3 px-5 rounded-lg cursor-pointer mt-12 flex items-center gap-2">
         <FaPlus/>
            Add New Reward
           </button>
           </Link>
+      </div>
+
 
       <div className="bg-white rounded-4xl py-14 px-14">
         <div className=" font-inter text-2xl text-[#000000]  ">

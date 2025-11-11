@@ -21,10 +21,10 @@ import logo from "@/public/Aminpass.png";
 const navitems = [
   { name: "Overview", link: "/businessowner/home", icon: homeIcon },
   { name: "Rewards", link: "/businessowner/manage/reward", icon: RewardIcon },
-  { name: "Staff", link: "/systemowner/permission/control", icon: StaffIcon },
+  { name: "Staff", link: "/businessowner/staff", icon: StaffIcon },
   { name: "Add Redeem", link: "/staff/redeem/add", icon: AddIcon },
   { name: "Analytics", link: "/businessowner/analytics/dashboard", icon: analytics },
-  { name: "Branch", link: "/systemowner/geo/location", icon: branch },
+  { name: "Branch", link: "/businessowner/branch/list", icon: branch },
   { name: "Customer", link: "/staff/customer/platform", icon: UserIcon },
    { name: "Subscription", link: "/systemowner/geo/location", icon: subscription },
    { name: "Support", link: "/businessowner/platform/support", icon: support },
@@ -59,7 +59,8 @@ const BusinessSidebar = () => {
         {/* Nav Items */}
         <ul className="flex flex-col gap-6 mt-[90px] ">
           {navitems.map((item, index) => {
-            const isActive = pathname === item.link;
+           const isActive =
+            pathname === item.link || pathname.startsWith(item.link + "/");
             return (
               <Link
         href={item.link}

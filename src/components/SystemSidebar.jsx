@@ -55,7 +55,8 @@ const SystemSidebar = () => {
         {/* Nav Items */}
         <ul className="flex flex-col gap-6 mt-[90px] ">
           {navitems.map((item, index) => {
-            const isActive = pathname === item.link;
+            const isActive =
+            pathname === item.link || pathname.startsWith(item.link + "/");
             return (
               <Link
                 href={item.link}
