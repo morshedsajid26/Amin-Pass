@@ -1,7 +1,7 @@
 import Bredcumb from "@/src/components/Bredcumb";
 import Link from "next/link";
 import React from "react";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaSearch } from "react-icons/fa";
 
 const Reward = () => {
   return (

@@ -8,8 +8,8 @@ const layout = ({children}) => {
     const pathname = usePathname();
 
     const nav = [
-      { name: "Reward", link: "/businessowner/manage/reward/management" },
-       { name: "Loyalty Card", link: "/businessowner/manage/reward/management/loyalty/programme" },
+      { name: "Subscription", link: "/businessowner/billing/subscription" },
+       { name: "Billing History", link: "/businessowner/billing/subscription/billing/history" },
      
     ];
   return (
@@ -18,18 +18,7 @@ const layout = ({children}) => {
 
         <ul className="flex  gap-6 border-b border-black/20 ">
           {nav.map((item, index) => {
-             let isActive = false;
-
-        // 🎯 Logic: Loyalty active for any deeper nested route
-        if (item.link.includes("/loyalty/")) {
-          isActive = pathname.startsWith("/businessowner/manage/reward/management/loyalty/");
-        } else {
-          // Reward tab only for exact match or management root
-          isActive =
-            pathname === item.link ||
-            (pathname.startsWith(item.link) &&
-              !pathname.includes("/loyalty/"));
-        }
+            const isActive = pathname === item.link;
             return (
               <Link
                 href={item.link}
