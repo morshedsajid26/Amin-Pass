@@ -20,7 +20,7 @@ const layout = ({children}) => {
         <ul className="flex  gap-6 border-b border-black/20 ">
           {nav.map((item, index) => {
            const isActive =
-            pathname === item.link || pathname.startsWith(item.link + "/");;
+             pathname === item.link || pathname === item.link + "/"; ;
             return (
               <Link
                 href={item.link}

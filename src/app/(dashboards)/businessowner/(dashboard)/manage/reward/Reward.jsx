@@ -8,17 +8,17 @@ const Reward = () => {
     <div>
       <Bredcumb />
 
-      <div>
-        <div className="relative ml-[10%]">
+      <div className="flex items-center justify-center gap-20 my-10">
+        <div className="relative ">
                   <input
                     type="text"
-                    className="border outline-none border-[#000000] py-[14px] px-12 w-[462px] rounded-[15px] text-[#000000] placeholder:text-[#000000] font-inter"
+                    className="border outline-none border-[#000000] dark:border-[#CDCDCD] py-[14px] px-12 w-[462px] rounded-[15px] dark:text-white text-[#000000] placeholder:text-[#000000] dark:placeholder:text-white font-inter"
                     placeholder="Search"
                   />
-                  <FaSearch className=" absolute top-1/2 left-6 -translate-y-1/2 text-[#7AA3CC]" />
+                  <FaSearch className=" absolute top-1/2 left-6 -translate-y-1/2 text-[#7AA3CC] " />
                 </div>
-      <Link href='/businessowner/manage/reward/management' className="flex justify-end mb-10">
-      <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl  font-inter py-3 px-5 rounded-lg cursor-pointer mt-12 flex items-center gap-2">
+      <Link href='/businessowner/manage/reward/management' >
+      <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl  font-inter py-3 px-5 rounded-lg cursor-pointer  flex items-center gap-2">
         <FaPlus/>
            Add New Reward
           </button>
@@ -26,8 +26,8 @@ const Reward = () => {
       </div>
 
 
-      <div className="bg-white rounded-4xl py-14 px-14">
-        <div className=" font-inter text-2xl text-[#000000]  ">
+      <div className="bg-white  dark:bg-[#141414] rounded-4xl py-14 px-14">
+        <div className=" font-inter text-2xl text-[#000000] dark:text-white  ">
           <div className="flex justify-between border-b border-[#000000]/10 py-4">
             <span className="font-medium">Created Date:</span>
             <span className="font-normal">04/05/2025</span>
@@ -50,12 +50,12 @@ const Reward = () => {
 
           <div className="flex justify-between border-b border-[#000000]/10 py-4">
             <span className="font-medium">Expiry Days:</span>
-            <span className="text-[#000000] ">14/05/2025</span>
+            <span className=" ">14/05/2025</span>
           </div>
 
           <div className="flex justify-between border-b border-[#000000]/10 py-4">
             <span className="font-medium">Earning Rule:</span>
-            <span className="text-[#000000] ">Per Spend</span>
+            <span className="">Per Spend</span>
           </div>
           <div className="flex justify-between border-b border-[#000000]/10 py-4">
             <span className="font-medium">Reward:</span>
@@ -64,7 +64,7 @@ const Reward = () => {
         </div>
 
         <div className="flex justify-center items-center gap-12 mt-15">
-          <button className="border border-[#7AA3CC] text-[#010101] font-semibold text-xl font-inter py-3  px-20 rounded-lg cursor-pointer mt-12">
+          <button className="border border-[#7AA3CC] text-[#010101] dark:text-white font-semibold text-xl font-inter py-3  px-20 rounded-lg cursor-pointer mt-12">
             Delete
           </button>
           <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl  font-inter py-3 px-20 rounded-lg cursor-pointer mt-12">

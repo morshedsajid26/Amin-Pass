@@ -18,7 +18,7 @@ const data = [
 
 export default function CustomerVisitChart() {
   return (
-    <div className="bg-white rounded-2xl p-8">
+    <div className="bg-white  dark:bg-[#141414] rounded-2xl p-8">
       
       <ResponsiveContainer width="100%" height={350} style={{ border: 'none' }}>
         <BarChart width={500}

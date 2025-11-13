@@ -28,7 +28,7 @@ const layout = ({children}) => {
              
               <div className='px-10'>
                 <Topbar />
-                <ThemeToggle/>
+                
               </div>
   
            

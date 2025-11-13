@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 
 
-export default function ThemeToggle() {
+export default function ThemeToggle({className}) {
   const [dark, setDark] = useState(false);
 
   const [mounted, setMounted] = useState(false);
@@ -44,7 +44,7 @@ export default function ThemeToggle() {
 
      <div
                 onClick={toggle}
-                className={`relative flex items-center w-24 h-11 border-[#006489] dark:border-white border bg-white/20 md:backdrop-blur-sm  rounded-full cursor-pointer transition-all duration-300 z-30 ${dark ? "md:bg-white/20  md:backdrop-blur-sm " : ""
+                className={`relative flex items-center w-24 h-11 border-[#006489] dark:border-white border bg-white/20 md:backdrop-blur-sm  rounded-full cursor-pointer transition-all duration-300 z-30 ${className} ${dark ? "md:bg-white/20  md:backdrop-blur-sm " : ""
                         }`}
             >
                 

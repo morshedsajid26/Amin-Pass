@@ -28,7 +28,7 @@ const CardType = ({ onSelect }) => {
   return (
 
     <div>
-    <div className="grid grid-cols-4  mt-8">
+    <div className="grid grid-cols-3  mt-8">
       {cards.map((card) => (
         <div
           key={card.id}

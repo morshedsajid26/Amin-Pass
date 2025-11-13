@@ -40,30 +40,30 @@ const statusData = [
             324
           </p>
       </div>
-     <div className='bg-[#F9F9F9] rounded-2xl col-span-2 p-5 flex flex-col items-center gap-2'>
-          <Image src={staff} alt='ticket'/>
-          <p className="font-inter text-[#121212]">
+     <div className='bg-[#F9F9F9] dark:bg-transparent dark:border dark:border-white rounded-2xl col-span-2 p-5 flex flex-col items-center gap-2'>
+          <Image src={staff} alt='ticket ' className='dark:invert'/>
+          <p className="font-inter text-[#121212] dark:text-white">
             Total Staff
           </p>
-          <p className="font-inter font-semibold text-[#121212]">
+          <p className="font-inter font-semibold text-[#121212] dark:text-white">
             324
           </p>
       </div>
-      <div className='bg-[#F9F9F9] rounded-2xl col-span-2 p-5 flex flex-col items-center gap-2'>
-         <Image src={reward} alt='ticket'/>
-          <p className="font-inter text-[#121212]">
+      <div className='bg-[#F9F9F9] dark:bg-transparent dark:border dark:border-white rounded-2xl col-span-2 p-5 flex flex-col items-center gap-2'>
+         <Image src={reward} alt='ticket' className='dark:invert'/>
+          <p className="font-inter text-[#121212] dark:text-white">
             Reward Redeem
           </p>
-          <p className="font-inter font-semibold text-[#121212]">
+          <p className="font-inter font-semibold text-[#121212] dark:text-white">
             324
           </p>
       </div>
-      <div className='bg-[#F9F9F9] rounded-2xl col-span-2 p-5 flex flex-col items-center gap-2'>
-        <Image src={visit} alt='bill'/>
-          <p className="font-inter text-[#121212]">
+      <div className='bg-[#F9F9F9] dark:bg-transparent dark:border dark:border-white rounded-2xl col-span-2 p-5 flex flex-col items-center gap-2'>
+        <Image src={visit} alt='bill' className='dark:invert'/>
+          <p className="font-inter text-[#121212] dark:text-white">
             Total visit this month
           </p>
-          <p className="font-inter font-semibold text-[#121212]">
+          <p className="font-inter font-semibold text-[#121212] dark:text-white">
             324
           </p>
       </div>
@@ -73,19 +73,19 @@ const statusData = [
 
 
       <div className=' rounded-2xl col-span-8'>
-        <h2 className="text-2xl mb-4 font-inter font-medium ">Customer Visit & Reward Redeemptions</h2>
+        <h2 className="text-2xl mb-4 font-inter font-medium dark:text-white ">Customer Visit & Reward Redeemptions</h2>
         <CustomerVisitChart/>
       </div>
 
       <div className=' col-span-4'>
-        <h3 className="font-medium text-2xl mb-6 font-inter">
+        <h3 className="font-medium text-2xl mb-6 font-inter dark:text-white">
         Top Performing Chart
       </h3>
 <ProgressBar data={data}/>
       </div>
 
       <div className=' col-span-4'>
-        <h3 className="font-medium text-2xl mb-6 font-inter">
+        <h3 className="font-medium text-2xl mb-6 font-inter dark:text-white">
        Redeemption Breakdown
       </h3>
 <StatusProgressChart data={statusData} />

@@ -48,7 +48,7 @@ const Subscription = () => {
 
           {viewOpen && (
         <div className="fixed inset-0  bg-[#D9D9D9]/80 flex items-center justify-center z-50 ">
-          <div className="bg-white rounded-4xl py-14 px-14 w-[80%]  ">
+          <div className="bg-white rounded-4xl py-14 px-14 w-[80%] overflow-scroll hide-scrollbar  ">
            
             <div className=" grid grid-cols-2 font-inter gap-20 text-[#000000]  ">
               <Dropdown

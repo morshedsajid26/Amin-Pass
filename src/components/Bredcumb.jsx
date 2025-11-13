@@ -12,7 +12,7 @@ const Bredcumb = () => {
       {visible.map((item, index) => 
         ( <h3 
         key={index}
-        className="capitalize font-inter text-[#000000]  text-2xl mb-8 px-1">
+        className="capitalize font-inter text-[#000000] dark:text-white  text-2xl mb-8 px-1">
         {item}
           {index < visible.length - 1 && "  "}
       </h3>))}

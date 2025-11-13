@@ -7,9 +7,12 @@ import { FaSearch } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import Dropdown from "./Dropdown";
 import { TfiReload } from "react-icons/tfi";
+import Link from "next/link";
+import ThemeToggle from "./ThemeToggle";
 
 const Topbar = () => {
   const pathname = usePathname();
+  const isBusinessOwner = pathname.startsWith("/businessowner");
   return (
     <div className=" flex items-center justify-between ">
       {pathname === "/systemowner/home"  ? (
@@ -49,8 +52,26 @@ const Topbar = () => {
       )}
       
 
+
+
+ 
+
+
       <div className="flex items-center gap-10  ">
-        <IoMdNotificationsOutline className="h-8 w-8 text-[#020202] dark:text-white" />
+        {/* Theme chnage icon */}
+          {isBusinessOwner && (
+          <ThemeToggle />
+        )}
+        {/* Notification Icon */}
+          {isBusinessOwner ? (
+            // ACTIVE LINK: Works only for BusinessOwner
+            <Link href="/businessowner/notification">
+              <IoMdNotificationsOutline className="h-8 w-8 text-[#020202] dark:text-white cursor-pointer" />
+            </Link>
+          ) : (
+            // DISABLED ICON: Other dashboards
+            <IoMdNotificationsOutline className="h-8 w-8 text-[#020202]" />
+          )}
 
         <Image src={Avatar} alt="profile" />
       </div>

@@ -101,30 +101,30 @@ const Staff = () => {
 
       {viewOpen && (
         <div className="fixed inset-0  bg-[#D9D9D9]/80 flex items-center justify-center z-50 ">
-          <div className="bg-white rounded-4xl py-14 px-14 w-[50%]  ">
-            <h3 className="font-inter text-[32px] border-b-2 border-black/70 pb-2 w-[30%] mb-6">Staff Information</h3>
-            <div className=" font-inter text-2xl text-[#000000]  ">
-              <div className="flex justify-between border-b border-[#000000]/10 py-4">
+          <div className="bg-white dark:bg-[#141414] rounded-4xl py-14 px-14 w-[50%]  ">
+            <h3 className="font-inter text-[32px] border-b-2 border-black/70 dark:border-white/70 pb-2 w-[30%] mb-6 dark:text-white">Staff Information</h3>
+            <div className=" font-inter text-2xl text-[#000000] dark:text-white  ">
+              <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/10 py-4">
                 <span className="font-medium">Staff Name:</span>
                 <span className="font-normal">Jane D.</span>
               </div>
 
-              <div className="flex justify-between border-b border-[#000000]/10 py-4">
+              <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/10 py-4">
                 <span className="font-medium">Email:</span>
                 <span className="font-normal">example@gmail.com</span>
               </div>
 
-              <div className="flex justify-between border-b border-[#000000]/10 py-4">
+              <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/10 py-4">
                 <span className="font-medium">Branch</span>
                 <span className="font-normal">Main Branch</span>
               </div>
 
-              <div className="flex justify-between border-b border-[#000000]/10 py-4">
+              <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/10 py-4">
                 <span className="font-medium">Role:</span>
                 <span className="font-normal">Manager</span>
               </div>
 
-              <div className="flex justify-between border-b border-[#000000]/10 py-4">
+              <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/10 py-4">
                 <span className="font-medium">Status:</span>
                 <span>Suspended</span>
               </div>
@@ -133,7 +133,7 @@ const Staff = () => {
             <div className="flex justify-center items-center gap-12 mt-15">
               <button 
                onClick={() => setDeleteOpen(true)}
-              className="border border-[#7AA3CC] text-[#010101] font-semibold text-xl font-inter py-3  px-20 rounded-lg cursor-pointer mt-12">
+              className="border border-[#7AA3CC] text-[#010101] dark:text-white font-semibold text-xl font-inter py-3  px-20 rounded-lg cursor-pointer mt-12">
                 Delete
               </button>
               <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl  font-inter py-3 px-20 rounded-lg cursor-pointer mt-12">
