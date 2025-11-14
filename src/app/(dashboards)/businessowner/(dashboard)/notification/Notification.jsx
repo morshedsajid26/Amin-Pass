@@ -108,17 +108,17 @@ const Notification = () => {
   const currentItems = baseOnTitle.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="w-full p-7 bg-white overflow-x-auto rounded-[10px]">
+    <div className="w-full p-7 bg-white dark:bg-[#141414] overflow-x-auto rounded-[10px]">
       {/* Header */}
       <div className="flex items-center gap-[14px]">
-        <h3 className="text-[#333333] text-[20px] font-inter font-semibold capitalize">
+        <h3 className="text-[#333333] dark:text-white  text-[20px] font-inter font-semibold capitalize">
           {pathParts[1] || "Notifications"}
         </h3>
       </div>
 
       {/* Total Notifications */}
       <div>
-        <p className="text-[#333333] text-[16px] font-inter font-semibold mt-[21px]">
+        <p className="text-[#333333] dark:text-white text-[16px] font-inter font-semibold mt-[21px]">
           Total {baseOnTitle.length} Notifications
         </p>
       </div>
@@ -128,16 +128,16 @@ const Notification = () => {
         {currentItems.map((item, index) => (
           <div
             key={index}
-            className="w-full hover:bg-[#CCDCE9] transition-all duration-300 py-3 px-[25px] c"
+            className="w-full hover:bg-[#CCDCE9] dark:hover:bg-[#212121] transition-all duration-300 py-3 px-[25px] c"
           >
             <div 
              onClick={() => setPopOpen(true)}
             className="w-full flex items-center justify-between cursor-pointer">
-              <p className="w-[80%] text-[#333333] text-[16px] font-inter font-semibold">
+              <p className="w-[80%] text-[#333333] dark:text-white  text-[16px] font-inter font-semibold">
                 {item.message}
               </p>
 
-              <p className="w-[10%] flex justify-end text-[#5C5C5C] text-[16px] font-inter whitespace-nowrap">
+              <p className="w-[10%] flex justify-end text-[#5C5C5C] dark:text-white  text-[16px] font-inter whitespace-nowrap">
                 {timeAgo(item.time)}
               </p>
             </div>

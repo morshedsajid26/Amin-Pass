@@ -7,30 +7,30 @@ const Subscription = () => {
      const [viewOpen, setViewOpen] = useState(false);
   return (
     <div>
-     <div className="bg-white rounded-4xl py-14 px-14 mt-10">
-            <h3 className="font-inter text-[32px] border-b-2 border-black/70 pb-2 w-[26%] mb-6">Subscription Information</h3>
-            <div className=" font-inter text-2xl text-[#000000]  ">
-              <div className="flex justify-between border-b border-[#000000]/10 py-4">
+     <div className="bg-white dark:bg-[#141414] rounded-4xl py-14 px-14 mt-10">
+            <h3 className="font-inter text-[32px] border-b-2   pb-2 w-[26%] mb-6 dark:text-white">Subscription Information</h3>
+            <div className=" font-inter text-2xl text-[#000000] dark:text-white  ">
+              <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/10 dark:border-white/10 py-4">
                 <span className="font-medium">Current plan:</span>
                 <span className="font-normal">Monthly</span>
               </div>
 
-              <div className="flex justify-between border-b border-[#000000]/10 py-4">
+              <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/10 py-4">
                 <span className="font-medium">Price:</span>
                 <span className="font-normal">$25</span>
               </div>
 
-              <div className="flex justify-between border-b border-[#000000]/10 py-4">
+              <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/10 py-4">
                 <span className="font-medium">Renewal Date:</span>
                 <span className="font-normal">30/05/2025</span>
               </div>
 
-              <div className="flex justify-between border-b border-[#000000]/10 py-4">
+              <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/10 py-4">
                 <span className="font-medium">Usage:</span>
                 <span className="font-normal">3 of 5 location usage</span>
               </div>
 
-              <div className="flex justify-between border-b border-[#000000]/10 py-4">
+              <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/10 py-4">
                 <span className="font-medium">Status:</span>
                 <span>Active</span>
               </div>

@@ -75,7 +75,7 @@ const Staff = () => {
         <div className="relative ">
           <input
             type="text"
-            className="border outline-none border-[#000000] py-[14px] px-12 w-[462px] rounded-[15px] text-[#000000] placeholder:text-[#000000] font-inter"
+            className="border outline-none border-[#000000] dark:border-white py-3.5  px-12 w-[462px] rounded-[15px] text-[#000000] dark:placeholder:text-white placeholder:text-[#000000] font-inter"
             placeholder="Search Reward"
           />
           <FaSearch className=" absolute top-1/2 left-6 -translate-y-1/2 text-[#7AA3CC]" />

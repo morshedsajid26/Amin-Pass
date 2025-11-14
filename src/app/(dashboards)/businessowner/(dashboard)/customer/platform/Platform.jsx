@@ -63,10 +63,10 @@ const Platform = () => {
           324
         </p>
       </div>
-      <div className="bg-[#F9F9F9] rounded-2xl  p-5 flex flex-col items-center gap-2">
-        <Image src={visit} alt="bill" />
-        <p className="font-inter text-[#121212]">Total visit this month</p>
-        <p className="font-inter font-semibold text-[#121212]">324</p>
+      <div className="bg-[#F9F9F9] dark:bg-transparent dark:border dark:border-white rounded-2xl  p-5 flex flex-col items-center gap-2">
+        <Image src={visit} alt="bill" className="dark:invert" />
+        <p className="font-inter text-[#121212] dark:text-white">Total visit this month</p>
+        <p className="font-inter font-semibold dark:text-white text-[#121212]">324</p>
       </div>
 
       <div className="col-span-3">

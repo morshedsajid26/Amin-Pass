@@ -64,7 +64,7 @@ const OTP = () => {
 
         <p className="font-inter text-[16px] text-[#333333] dark:text-white mt-[92px]">
           You have not received the email?
-          <a href="/systemowner/forgotpassword" className="text-[#005FA8] cursor-pointer underline m-2">Resend</a>
+          <a href="/businessowner/forgotpassword" className="text-[#005FA8] cursor-pointer underline m-2">Resend</a>
         </p>
       </form>
     </div>

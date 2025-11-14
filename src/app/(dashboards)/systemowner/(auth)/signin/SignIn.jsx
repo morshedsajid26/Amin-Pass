@@ -4,6 +4,7 @@ import React from 'react'
 import InputField from '@/src/components/InputField'
 import Password from '@/src/components/Password'
 import { FcGoogle } from "react-icons/fc";
+import Link from 'next/link';
 
 
 const SignIn = () => {
@@ -39,9 +40,11 @@ const SignIn = () => {
 
 
 
+      <Link href='/systemowner/home' className='w-full'>
       <button className='bg-[#7AA3CC] text-[#010101] font-semibold text-xl w-full font-inter py-3 rounded-lg cursor-pointer mt-12'>
         Log In
       </button>
+          </Link>
 
      
       

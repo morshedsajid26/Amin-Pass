@@ -10,7 +10,7 @@ const TestimonialCard = ({ testimonial }) => {
   return (
     <div
       className={`p-6 rounded-2xl shadow-md border border-black/10 transition-all duration-300 ${
-        enabled ? "bg-[#E9F0F5]" : "bg-[#FBFBFB]/90 opacity-60"
+        enabled ? "bg-[#E9F0F5] dark:bg-[#141414]" : "bg-[#FBFBFB]/90 opacity-60  dark:bg-[#484848]/90"
       }`}
     >
       {/* Header */}
@@ -25,7 +25,7 @@ const TestimonialCard = ({ testimonial }) => {
           />
           <h3
             className={`font-inter text-[32px] font-medium ${
-              enabled ? "text-[#000000]" : "text-[#A1A1A1]"
+              enabled ? "text-[#000000] dark:text-white" : "text-[#A1A1A1]"
             }`}
           >
             {testimonial.name}
@@ -35,7 +35,7 @@ const TestimonialCard = ({ testimonial }) => {
         {/* Toggle Button */}
         <button
           onClick={() => setEnabled((prev) => !prev)}
-          className="flex items-center bg-[#21283F] rounded-full py-6 px-1 relative text-white font-inter"
+          className="flex items-center bg-[#21283F] dark:bg-[#F5F5F5] dark:text-black rounded-full py-6 px-1 relative text-white font-inter"
         >
           <span
             className={`absolute left-1 top-1 w-13 h-10 flex items-center justify-center rounded-full bg-[#80B3FF] transition-all duration-300 ${
@@ -53,7 +53,7 @@ const TestimonialCard = ({ testimonial }) => {
       {/* Body */}
       <p
         className={`text-[16px] font-inter my-6 transition-all duration-300 ${
-          enabled ? "text-[#000000]" : "text-[#9CA3AF]"
+          enabled ? "text-[#000000] dark:text-white" : "text-[#9CA3AF]"
         }`}
       >
         {testimonial.text}
@@ -61,11 +61,11 @@ const TestimonialCard = ({ testimonial }) => {
 
       <p
         className={`font-inter font-semibold text-[16px] ${
-          enabled ? "text-[#000000]" : "text-[#9CA3AF]"
+          enabled ? "text-[#000000] dark:text-white" : "text-[#9CA3AF]"
         }`}
       >
         Business:{" "}
-        <span className="font-normal">{testimonial.business}</span>{" "}
+        <span className="font-normal dark:text-white">{testimonial.business}</span>{" "}
         <span className="inline-flex ml-2">
           {Array.from({ length: testimonial.rating }).map((_, i) => (
             <FaStar key={i} className="text-[#FACC15]" />

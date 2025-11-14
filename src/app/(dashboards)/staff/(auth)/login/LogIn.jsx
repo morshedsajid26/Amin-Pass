@@ -51,7 +51,7 @@ const LogIn = () => {
        
 
 
-      <Link className="w-[50%] " href='' >
+      <Link className="w-[50%] " href='/staff/customer/platform' >
       <button className='bg-[#7AA3CC] text-[#010101] font-semibold text-xl w-full font-inter py-3 rounded-lg cursor-pointer mt-12'>
         Log In
       </button>

@@ -40,7 +40,7 @@ const SignIn = () => {
 
 
 
-      <Link className='w-full' href=''>
+      <Link className='w-full' href='/staff/customer/platform'>
       <button className='bg-[#7AA3CC] text-[#010101] font-semibold text-xl w-full font-inter py-3 rounded-lg cursor-pointer mt-12'>
         Sign In
       </button>

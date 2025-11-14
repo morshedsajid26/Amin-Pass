@@ -60,7 +60,7 @@ const LoyaltyCard = () => {
       {/* Buttons */}
     </div>
       <div className="flex justify-center gap-8 mt-6">
-        <button className="border border-[#7AA3CC]  font-inter font-medium  py-2.5 px-15 rounded-md">
+        <button className="border border-[#7AA3CC] dark:text-white  font-inter font-medium  py-2.5 px-15 rounded-md">
           Edit
         </button>
         <button className="bg-[#ED4539] border border-[#7AA3CC]  font-inter font-medium  py-2.5 px-14 rounded-md">

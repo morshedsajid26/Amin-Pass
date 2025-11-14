@@ -39,7 +39,7 @@ const Support = () => {
       <div className="mt-22 flex items-center gap-8 justify-center">
               <button 
               
-              className="border border-[#7AA3CC] font-bold font-inter px-20 py-3 rounded-md text-[#000000]  cursor-pointer ">
+              className="border border-[#7AA3CC] font-bold font-inter px-20 py-3 rounded-md text-[#000000] dark:text-white  cursor-pointer ">
                 Close
               </button>
 

@@ -28,7 +28,7 @@ const navitems = [
   { name: "Customer", link: "/businessowner/customer/platform", icon: UserIcon },
    { name: "Subscription", link: "/businessowner/billing/subscription", icon: subscription },
    { name: "Support", link: "/businessowner/platform/support", icon: support },
-  { name: "Settings", link: "/systemowner/platform/settings", icon: SettingsIcon },
+  { name: "Settings", link: "/businessowner/platform/settings", icon: SettingsIcon },
 ];
 
 const BusinessSidebar = () => {
@@ -91,10 +91,13 @@ const BusinessSidebar = () => {
 
         {/* Logout */}
         <div className="mt-25 pb-11 ">
+          <Link href='/businessowner/signin'>
           <button className="flex items-center gap-4 py-2 px-2 w-full text-[#FF1100] hover:bg-[#7AA3CC] font-inter font-medium cursor-pointer rounded-lg transition-all duration-200">
             <Image src={LogoutIcon} alt="log out" className="w-6 h-6 dark:invert" />
             Log Out
           </button>
+
+          </Link>
         </div>
       </div>
 

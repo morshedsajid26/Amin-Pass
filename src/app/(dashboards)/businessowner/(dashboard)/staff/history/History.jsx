@@ -13,7 +13,7 @@ const History = () => {
     const cls =
       color === "blue"
         ? "text-[#000000] bg-[#7AA3CC] "
-        : "text-[#000000] bg-transparent ring-1 ring-[#7AA3CC]";
+        : "text-[#000000] dark:text-white  bg-transparent ring-1 ring-[#7AA3CC]";
     return (
       <span
         className={`inline-flex items-center rounded-[5px] px-6 py-[9px] text-[16px] font-inter ${cls}`}
@@ -27,7 +27,7 @@ const History = () => {
   function OutlineBtn({ children, tone = "slate", onClick }) {
     const tones = {
       blue: "text-[#000000]  bg-[#7AA3CC] hover:bg-[#7AA3CC]/50",
-      red: "text-[#000000] ring-1 ring-inset ring-[#7AA3CC] hover:bg-[#7AA3CC]/10",
+      red: "text-[#000000] dark:text-white  ring-1 ring-inset ring-[#7AA3CC] hover:bg-[#7AA3CC]/10",
       slate:
         "text-slate-600 ring-1 ring-inset ring-slate-300 hover:bg-slate-50",
     };
@@ -50,7 +50,7 @@ const History = () => {
     if (s === "rejected") return <Badge color="red">❌Rejected</Badge>;
 
     return (
-      <div className="flex items-center justify-center gap-3 text-[16px] font-inter">
+      <div className="flex items-center justify-center gap-3 text-[16px] font-inter ">
         <OutlineBtn tone="blue">
           ✅ 
           Approve

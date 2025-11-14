@@ -16,7 +16,7 @@ const layout = ({children}) => {
     <div>
         <Bredcumb/>
 
-        <ul className="flex  gap-6 border-b border-black/20 ">
+        <ul className="flex  gap-6 border-b border-black/20 dark:border-white/20 ">
           {nav.map((item, index) => {
             const isActive = pathname === item.link;
             return (
@@ -24,10 +24,10 @@ const layout = ({children}) => {
                 href={item.link}
                 key={index}
                 onClick={() => setIsOpen(false)} // auto close on mobile
-                className={`py-2 px-2 font-inter  flex items-center gap-4 cursor-pointer  transition-all duration-200 text-xl ${
+                className={`py-2 px-2 font-inter  flex items-center gap-4 cursor-pointer  transition-all duration-200 text-xl dark:text-white ${
                   isActive
                     ? "border-b-2 "
-                    : "text-[#000000]"
+                    : "text-[#000000] dark:text-white"
                 }`}
               >
                 {item.name}

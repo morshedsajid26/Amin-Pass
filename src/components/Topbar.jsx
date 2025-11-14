@@ -13,6 +13,8 @@ import ThemeToggle from "./ThemeToggle";
 const Topbar = () => {
   const pathname = usePathname();
   const isBusinessOwner = pathname.startsWith("/businessowner");
+  const isStaff = pathname.startsWith("/staff");
+
   return (
     <div className=" flex items-center justify-between ">
       {pathname === "/systemowner/home"  ? (
@@ -28,11 +30,11 @@ const Topbar = () => {
         <div className="h-[60px]" />
       )}
 
-      {pathname === "/staff/customer/platform" ? (
+      {isStaff ? (
         <div className="flex items-center gap-2">
-        <p className="font-inter text-[#656565]">Offline Mode (save locally)</p>
-        <TfiReload />
-      </div>
+          <p className="font-inter text-[#656565]">Offline Mode (save locally)</p>
+          <TfiReload />
+        </div>
       ) : (
         <div className="h-[60px]" />
       )}

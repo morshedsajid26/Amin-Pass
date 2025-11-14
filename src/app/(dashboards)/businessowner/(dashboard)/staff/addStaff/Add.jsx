@@ -23,7 +23,7 @@ const Add = () => {
       </form>
 
        <div className="flex justify-center items-center gap-12 mt-15">
-          <button className="border border-[#7AA3CC] text-[#010101] font-semibold text-xl font-inter py-3  px-20 rounded-lg cursor-pointer mt-12">
+          <button className="border border-[#7AA3CC] dark:text-white text-[#010101] font-semibold text-xl font-inter py-3  px-20 rounded-lg cursor-pointer mt-12">
             Close
           </button>
           <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl  font-inter py-3 px-20 rounded-lg cursor-pointer mt-12">

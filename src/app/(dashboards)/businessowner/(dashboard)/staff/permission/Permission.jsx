@@ -79,7 +79,7 @@ const Permission = () => {
           {TableHeads.map((head, idx) => (
             <th
               key={idx}
-              className={`text-start border-[#000000]/10 font-medium font-inter text-[#000000] py-[22px]   text-2xl
+              className={`text-start border-[#000000]/10 font-medium font-inter text-[#000000] dark:text-white  py-[22px]   text-2xl
                  `}
               
             >
@@ -96,7 +96,7 @@ const Permission = () => {
             {TableHeads.map((head, headIdx) => (
               <td
                 key={headIdx}
-                className="border-t border-b border-[#000000]/10 py-[22px] font-inter text-xl text-[#000000]"
+                className="border-t border-b border-[#000000]/10 dark:border-white/10 py-[22px] font-inter text-xl text-[#000000] dark:text-white "
               >
                 
                 {head.render ? head.render(row, rowIdx) : row[head.key]}

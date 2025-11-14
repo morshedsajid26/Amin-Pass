@@ -41,7 +41,7 @@ const Dropdown = ({
       className={`flex flex-col   relative ${className}`}
     >
       {/* Label */}
-      <label className={`font-inter text-[#000000]  ${labelClass}`}>
+      <label className={`font-inter text-[#000000] dark:text-white  ${labelClass}`}>
         {label}
        
       </label>
@@ -52,19 +52,19 @@ const Dropdown = ({
           <input
             readOnly
             value={selected || ""}
-            className={`w-full bg-transparent outline-none text-[#000000] placeholder:text-[#000000]   cursor-pointer ${inputClass}`}
+            className={`w-full bg-transparent outline-none text-[#000000] dark:text-white placeholder:text-[#000000] dark:placeholder:text-white   cursor-pointer ${inputClass}`}
             placeholder={placeholder}
           />
 
           {/* Arrow Icon */}
-          <div className={`w-6 h-6  flex items-center justify-center absolute top-1/2 -translate-y-1/2 right-6 text-[#000000] ${icon}`}>
+          <div className={`w-6 h-6  flex items-center justify-center absolute top-1/2 -translate-y-1/2 right-6 text-[#000000] dark:text-white ${icon}`}>
             {show ? <FaCaretUp /> : <FaCaretDown />}
           </div>
         </div>
 
         {/* Dropdown Menu */}
         <div
-          className={`absolute left-0 top-[105%] w-full bg-white border border-[#CED2E5] rounded-md shadow-md  text-[#000000] z-30 transition-all duration-300 text-center overflow-y-scroll hide-scrollbar  ${optionClass} ${
+          className={`absolute left-0 top-[105%] w-full bg-white  border border-[#CED2E5] rounded-md shadow-md  text-[#000000] z-30 transition-all duration-300 text-center overflow-y-scroll hide-scrollbar  ${optionClass} ${
             show
               ? "opacity-100 visible max-h-40 overflow-auto"
               : "opacity-0 invisible max-h-0 overflow-hidden"

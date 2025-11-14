@@ -70,21 +70,21 @@ const Dashboard = () => {
           </p>
       </div>
 
-      <div className='bg-[#F9F9F9] rounded-2xl  p-5 flex flex-col items-center gap-2'>
-         <Image src={reward} alt='ticket'/>
-          <p className="font-inter text-[#121212]">
+      <div className='bg-[#F9F9F9] dark:bg-transparent  rounded-2xl  p-5 flex flex-col items-center gap-2 dark:border dark:border-white'>
+         <Image src={reward} alt='ticket' className='dark:invert'/>
+          <p className="font-inter text-[#121212] dark:text-white">
             Reward Redeem
           </p>
-          <p className="font-inter font-semibold text-[#121212]">
+          <p className="font-inter font-semibold text-[#121212] dark:text-white">
             324
           </p>
       </div>
-      <div className='bg-[#F9F9F9] rounded-2xl  p-5 flex flex-col items-center gap-2'>
-        <Image src={visit} alt='bill'/>
-          <p className="font-inter text-[#121212]">
+      <div className='bg-[#F9F9F9] dark:bg-transparent rounded-2xl  p-5 flex flex-col items-center gap-2 dark:border dark:border-white'>
+        <Image src={visit} alt='bill' className='dark:invert'/>
+          <p className="font-inter text-[#121212] dark:text-white">
             Total visit this month
           </p>
-          <p className="font-inter font-semibold text-[#121212]">
+          <p className="font-inter font-semibold text-[#121212] dark:text-white ">
             324
           </p>
       </div>
@@ -96,8 +96,9 @@ const Dashboard = () => {
 
     <Dropdown
     placeholder='Location Filter'
-    className={` bg-[#7AA3CC] rounded-xl p-2.5 font-inter font-medium`}
+    className={` bg-[#7AA3CC] dark:bg-transparent dark:border dark:border-[#7AA3CC] rounded-xl p-2.5 font-inter font-medium `}
     options={["1","2"]}
+    inputClass={``}
     />
     <div className='relative'>
             <button 

@@ -1,26 +1,23 @@
 "use client";
 
-
 import { useEffect, useState } from "react";
+import { FiSun, FiMoon } from "react-icons/fi";
 
-
-export default function ThemeToggle({className}) {
+export default function ThemeToggle({ className }) {
   const [dark, setDark] = useState(false);
-
   const [mounted, setMounted] = useState(false);
+
+  // Check saved theme on mount
   useEffect(() => {
-   
     const saved = localStorage.getItem("theme");
     if (saved === "dark") {
       document.documentElement.classList.add("dark");
       setDark(true);
     }
-  }, []);
- useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted) return null; // avoid hydration mismatch
 
   const toggle = () => {
     if (dark) {
@@ -35,28 +32,26 @@ export default function ThemeToggle({className}) {
   };
 
   return (
-    // <button
-    //   onClick={toggle}
-    //   className="px-4 py-2 border rounded bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100 transition-colors"
-    // >
-    //   {dark ? "Light Mode" : "Dark Mode"}
-    // </button>
+    <div
+      onClick={toggle}
+      className={`relative w-16 h-8 bg-gray-300 dark:bg-gray-700 rounded-full 
+                 flex items-center cursor-pointer transition-all duration-300 
+                 ${className}`}
+    >
+      {/* Animated white circle */}
+      <div
+        className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md 
+                    flex items-center justify-center text-black transition-all duration-300
+                    ${dark ? "translate-x-8" : "translate-x-0"}`}
+      >
+        {dark ? <FiMoon size={16} /> : <FiSun size={16} />}
+      </div>
 
-     <div
-                onClick={toggle}
-                className={`relative flex items-center w-24 h-11 border-[#006489] dark:border-white border bg-white/20 md:backdrop-blur-sm  rounded-full cursor-pointer transition-all duration-300 z-30 ${className} ${dark ? "md:bg-white/20  md:backdrop-blur-sm " : ""
-                        }`}
-            >
-                
-                <div
-                    className={`absolute rounded-full  flex items-center justify-center font-bold transition-all duration-300 ${dark ? "translate-x-[52px]" : "translate-x-2"
-                        }`}
-                >
-                    {dark ? "Dark ": "Light"}
-                </div>
-
-                
-             
-                </div>
+      {/* Decorative gradient glow (optional) */}
+      <div
+        className={`absolute inset-0 rounded-full pointer-events-none transition-opacity duration-300
+                    ${dark ? "opacity-50 bg-gradient-to-r from-blue-500/40 to-purple-500/40" : "opacity-0"}`}
+      ></div>
+    </div>
   );
 }

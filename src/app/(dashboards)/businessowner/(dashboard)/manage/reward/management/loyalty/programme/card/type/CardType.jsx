@@ -36,8 +36,8 @@ const CardType = ({ onSelect }) => {
           className={`w-[310px] py-8 cursor-pointer rounded-2xl flex flex-col justify-center items-center border transition-all duration-300 
             ${
               selected === card.id
-                ? "bg-black text-white border-white"
-                : "bg-white text-black border-gray-300 hover:shadow-md"
+                ? "bg-black dark:bg-white dark:text-black text-white border-white dark:border-black"
+                : "bg-white dark:bg-black dark:text-white  text-black border-gray-300 hover:shadow-md"
             }`}
         >
           {card.icon}
@@ -47,7 +47,7 @@ const CardType = ({ onSelect }) => {
     </div>
 
     <div>
-      <Link href='/businessowner/manage/reward/management/loyalty/programme' className="flex justify-center mt-25">
+      <Link href='/businessowner/manage/reward/management/loyalty/programme/card/details' className="flex justify-center mt-25">
       <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl  font-inter py-3 px-25 rounded-lg cursor-pointer flex items-center gap-2">
       
            Continue

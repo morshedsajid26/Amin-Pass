@@ -17,7 +17,7 @@ const layout = ({children}) => {
     <div>
       
 
-        <ul className="flex  gap-6 border-b border-black/20 ">
+        <ul className="flex  gap-6 border-b border-black/20  dark:border-white/20">
           {nav.map((item, index) => {
            const isActive =
              pathname === item.link || pathname === item.link + "/"; ;
@@ -28,8 +28,8 @@ const layout = ({children}) => {
                 onClick={() => setIsOpen(false)} // auto close on mobile
                 className={`py-2 px-2 font-inter  flex items-center gap-4 cursor-pointer  transition-all duration-200 text-xl ${
                   isActive
-                    ? "border-b-2 "
-                    : "text-[#000000]"
+                    ? "border-b-2 dark:text-white "
+                    : "text-[#000000] dark:text-white "
                 }`}
               >
                 {item.name}
