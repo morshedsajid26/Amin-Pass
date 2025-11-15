@@ -48,7 +48,7 @@ const Subscription = () => {
 
           {viewOpen && (
         <div className="fixed inset-0  bg-[#D9D9D9]/80 flex items-center justify-center z-50 ">
-          <div className="bg-white rounded-4xl py-14 px-14 w-[80%] overflow-scroll hide-scrollbar  ">
+          <div className="bg-white dark:bg-black rounded-4xl py-14 px-14 w-[80%] overflow-scroll hide-scrollbar  ">
            
             <div className=" grid grid-cols-2 font-inter gap-20 text-[#000000]  ">
               <Dropdown
@@ -84,7 +84,7 @@ const Subscription = () => {
             <div className="flex justify-center items-center gap-12 mt-15">
               <button 
             onClick={() => setViewOpen(false)}
-              className="border border-[#7AA3CC] text-[#010101] font-semibold text-xl font-inter py-3  px-20 rounded-lg cursor-pointer mt-12">
+              className="border border-[#7AA3CC] text-[#010101] dark:text-white font-semibold text-xl font-inter py-3  px-20 rounded-lg cursor-pointer mt-12">
               Cancel
               </button>
               <button 

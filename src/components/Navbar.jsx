@@ -38,12 +38,14 @@ const Navbar = () => {
             />
           </ul>
 
-          <Link href='/signup'>
+          <Link href='/login'>
           
           <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl px-4 font-inter py-3 rounded-2xl cursor-pointer ">
             Login for business
           </button>
           </Link>
+
+          
         </div>
       </Container>
     </div>
