@@ -269,7 +269,7 @@ function getOrdinal(n) {
       <div className="flex justify-between items-center w-full mb-4 px-1 mt-2 ">
         <div className="text-center">
           <p className="text-[16px] font-inter" style={{ color: colors.text }}>
-            Stamps 
+            Stamps Remain
           </p>
           <p
             className="text-[16px] font-inter font-semibold"
@@ -281,7 +281,7 @@ function getOrdinal(n) {
 
         <div className="text-center">
           <p className="text-[16px] font-inter" style={{ color: colors.text }}>
-            Available Rewards
+            Available
           </p>
           <p
             className="text-[16px] font-inter font-semibold"
