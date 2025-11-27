@@ -3,7 +3,7 @@ import Topbar from '@/src/components/Topbar'
 import React from 'react'
 import BusinessSidebar from '@/src/components/BusinessSidebar'
 import { ThemeProvider } from '@/src/components/Theme-Provider'
-import ThemeToggle from '@/src/components/ThemeToggle'
+
 
 const layout = ({children}) => {
   return (
