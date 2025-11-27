@@ -17,14 +17,14 @@ const layout = ({children}) => {
     >
 
       <div className='bg-gradient-to-b from-[#A8C4D8] to-[#E4DBC2] dark:from-[#000000] dark:to-[#000000] '>
-         <div className="flex h-screen overflow-hidden p-5">
+         <div className="flex h-screen overflow-hidden ">
             
           
               <BusinessSidebar/>
            
   
            
-            <div className="flex-1 flex flex-col min-w-0 min-h-0 ">
+            <div className="flex-1 flex flex-col min-w-0 min-h-0 p-5 ">
              
               <div className='px-10'>
                 <Topbar />
