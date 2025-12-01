@@ -14,6 +14,7 @@ import NotificationIcon from "@/public/NotificationIcon.png";
 import TransactionIcon from "@/public/TransactionIcon.png";
 import LogoutIcon from "@/public/LogoutIcon.png";
 import logo from "@/public/Aminpass.png";
+import Cookies from "js-cookie";
 
 const navitems = [
     { name: "Customer", link: "/staff/customer/platform", icon: UserIcon },
@@ -27,6 +28,34 @@ const navitems = [
 const StaffSidebar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+
+   const handleLogout = async () => {
+  try {
+    const token = Cookies.get("token");
+
+    if (!token) {
+      console.log("No token found");
+    } else {
+      await fetch("http://127.0.0.1:8000/api/logout", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }
+
+    // Clear token from localStorage
+    Cookies.remove("token");
+
+    // Redirect to login page
+    window.location.href = "/staff/signin";
+
+  } catch (error) {
+    console.log("Logout error:", error);
+    Cookies.remove("token");
+    window.location.href = "/staff/signin";
+  }
+};
 
   return (
     <>
@@ -74,13 +103,15 @@ const StaffSidebar = () => {
 
         {/* Logout */}
         <div className="  ">
-          <Link href='/staff/login'>
-          <button className="flex items-center gap-4 py-2 px-2 w-full text-[#FF1100] hover:bg-[#7AA3CC] font-inter font-medium cursor-pointer rounded-lg transition-all duration-200">
+          
+          <button 
+          onClick={handleLogout}
+          className="flex items-center gap-4 py-2 px-2 w-full text-[#FF1100] hover:bg-[#7AA3CC] font-inter font-medium cursor-pointer rounded-lg transition-all duration-200">
             <Image src={LogoutIcon} alt="log out" className="w-6 h-6" />
             Log Out
           </button>
 
-          </Link>
+          
         </div>
       </div>
 

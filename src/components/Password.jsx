@@ -1,34 +1,53 @@
 "use client";
-import React, { useState } from 'react'
-import { FaRegEyeSlash } from 'react-icons/fa';
-import { IoEyeOutline } from 'react-icons/io5';
+import React, { useState } from "react";
+import { FaRegEyeSlash } from "react-icons/fa";
+import { IoEyeOutline } from "react-icons/io5";
 
-const Password = ({label,placeholder,className,labelClass,icon,inputClass}) => {
+const Password = ({
+  label,
+  placeholder,
+  className = "",
+  labelClass = "",
+  icon = "",
+  inputClass = "",
+  value,
+  onChange,
+  name, // optional: "password" or "password_confirmation"
+}) => {
+  const [showPass, setShowPass] = useState(false);
 
-     const [showPass, setShowPass] = useState(false);
   return (
-     <div className={`flex flex-col gap-2  w-full ${className}`}>
-            <label className={`font-inter text-[#333333] dark:text-white ${labelClass}`}>
-              {label}
-            </label>
-            <div className="relative">
-              <input
-                type={showPass ? "text" : "password"}
-                className={`w-full outline-none py-3 px-4 text-[#5C5C5C] dark:text-white font-inter text-[16px] placeholder-[#5C5C5C] border border-[#005FA8] dark:border-white rounded ${inputClass}`}
-                placeholder={placeholder}
-              />
-              <div
-                onClick={() => setShowPass(!showPass)}
-                className={`w-6 h-6  flex items-center justify-center absolute top-1/2 -translate-y-1/2 right-4 text-[#005FA8] dark:text-white ${icon}`}>
-                {showPass ? (
-                  <IoEyeOutline className=" w-6 h-6 " />
-                ) : (
-                  <FaRegEyeSlash className=" w-6 h-6 " />
-                )}
-              </div>
-            </div>
-          </div>
-  )
-}
+    <div className={`flex flex-col gap-2 w-full ${className}`}>
+      {label && (
+        <label className={`font-inter text-[#333333] dark:text-white ${labelClass}`}>
+          {label}
+        </label>
+      )}
 
-export default Password
+      <div className="relative">
+        <input
+          name={name}
+          type={showPass ? "text" : "password"}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          className={`w-full outline-none py-3 px-4 text-[#5C5C5C] dark:text-white font-inter text-[16px] placeholder-[#5C5C5C] border border-[#005FA8] dark:border-white rounded ${inputClass}`}
+          aria-label={label || "password"}
+          autoComplete={name === "password" ? "new-password" : "off"}
+        />
+
+        <button
+          type="button"
+          onClick={() => setShowPass((s) => !s)}
+          aria-pressed={showPass}
+          aria-label={showPass ? "Hide password" : "Show password"}
+          className={`w-8 h-8 flex items-center justify-center absolute top-1/2 -translate-y-1/2 right-3 text-[#005FA8] dark:text-white ${icon}`}
+        >
+          {showPass ? <IoEyeOutline className="w-5 h-5" /> : <FaRegEyeSlash className="w-5 h-5" />}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Password;
