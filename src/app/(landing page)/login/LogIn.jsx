@@ -69,7 +69,7 @@ const LogIn = () => {
   return (
     <div className="bg-gradient-to-t from-[#F4F1EC] to-[#B3CBDB] min-h-screen">
       <Container className="flex flex-col items-center py-20 px-11 h-screen overflow-y-auto hide-scrollbar">
-        <Image src={AuthLogo} alt="logo" />
+        <Image src={AuthLogo} alt="logo" width={230} height={230} />
 
         <form
           onSubmit={handleLogin}
@@ -87,14 +87,12 @@ const LogIn = () => {
             label="Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-           
             labelClass="text-[#333333] text-[16px]"
             inputClass="border-[#005FA8] rounded-[4px] text-[#5C5C5C] py-3"
           />
 
           <Password
             label="Password"
-           
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />

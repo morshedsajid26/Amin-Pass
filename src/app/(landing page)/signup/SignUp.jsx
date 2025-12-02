@@ -14,6 +14,7 @@ const SignUp = () => {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPasswordConfirmation] = useState("");
 
@@ -31,6 +32,7 @@ const SignUp = () => {
       const formData = new FormData();
       formData.append("name", name);
       formData.append("email", email);
+      formData.append("username", username);
       formData.append("password", password);
       formData.append("password_confirmation", password_confirmation);
 
@@ -46,10 +48,10 @@ const SignUp = () => {
         setMessage("Account created successfully!");
         setIsSuccess(true);
 
-        // Redirect after 2 sec
+        
         setTimeout(() => {
           router.push("/login");
-        }, 2000);
+        }, 1000);
       } else {
         setMessage(JSON.stringify(data));
         setIsSuccess(false);
@@ -65,7 +67,7 @@ const SignUp = () => {
   return (
     <div className="bg-gradient-to-t from-[#F4F1EC] to-[#B3CBDB] min-h-screen">
       <Container className="flex flex-col items-center py-20 px-11 h-screen overflow-y-auto hide-scrollbar">
-        <Image src={AuthLogo} alt="logo" />
+        <Image src={AuthLogo} alt="logo" width={230} height={230} />
 
         <form
           onSubmit={handleSubmit}
@@ -92,6 +94,15 @@ const SignUp = () => {
             label="Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            
+            labelClass="text-[#333333] text-[16px]"
+            inputClass="border-[#005FA8] rounded-[4px] text-[#5C5C5C] py-3"
+          />
+
+          <InputField
+            label="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             
             labelClass="text-[#333333] text-[16px]"
             inputClass="border-[#005FA8] rounded-[4px] text-[#5C5C5C] py-3"

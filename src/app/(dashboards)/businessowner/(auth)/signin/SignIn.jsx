@@ -47,7 +47,7 @@ const SignIn = () => {
           Cookies.set("token", data.token);
         }
 
-        // Redirect after 1.5 seconds
+        
         setTimeout(() => {
           router.push("/businessowner/home");
         }, 500);
