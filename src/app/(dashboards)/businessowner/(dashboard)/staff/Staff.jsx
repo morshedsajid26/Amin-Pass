@@ -154,7 +154,7 @@ const Staff = () => {
               <FiX className="w-6 h-6" />
             </button>
 
-            <h2 className="font-inter text-[20px] font-semibold text-[#F44336] mb-5">
+            <h2 className="font-inter text-xl font-semibold text-[#F44336] mb-5">
               Delete
             </h2>
             <p className="text-[#F1F1F1] font-inter mb-8 border-b border-t border-[#7D7B77] py-6">

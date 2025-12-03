@@ -111,7 +111,7 @@ const Notification = () => {
     <div className="w-full p-7 bg-white dark:bg-[#141414] overflow-x-auto rounded-[10px]">
       {/* Header */}
       <div className="flex items-center gap-[14px]">
-        <h3 className="text-[#333333] dark:text-white  text-[20px] font-inter font-semibold capitalize">
+        <h3 className="text-[#333333] dark:text-white  text-xl font-inter font-semibold capitalize">
           {pathParts[1] || "Notifications"}
         </h3>
       </div>

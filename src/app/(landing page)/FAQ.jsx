@@ -6,7 +6,7 @@ const FAQ = () => {
   return (
     <div className='pb-16'>
         <Container >
-             <h3 className=' font-inter font-bold text-[32px] text-center mb-8 '>FAQ</h3>
+             <h3 className=' font-inter font-bold text-2xl md:text-[32px] text-center mb-8 '>FAQ</h3>
 
        <div className={`flex flex-col justify-center items-center gap-4`}>
         <FAQdropdown

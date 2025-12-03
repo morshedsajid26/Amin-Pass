@@ -14,7 +14,7 @@ const Add = () => {
         <Password
         label='Password'
         labelClass={`font-inter text-xl   text-black`}
-        inputClass={`border-black py-4 rounded-2xl text-[20px] text-black `}
+        inputClass={`border-black py-4 rounded-2xl text-xl text-black `}
         icon={`text-black `}
         
         />

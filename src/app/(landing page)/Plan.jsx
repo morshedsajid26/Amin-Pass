@@ -100,10 +100,10 @@ const Plan = () => {
   return (
     <div className="pb-25">
       <Container>
-        <h3 className="font-inter font-bold text-[48px] text-center">
+        <h3 className="font-inter font-bold text-2xl md:text-[32px] text-center">
           Our Pricing Plan
         </h3>
-        <p className="font-inter text-center mt-2 mb-9 text-gray-600">
+        <p className="font-inter text-center mt-2 mb-5 md:mb-9 text-gray-600">
           Pick an account plan that fits your workflow
         </p>
 
@@ -111,7 +111,7 @@ const Plan = () => {
         <ToggleButton isAnnual={isAnnual} setIsAnnual={setIsAnnual} />
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 mt-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-20 mt-10">
           {plans.map((plan, i) => (
             <Card
               key={i}

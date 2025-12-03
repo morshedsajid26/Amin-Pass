@@ -69,7 +69,7 @@ useEffect(() => {
       )}
 
       {/* ✅ Landing Page */}
-      <div className="bg-gradient-to-t from-[#F4F1EC] to-[#B3CBDB] pt-5 h-screen overflow-y-auto hide-scrollbar">
+      <div className="bg-[#AAC5D8] md:bg-gradient-to-t from-[#F4F1EC] to-[#B3CBDB] pt-5 h-screen overflow-y-auto hide-scrollbar">
         <Navbar />
         <Banner />
         <FeaturedItem />
