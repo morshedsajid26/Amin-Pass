@@ -22,7 +22,7 @@ const NewPass = () => {
   useEffect(() => {
     const storedEmail = sessionStorage.getItem("resetEmail");
     if (!storedEmail) {
-      router.push("/admin/reset");
+      router.push("/businessowner/forgotpassword");
       return;
     }
     setEmail(storedEmail);
@@ -56,6 +56,7 @@ const NewPass = () => {
       const response = await axios.post(
         "http://127.0.0.1:8000/api/password/reset",
         {
+          email: email, 
           password: formData.password,
           password_confirmation: formData.confirmPassword,
         },
@@ -72,7 +73,7 @@ const NewPass = () => {
         // setSuccess("Password updated successfully!");
 
         setTimeout(() => {
-          router.push("/admin/success");
+          router.push("/businessowner/success");
         });
       }
     } catch (err) {
@@ -104,6 +105,7 @@ const NewPass = () => {
           labelClass={`dark:text-white`}
           placeholder="Enter your password"
           inputClass={`dark:text-white`}
+          name={`password`}
           value={formData.password}
           onChange={handleChange}
         />
@@ -113,6 +115,7 @@ const NewPass = () => {
           labelClass={`dark:text-white`}
           placeholder="Enter your password again"
           inputClass={`dark:text-white`}
+          name={`confirmPassword`}
            value={formData.confirmPassword}
           onChange={handleChange}
         />

@@ -76,7 +76,7 @@ const OTP = () => {
         }
       );
 
-      if (res.status === 200 && res.data.status === "success") {
+      if (res.status === 200) {
         setSuccess("OTP Verified Successfully!");
         setTimeout(() => {
           router.push("/businessowner/newpassword");
