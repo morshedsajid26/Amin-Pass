@@ -43,15 +43,7 @@ const Topbar = () => {
       
       <div className="flex items-center justify-between  ">
 
-      {pathname === "/systemowner/home" ? (
-        <Dropdown
-          className="w-[20%] font-inter font-medium text-2xl  "
-          options={["EN", "NL", "FR", "BN"]}
-          placeholder="EN"
-        />
-      ) : (
-        <div className="h-[60px]" />
-      )}
+    
       
 
 
