@@ -10,7 +10,7 @@ const Subscription = () => {
      <div className="bg-white dark:bg-[#141414] rounded-4xl py-14 px-14 mt-10">
             <h3 className="font-inter text-[32px] border-b-2   pb-2 w-[26%] mb-6 dark:text-white">Subscription Information</h3>
             <div className=" font-inter text-2xl text-[#000000] dark:text-white  ">
-              <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/10 dark:border-white/10 py-4">
+              <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/10 py-4">
                 <span className="font-medium">Current plan:</span>
                 <span className="font-normal">Monthly</span>
               </div>
