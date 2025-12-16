@@ -1,11 +1,11 @@
 "use client";
-import InputField from '@/src/components/InputField'
-import Image from 'next/image'
-import React, { useRef, useState } from 'react'
+import InputField from "@/src/components/InputField";
+import Image from "next/image";
+import React, { useRef, useState } from "react";
 import Avatar from "@/public/Avatar.png";
 import QR from "@/public/QR.png";
-import { FiEdit } from 'react-icons/fi';
-import Link from 'next/link';
+import { FiEdit } from "react-icons/fi";
+import Link from "next/link";
 
 const Edit = () => {
   // States & refs (logo & QR)
@@ -26,7 +26,6 @@ const Edit = () => {
 
   return (
     <div>
-
       {/* Café Logo Section */}
       <div className="mt-10 w-[120px] relative">
         <p className="font-inter text-xl mb-2 dark:text-white">Cafe Logo</p>
@@ -53,15 +52,21 @@ const Edit = () => {
         />
       </div>
 
-
       {/* Form Section */}
       <div className="grid grid-cols-2 gap-y-10 gap-x-20 mt-7">
         <InputField label="Shop Name" placeholder="" inputClass="font-inter" />
         <InputField label="Address" placeholder="" inputClass="font-inter" />
         <InputField label="Owner Name" placeholder="" inputClass="font-inter" />
-        <InputField label="Owner Gmail" placeholder="" inputClass="font-inter" />
-        <InputField label="Owner Number" placeholder="" inputClass="font-inter" />
-
+        <InputField
+          label="Owner Gmail"
+          placeholder=""
+          inputClass="font-inter"
+        />
+        <InputField
+          label="Owner Number"
+          placeholder=""
+          inputClass="font-inter"
+        />
 
         {/* QR Code Section */}
         <div>
@@ -92,14 +97,16 @@ const Edit = () => {
         </div>
       </div>
 
-
-       <Link href='/businessowner/platform/settings' className=" flex justify-center ">
+      <Link
+        href="/businessowner/platform/settings"
+        className=" flex justify-center "
+      >
         <button className="bg-[#7AA3CC] text-[#000000]  font-bold font-inter py-3 px-15 mt-20 rounded-lg cursor-pointer">
-         Save
+          Save
         </button>
-        </Link>
+      </Link>
     </div>
-  )
-}
+  );
+};
 
 export default Edit;
