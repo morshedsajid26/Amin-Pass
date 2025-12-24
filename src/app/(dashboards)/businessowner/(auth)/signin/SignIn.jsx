@@ -30,7 +30,7 @@ const SignIn = () => {
       formData.append("email", email);
       formData.append("password", password);
 
-      const res = await fetch("http://127.0.0.1:8000/api/login", {
+      const res = await fetch("http://sajid23s-business.127.0.0.1.nip.io:8000/api/owner/login", {
         method: "POST",
         body: formData,
       });
