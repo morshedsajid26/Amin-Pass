@@ -62,7 +62,7 @@ const OTP = () => {
       setLoading(true);
 
       const res = await axios.post(
-        "http://127.0.0.1:8000/api/password/verify-otp",
+        "http://127.0.0.1:8000/api/admin/password/verify-otp",
         {
           email: email,
           otp: finalOtp, 

@@ -47,7 +47,7 @@ const Navbar = () => {
             />
           </ul>
 
-          <Link href="/login">
+          <Link href="/businessowner/signin">
             <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl px-4 font-inter py-3 rounded-2xl cursor-pointer hidden md:block">
               Login for business
             </button>
@@ -77,7 +77,7 @@ const Navbar = () => {
               placeholder="EN"
             />
 
-            <Link href="/login" className="mt-10  w-full">
+            <Link href="/businessowner/signin" className="mt-10  w-full">
               <button className="bg-[#7AA3CC] w-full text-[#010101] font-semibold text-lg px-4 py-3 rounded-xl mt-3">
                 Login for business
               </button>

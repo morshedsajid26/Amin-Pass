@@ -55,7 +55,7 @@ const AddTenant = () => {
         />
 
         <Dropdown
-        label='Branch'
+        label='Maximum Branch'
         className={`gap-2`}
         labelClass={`font-inter text-xl text-[#000000]`}
         placeholder='1'
@@ -68,8 +68,8 @@ const AddTenant = () => {
         className={`gap-2`}
         label='Subscription'
         labelClass={`font-inter text-xl text-[#000000]`}
-        placeholder='1'
-        options={["1","2", "3" ,"4", "5"]}
+        placeholder='Starter'
+        options={["Starter","Grow", "Business" ]}
         optionClass={`font-inter `}
         inputClass={`border p-4 font-inter rounded-2xl`}
         />

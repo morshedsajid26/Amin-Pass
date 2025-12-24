@@ -50,7 +50,7 @@ const SignUp = () => {
 
         
         setTimeout(() => {
-          router.push("/login");
+          router.push("/businessowner/signin");
         }, 1000);
       } else {
         setMessage(JSON.stringify(data));
@@ -142,8 +142,8 @@ const SignUp = () => {
 
           <p className="text-center mt-5 font-inter">
             Already have an Account?{" "}
-            <a href="/login" className="text-[#7AA3CC]">
-              LogIn
+            <a href="/businessowner/signin" className="text-[#7AA3CC]">
+              Sign In
             </a>
           </p>
         </form>

@@ -30,7 +30,7 @@ const ForgotPass = () => {
       setLoading(true);
 
       // ✅ OTP send request to backend
-      const res = await axios.post("http://127.0.0.1:8000/api/password/send-otp", {
+      const res = await axios.post("http://127.0.0.1:8000/api/admin/password/send-otp", {
         email: email,
       });
       console.log("OTP API RESPONSE:", res.data);

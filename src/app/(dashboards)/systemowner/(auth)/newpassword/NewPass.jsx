@@ -54,7 +54,7 @@ const NewPass = () => {
       setLoading(true);
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/password/reset",
+        "http://127.0.0.1:8000/api/admin/password/reset",
         {
           email: email, 
           password: formData.password,

@@ -21,6 +21,7 @@ const Edit = () => {
     if (!file) return;
 
     const url = URL.createObjectURL(file);
+    
     setPreview(url);
   };
 
