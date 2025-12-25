@@ -27,14 +27,17 @@ const Management = () => {
       try {
         const token = Cookies.get("token");
 
-        const res = await fetch("http://127.0.0.1:8000/api/admin/get-all-tenants", {
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    Authorization: `Bearer ${token}`,
-  },
-});
+        const res = await fetch(
+          "http://127.0.0.1:8000/api/admin/get-all-tenants",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         const data = await res.json();
 
@@ -166,7 +169,6 @@ const Management = () => {
         <div className="fixed inset-0 bg-[#D9D9D9]/80 flex items-center justify-center z-50">
           <div className="bg-gradient-to-b from-[#A8C4D8] to-[#E4DBC2] rounded-3xl w-[50%] max-h-[85vh] flex flex-col gap-y-10 overflow-hidden">
             <div className="overflow-y-auto hide-scrollbar flex flex-col gap-y-10">
-              
               {/* PERSONAL INFO */}
               <div className="bg-[#FFFFFF] rounded-3xl p-4">
                 <div className="flex justify-end">
@@ -222,7 +224,6 @@ const Management = () => {
                   </button>
                 </Link>
               </div>
-
             </div>
           </div>
         </div>

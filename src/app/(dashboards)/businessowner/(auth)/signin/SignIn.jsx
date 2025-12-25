@@ -7,6 +7,7 @@ import Password from "@/src/components/Password";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { BUSINESSOWNER_BASE_URL } from "@/src/config/api";
 
 const SignIn = () => {
   const router = useRouter();
@@ -30,7 +31,7 @@ const SignIn = () => {
       formData.append("email", email);
       formData.append("password", password);
 
-      const res = await fetch("http://sajid23s-business.127.0.0.1.nip.io:8000/api/owner/login", {
+      const res = await fetch(`${BUSINESSOWNER_BASE_URL}/api/owner/login`, {
         method: "POST",
         body: formData,
       });

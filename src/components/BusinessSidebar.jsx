@@ -43,7 +43,7 @@ const BusinessSidebar = () => {
     if (!token) {
       console.log("No token found");
     } else {
-      await fetch("http://127.0.0.1:8000/api/logout", {
+      await fetch(`${BUSINESSOWNER_BASE_URL}/api/owner/logout`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
