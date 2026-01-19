@@ -136,7 +136,7 @@ const Management = () => {
       <div className="flex items-center justify-between">
         <Dropdown
           placeholder="Active"
-          className="w-[10%] border border-[#D4AF37] rounded-xl p-2 font-inter font-medium"
+          className="md:w-[10%] border border-[#D4AF37] rounded-xl p-2 font-inter font-medium"
           options={["Active", "Inactive"]}
         />
 
@@ -154,7 +154,7 @@ const Management = () => {
         </p>
       ) : (
         <>
-          <Table TableHeads={TableHeads} TableRows={tableRows} />
+          <Table TableHeads={TableHeads} TableRows={tableRows} tableClass={`overflow-x-scroll`} />
 
           <Pagination
             totalPages={totalPages}

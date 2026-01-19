@@ -69,10 +69,10 @@ useEffect(() => {
   ];
 
   return (
-    <div className="grid grid-cols-8 gap-10">
+    <div className="grid grid-cols-12 gap-10">
 
       {/* TOTAL TENANTS */}
-      <div className="bg-[#F9F9F9] rounded-2xl col-span-2 p-5 flex flex-col items-center gap-2">
+      <div className="bg-[#F9F9F9] rounded-2xl col-span-6 md:col-span-3 p-5 flex flex-col items-center gap-2">
         <Image src={tenants} alt="user" />
         <p className="font-inter text-[#121212]">Tenants Register</p>
         <p className="font-inter font-semibold text-[#121212]">
@@ -81,7 +81,7 @@ useEffect(() => {
       </div>
 
       {/* ACTIVE TENANTS */}
-      <div className="bg-[#F9F9F9] rounded-2xl col-span-2 p-5 flex flex-col items-center gap-2">
+      <div className="bg-[#F9F9F9] rounded-2xl col-span-6 md:col-span-3 p-5 flex flex-col items-center gap-2">
         <span className="w-14 h-14 bg-[#4CAF50] rounded-full"></span>
         <p className="font-inter text-[#121212]">Active Tenants</p>
         <p className="font-inter font-semibold text-[#121212]">
@@ -90,21 +90,21 @@ useEffect(() => {
       </div>
 
       {/* SUPPORT TICKET */}
-      <div className="bg-[#F9F9F9] rounded-2xl col-span-2 p-5 flex flex-col items-center gap-2">
+      <div className="bg-[#F9F9F9] rounded-2xl col-span-6  md:col-span-3 p-5 flex flex-col items-center gap-2">
         <Image src={ticket} alt="ticket" />
         <p className="font-inter text-[#121212]">Support Ticket</p>
         <p className="font-inter font-semibold text-[#121212]">324</p>
       </div>
 
       {/* BILLING ISSUE */}
-      <div className="bg-[#F9F9F9] rounded-2xl col-span-2 p-5 flex flex-col items-center gap-2">
+      <div className="bg-[#F9F9F9] rounded-2xl col-span-6 md:col-span-3 p-5 flex flex-col items-center gap-2">
         <Image src={bill} alt="bill" />
         <p className="font-inter text-[#121212]">Billing Issue</p>
         <p className="font-inter font-semibold text-[#121212]">324</p>
       </div>
 
       {/* TABLE */}
-      <div className="bg-[#F9F9F9] rounded-2xl col-span-8 p-5">
+      <div className="bg-[#F9F9F9] rounded-2xl col-span-12  p-5">
         <table className="w-full border-collapse bg-[#F9F9F9] rounded-2xl overflow-hidden">
           <thead>
             <tr key={'header'}>
@@ -134,13 +134,13 @@ useEffect(() => {
       </div>
 
       {/* TENANTS GROWTH */}
-      <div className="rounded-2xl col-span-5">
+      <div className="rounded-2xl col-span-12 md:col-span-8">
         <h2 className="text-2xl mb-4 font-inter font-medium">Tenants Growth</h2>
         <TenantsGrowthChart />
       </div>
 
       {/* SUPPORT TICKET */}
-      <div className="rounded-2xl col-span-3">
+      <div className="rounded-2xl col-span-12 md:col-span-4">
         <h2 className="text-2xl mb-4 font-inter font-medium">Support Ticket</h2>
         <SupportTicketChart />
       </div>

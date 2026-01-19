@@ -103,13 +103,15 @@ const Staff = () => {
         <div className="fixed inset-0  bg-[#D9D9D9]/80 flex items-center justify-center z-50 ">
           <div className="bg-white dark:bg-[#141414] rounded-4xl py-14 px-14 w-[50%]  ">
              
-            <h3 className="font-inter text-[32px] border-b-2 border-black/70 dark:border-white/70 pb-2 w-[30%] mb-6 dark:text-white">Staff Information</h3>
+            <div className="flex items-start justify-between">
+              <h3 className="font-inter text-[32px] border-b-2 border-black/70 dark:border-white/70 pb-2 w-[30%] mb-6 dark:text-white">Staff Information</h3>
             <button
               onClick={() => setViewOpen(false)}
-              className=" text-[#000000] dark:text-white "
+              className=" text-[#000000] dark:text-white cursor-pointer"
             >
               <FiX className="w-6 h-6" />
             </button>
+            </div>
             <div className=" font-inter text-2xl text-[#000000] dark:text-white  ">
               <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/10 py-4">
                 <span className="font-medium">Staff Name:</span>
