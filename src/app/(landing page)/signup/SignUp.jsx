@@ -14,7 +14,7 @@ const SignUp = () => {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+  // const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPasswordConfirmation] = useState("");
 
@@ -99,14 +99,14 @@ const SignUp = () => {
             inputClass="border-[#005FA8] rounded-[4px] text-[#5C5C5C] py-3"
           />
 
-          <InputField
+          {/* <InputField
             label="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             
             labelClass="text-[#333333] text-[16px]"
             inputClass="border-[#005FA8] rounded-[4px] text-[#5C5C5C] py-3"
-          />
+          /> */}
 
           <Password
             label="Password"
