@@ -20,6 +20,7 @@ const SignIn = () => {
 
       <InputField
       label='Email Address'
+      type={`email`}
       labelClass={`text-[#333333] text-[16px]`}
       placeholder=''
       inputClass={`border-[#005FA8] rounded-[4px]  text-[#5C5C5C] py-3 placeholder:text-[#5C5C5C]`}

@@ -80,6 +80,7 @@ const SignIn = () => {
 
         <InputField
           label="Email Address"
+          type={`email`}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           labelClass={`text-[#333333] text-[16px]`}

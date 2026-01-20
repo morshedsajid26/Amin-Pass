@@ -77,7 +77,7 @@ const BranchList = () => {
     <div>
       <Bredcumb />
 
-      <Link href="/businessowner/branch/add" className="flex justify-end mb-6">
+      <Link href="/businessowner/branch/list/add" className="flex justify-end mb-6">
         <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl font-inter py-3 px-5 rounded-lg cursor-pointer flex items-center gap-2">
           <FaPlus />
           Add New Branch

@@ -69,6 +69,7 @@ const ForgotPass = () => {
           labelClass={`text-[#333333] dark:text-white text-[16px]`}
           inputClass={`border-[#005FA8] rounded-[4px]  text-[#5C5C5C] py-3 placeholder:text-[#5C5C5C] dark:text-white`}
           name="email"
+          type={`email`}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />

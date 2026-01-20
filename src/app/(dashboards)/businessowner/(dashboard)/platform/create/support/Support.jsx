@@ -18,14 +18,18 @@ const Support = () => {
         
         <InputField
         label={`Business Name`}
+        type={`text`}
         />
 
         <InputField
         label={`Issue`}
+        type={`text`}
         />
 
         <InputField
         label={`Date`}
+        type={`date`}
+        
         />
 
        <Dropdown
