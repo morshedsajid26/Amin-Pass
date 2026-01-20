@@ -114,7 +114,7 @@ const Support = () => {
         </div>
 
         <div>
-          <Link href="/businessowner/platform/create/support" >
+          <Link href="/businessowner/platform/support/create/support" >
           <button className="bg-[#7AA3CC] font-inter font-medium py-2 px-11 rounded-lg text-[#121212] cursor-pointer  hover:bg-[#7AA3CC]/80 transition-all duration-300">
             Create Support
           </button>
