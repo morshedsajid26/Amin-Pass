@@ -56,11 +56,13 @@ const Activation = () => {
     <div>
       <Bredcumb />
 
-      <Table TableHeads={TableHeads} TableRows={currentItems} />
+      <div className="overflow-x-auto">
+        <Table TableHeads={TableHeads} TableRows={currentItems} />
+      </div>
 
       {viewOpen && (
         <div className="fixed inset-0  bg-[#D9D9D9]/80 flex items-center justify-center z-50 ">
-          <div className="bg-linear-to-b from-[#A8C4D8] to-[#E4DBC2] rounded-3xl  p-12 w-[50%]">
+          <div className="bg-linear-to-b from-[#A8C4D8] to-[#E4DBC2] rounded-3xl   p-12 md:w-[50%] w-full overflow-y-auto md:h-[80%] h-full hide-scrollbar">
             <div className="flex justify-end">
               <FiX
                 onClick={() => setViewOpen(false)}
@@ -73,16 +75,17 @@ const Activation = () => {
                 label="Select Plan "
                 placeholder="Starter"
                 labelClass={`text-2xl `}
-                className={`   gap-2  font-inter `}
+                className={`   gap-2  font-inter md:col-span-1 col-span-2 `}
                 inputClass="text-base border rounded-2xl  py-3 px-4"
                 options={["Starter", "Grow", "Business"]}
                 optionClass={`text-base`}
               />
 
               <InputField
+                type="number"
                 label={`Price`}
                 labelClass={`text-2xl `}
-                className={``}
+                className={` md:col-span-1 col-span-2`}
                 placeholder={`Price`}
                 inputClass="text-base border rounded-2xl  py-3 px-4"
               />
@@ -91,7 +94,7 @@ const Activation = () => {
                 label="Location Select"
                 placeholder="1"
                 labelClass={`text-2xl `}
-                className={`   gap-2  font-inter `}
+                className={`   gap-2  font-inter  md:col-span-1 col-span-2 `}
                 inputClass="text-base border rounded-2xl  py-3 px-4"
                 options={["1", "2", "3"]}
                 optionClass={`text-base`}
@@ -101,7 +104,7 @@ const Activation = () => {
                 label="Card Select"
                 placeholder="1"
                 labelClass={`text-2xl `}
-                className={`   gap-2  font-inter `}
+                className={`   gap-2  font-inter  md:col-span-1 col-span-2`}
                 inputClass="text-base border rounded-2xl  py-3 px-4"
                 options={["1", "2", "3"]}
                 optionClass={`text-base`}
@@ -111,13 +114,13 @@ const Activation = () => {
                 label="Plan "
                 placeholder="Active"
                 labelClass={`text-2xl `}
-                className={`   gap-2  font-inter `}
+                className={`   gap-2  font-inter   md:col-span-1 col-span-2`}
                 inputClass="text-base border rounded-2xl  py-3 px-4"
                 options={["Active", "Inctive"]}
                 optionClass={`text-base`}
               />
 
-              <div>
+              <div className=" md:col-span-1 col-span-2">
                 <p className="font-inter text-2xl text-[#000000] mb-4">
                   Card Type
                 </p>

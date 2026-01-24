@@ -154,7 +154,9 @@ const Management = () => {
         </p>
       ) : (
         <>
-          <Table TableHeads={TableHeads} TableRows={tableRows} tableClass={`overflow-x-scroll`} />
+          <div className="overflow-x-auto">
+            <Table TableHeads={TableHeads} TableRows={tableRows}/>
+          </div>
 
           <Pagination
             totalPages={totalPages}

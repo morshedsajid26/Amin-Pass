@@ -145,7 +145,7 @@ export default function Location() {
       <Bredcumb />
 
       {/* Search Bar */}
-      <div className="flex justify-center gap-10 mt-10">
+      <div className="flex flex-col md:flex-row justify-center items-end md:gap-10 gap-5 mt-10">
         <div className="relative">
           <input
             ref={searchRef}

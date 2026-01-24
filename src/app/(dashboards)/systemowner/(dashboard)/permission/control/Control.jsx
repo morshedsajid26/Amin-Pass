@@ -64,13 +64,13 @@ const Control = () => {
 
 <div className='border-b border-black/20'>
 
-        <h3 className='py-2 px-2 font-inter  flex items-center gap-4 cursor-pointer  transition-all duration-200 text-xl border-b-2 w-[13%]'>
+        <h3 className='py-2 px-2 font-inter  flex items-center gap-4 cursor-pointer  transition-all duration-200 text-xl border-b-2 md:w-[13%]'>
           Tenants Permission
         </h3>
 </div>
 
 
-        <table className={`w-[50%] border-collapse overflow-hidden `}>
+        <table className={`md:w-[50%] w-full border-collapse overflow-hidden `}>
     
       <thead>
         <tr className="">

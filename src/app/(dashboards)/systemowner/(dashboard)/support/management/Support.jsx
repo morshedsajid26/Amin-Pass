@@ -93,10 +93,10 @@ const Support = () => {
     <div>
       <Bredcumb />
 
-      <div className="flex items-center gap-16 ">
+      <div className="flex flex-col md:flex-row md:items-center gap-5 md:gap-16 ">
         <Dropdown
           placeholder="All"
-          className={`w-[8%]  bg-[#7AA3CC] rounded-xl p-2 font-inter font-medium`}
+          className={`md:w-[8%]  bg-[#7AA3CC] rounded-xl p-2 font-inter font-medium`}
           inputClass="text-base"
           options={["All", "One", "Two"]}
           optionClass={`text-base`}
@@ -105,14 +105,16 @@ const Support = () => {
         <div className="relative  ">
           <input
             type="text"
-            className="border outline-none border-[#000000] py-[14px] px-12 w-[462px] rounded-[15px] text-[#000000] placeholder:text-[#000000] font-inter"
+            className="border outline-none border-[#000000] py-[14px] px-12 w-full md:w-[462px] rounded-[15px] text-[#000000] placeholder:text-[#000000] font-inter"
             placeholder="Search"
           />
           <FaSearch className=" absolute top-1/2 left-6 -translate-y-1/2 text-[#7AA3CC]" />
         </div>
       </div>
 
-      <Table TableHeads={TableHeads} TableRows={currentItems} />
+      <div className="overflow-auto">
+        <Table TableHeads={TableHeads} TableRows={currentItems} />
+      </div>
 
       <Pagination
         totalPages={totalPages}
@@ -122,7 +124,7 @@ const Support = () => {
 
       {viewOpen && (
         <div className="fixed inset-0  bg-[#D9D9D9]/80 flex items-center justify-center z-50 ">
-          <div className="bg-[#EFEFEF] rounded-3xl  p-5 w-[50%]">
+          <div className="bg-[#EFEFEF] rounded-3xl  p-5 md:w-[50%]">
            
             <div className="flex justify-end">
             <FiX 

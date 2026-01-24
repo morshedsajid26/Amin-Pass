@@ -14,21 +14,25 @@ const AddTenant = () => {
 
     <div className='grid grid-cols-12 md:gap-x-16 gap-x-5 gap-y-5 mt-4'>
         <InputField
+        type='text'
         label="Owner Name"
         placeholder="Enter your Owner name"
         className={`col-span-12`}
         />
         <InputField
+        type='text'
         label="Address"
         placeholder="Enter your address"
         className={`col-span-12`}
         />
         <InputField
+        type='email'
         label="Owner Email"
         placeholder="Enter your email"
         className={`col-span-12`}
         />
         <InputField
+        type='number'
         label="Phone Number"
         placeholder="Enter your phone number"
         className={`col-span-12`}
@@ -42,21 +46,25 @@ const AddTenant = () => {
 
     <div className='grid grid-cols-12 md:gap-x-16 gap-x-5  gap-y-5 mt-4'>
         <InputField
+        type='text'
         label="Business Name"
         placeholder="Enter your Business name"
         className={`col-span-12`}
         />
         <InputField
+        type='text'
         label="Industry Type"
         placeholder="Enter your industry"
         className={`col-span-12`}
         />
         <InputField
+        type='text'
         label="Country"
         placeholder="Enter your Country"
         className={`col-span-12`}
         />
         <InputField
+        type='date'
         label="Registration Date"
         placeholder="Enter your date"
         className={`col-span-12`}

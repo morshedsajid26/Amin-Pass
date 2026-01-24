@@ -97,7 +97,7 @@ const Logs = () => {
     <div>
       <Bredcumb />
 
-      <div className="flex justify-between gap-16 ">
+      <div className="flex flex-col md:flex-row  md:justify-between items-end md:gap-16 gap-5 ">
 
         <div className="relative  ">
           <input
@@ -116,7 +116,9 @@ const Logs = () => {
           </div>
       </div>
 
-      <Table TableHeads={TableHeads} TableRows={currentItems} />
+      <div className="overflow-auto">
+        <Table TableHeads={TableHeads} TableRows={currentItems} />
+      </div>
 
       <Pagination
         totalPages={totalPages}

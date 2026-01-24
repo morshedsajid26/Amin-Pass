@@ -3,7 +3,7 @@ import React from 'react'
 
 const PassSettings = () => {
   return (
-    <div className='w-[480px] flex flex-col items-center mx-auto gap-8 mt-10 '>
+    <div className='w-full md:w-[480px] flex flex-col items-center mx-auto gap-8 mt-10 '>
 
       <Password
       label={`New Password`}
