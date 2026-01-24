@@ -5,7 +5,7 @@ import { MdOutlineMarkEmailUnread } from "react-icons/md";
 
 const Privacy = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <Container className={``}>
         <div className=" flex items-center justify-between py-5">
           <p className="font-inter">Hello!! Welcome to Aminpass</p>

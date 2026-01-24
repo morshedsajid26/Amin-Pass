@@ -8,7 +8,7 @@ import four from '@/public/featured4.png'
 
 const FeaturedItem = () => {
   return (
-    <div className='py-17'>
+    <div className='py-17' id='featuredItem'>
         <Container>
             <h3 className=' font-inter font-bold text-2xl md:text-[32px] text-center '>Featured Items</h3>
 

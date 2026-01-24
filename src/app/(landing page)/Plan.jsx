@@ -98,7 +98,7 @@ const Plan = () => {
   const [isAnnual, setIsAnnual] = useState(false);
 
   return (
-    <div className="pb-25">
+    <div className="pb-25" id="offer">
       <Container>
         <h3 className="font-inter font-bold text-2xl md:text-[32px] text-center">
           Our Pricing Plan
