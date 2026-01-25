@@ -41,10 +41,10 @@ const AddReward = () => {
       threshold: Number(formData.threshold),
       start_date: formData.start_date,
       expire_date: formData.expire_date,
-      is_active: active, // ✅ Active / Inactive নিশ্চিত
+      is_active: active,
     };
 
-    console.log("Submitting payload:", payload); // 🔍 debug
+    console.log("Submitting payload:", payload); 
 
     try {
       const token = Cookies.get("token");
@@ -94,44 +94,50 @@ const AddReward = () => {
     <div className="pt-8">
       {/* Logo */}
       <p className="font-inter text-xl dark:text-white">Reward Logo</p>
-      <div className="relative w-[7.6%] mt-4">
+      <div className="relative md:w-[7.6%] mt-4">
         <Image src={logo} alt="logo" />
       </div>
 
       {/* Form */}
-      <div className="grid grid-cols-2 gap-20 mt-7">
+      <div className="grid grid-cols-12 gap-5 md:gap-20 mt-7">
         <InputField
           label="Created Date"
           type="date"
           value={formData.start_date}
           onChange={(e) => handleChange("start_date", e.target.value)}
+          className='col-span-12 md:col-span-6'
         />
         <InputField
           label="Expire Date"
           type="date"
           value={formData.expire_date}
           onChange={(e) => handleChange("expire_date", e.target.value)}
+          className='col-span-12 md:col-span-6'
         />
         <InputField
           label="Reward Name"
           value={formData.name}
           onChange={(e) => handleChange("name", e.target.value)}
+          className='col-span-12 md:col-span-6'
         />
         <InputField
           label="Reward Type"
           value={formData.reward_type}
           onChange={(e) => handleChange("reward_type", e.target.value)}
+          className='col-span-12 md:col-span-6'
         />
         <InputField
           label="Earning Rule"
           value={formData.earning_rule}
           onChange={(e) => handleChange("earning_rule", e.target.value)}
+          className='col-span-12 md:col-span-6'
         />
         <InputField
           label="Threshold"
           type="number"
           value={formData.threshold}
           onChange={(e) => handleChange("threshold", e.target.value)}
+          className='col-span-12 md:col-span-6'
         />
       </div>
 

@@ -79,13 +79,14 @@ const AddBranch = () => {
     <div>
       <Bredcumb />
 
-      <div className="grid grid-cols-2 gap-10">
+      <div className="grid grid-cols-12 gap-10">
         <InputField
           label="Business Name"
           value={formData.name}
           onChange={(e) =>
             handleChange("name", e.target.value)
           }
+          className={`col-span-12 md:col-span-6`}
         />
 
         <InputField
@@ -94,6 +95,7 @@ const AddBranch = () => {
           onChange={(e) =>
             handleChange("location", e.target.value)
           }
+          className={`col-span-12 md:col-span-6`}
         />
 
         <InputField
@@ -103,6 +105,7 @@ const AddBranch = () => {
           onChange={(e) =>
             handleChange("staffs", e.target.value)
           }
+          className={`col-span-12 md:col-span-6`}
         />
 
         <InputField
@@ -111,6 +114,7 @@ const AddBranch = () => {
           onChange={(e) =>
             handleChange("manager_name", e.target.value)
           }
+          className={`col-span-12 md:col-span-6`}
         />
       </div>
 

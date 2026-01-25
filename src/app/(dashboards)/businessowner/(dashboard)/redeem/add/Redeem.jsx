@@ -26,7 +26,7 @@ const Redeem = () => {
     <div>
       <Bredcumb/>
 
-      <div className='flex items-center gap-14'>
+      <div className='flex flex-col md:flex-row items-center gap-14'>
       <div className="flex gap-4" >
           {[...Array(6)].map((_, i) => (
             <input
@@ -38,7 +38,7 @@ const Redeem = () => {
               ref={(el) => (inputs.current[i] = el)}
               onChange={(e) => handleChange(e, i)}
               onKeyDown={(e) => handleKeyDown(e, i)}
-              className="appearance-none w-[77px] h-[77px] border border-[#7AA3CC] rounded-[10px] text-center outline-none text-2xl font-inter font-bold text-[#005FA8]"
+              className="appearance-none md:w-[77px] w-12 h-12 md:h-[77px] border border-[#7AA3CC] rounded-[10px] text-center outline-none text-2xl font-inter font-bold text-[#005FA8]"
             />
           ))}
         </div>

@@ -94,7 +94,7 @@ const Notification = () => {
 
   
 
- <table className={`w-[50%] border-collapse overflow-hidden mt-10`}>
+ <table className={`md:w-[50%] w-full border-collapse overflow-hidden mt-10`}>
     
       <thead>
         <tr className="">
@@ -130,8 +130,8 @@ const Notification = () => {
     </table>
 
 <div className='mt-10 '>
-<h3 className='font-inter text-2xl font-medium border-b-2 w-[18%] pb-1 dark:text-white'>Notification By Location</h3>
-     <table className={`w-[50%] border-collapse overflow-hidden mt-7`}>
+<h3 className='font-inter text-2xl font-medium border-b-2 w-[60%] md:w-[18%] pb-1 dark:text-white'>Notification By Location</h3>
+     <table className={`md:w-[50%] w-full border-collapse overflow-hidden mt-7`}>
     
       <thead>
         <tr className="">

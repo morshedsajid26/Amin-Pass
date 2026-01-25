@@ -117,14 +117,16 @@ const History = () => {
         <div className="relative ">
           <input
             type="text"
-            className="border outline-none border-[#000000] dark:border-[#CDCDCD] py-[14px] px-12 w-[462px] rounded-[15px] dark:text-white text-[#000000] placeholder:text-[#000000] dark:placeholder:text-white font-inter"
+            className="border outline-none border-[#000000] dark:border-[#CDCDCD] py-[14px] px-12 w-full md:w-[462px] rounded-[15px] dark:text-white text-[#000000] placeholder:text-[#000000] dark:placeholder:text-white font-inter"
             placeholder="Search"
           />
           <FaSearch className=" absolute top-1/2 left-6 -translate-y-1/2 text-[#7AA3CC] " />
         </div>
       </div>
 
-      <Table TableHeads={TableHeads} TableRows={currentItems} />
+     <div className="overflow-auto">
+       <Table TableHeads={TableHeads} TableRows={currentItems} />
+     </div>
 
       <Pagination
         totalPages={totalPages}

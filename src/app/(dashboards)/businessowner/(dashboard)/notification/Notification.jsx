@@ -128,16 +128,16 @@ const Notification = () => {
         {currentItems.map((item, index) => (
           <div
             key={index}
-            className="w-full hover:bg-[#CCDCE9] dark:hover:bg-[#212121] transition-all duration-300 py-3 px-[25px] c"
+            className="w-full hover:bg-[#CCDCE9] dark:hover:bg-[#212121] transition-all duration-300 py-3 md:px-[25px] c"
           >
             <div 
              onClick={() => setPopOpen(true)}
-            className="w-full flex items-center justify-between cursor-pointer">
-              <p className="w-[80%] text-[#333333] dark:text-white  text-[16px] font-inter font-semibold">
+            className="w-full flex items-center justify-between  cursor-pointer">
+              <p className="md:w-[80%] text-[#333333] dark:text-white  text-[16px] font-inter font-semibold">
                 {item.message}
               </p>
 
-              <p className="w-[10%] flex justify-end text-[#5C5C5C] dark:text-white  text-[16px] font-inter whitespace-nowrap">
+              <p className="md:w-[10%] flex justify-end text-[#5C5C5C] dark:text-white  text-[16px] font-inter whitespace-nowrap">
                 {timeAgo(item.time)}
               </p>
             </div>
@@ -154,7 +154,7 @@ const Notification = () => {
 
     {popOpen && (
         <div className="fixed inset-0  bg-[#D9D9D9]/80 flex items-center justify-center z-50 ">
-          <div className="bg-white rounded-4xl py-14 px-14 w-[30%]  ">
+          <div className="bg-white rounded-4xl py-14 px-14 md:w-[30%] w-[80%]  ">
 
             <div className="flex justify-end mb-5 ">
                 <FiX 

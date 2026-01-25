@@ -30,8 +30,8 @@ const AddPoint = () => {
     <div>
       <Bredcumb/>
 
-      <div className='flex items-center gap-25'>
-      <div className='bg-white dark:bg-transparent  w-[50%] rounded-2xl py-2 px-6 '>
+      <div className='flex flex-col md:flex items-center gap-5 md:gap-25'>
+      <div className='bg-white dark:bg-transparent w-full  md:w-[50%] rounded-2xl py-2 px-6 '>
 <div className="flex items-center gap-6 ">
             <Image
               src={Avatar}
@@ -49,15 +49,15 @@ const AddPoint = () => {
           </div>
       </div>
 
-      <div className='bg-white dark:bg-transparent w-[20%] rounded-2xl py-3 px-10'>
+      <div className='bg-white dark:bg-transparent md:w-[20%] w-full rounded-2xl py-3 px-10'>
         <p className='font-inter font-medium text-2xl dark:text-white'>{formattedDate}</p>
         <p className='font-inter font-medium  mt-3 dark:text-white'>Visit Date</p>
       </div>
 
       </div>
 
-      <div className='flex flex-col items-center justify-center mt-17 gap-8'>
-        <div className='bg-[#E1E1E1] dark:bg-[#141414] rounded-2xl w-[30%] flex items-center justify-between py-5 px-10'>
+      <div className='flex flex-col items-center justify-center mt-5 md:mt-17 gap-8'>
+        <div className='bg-[#E1E1E1] dark:bg-[#141414] rounded-2xl w-full md:w-[30%] flex items-center justify-between py-5 px-10'>
             <FaMinus 
             onClick={handleDecrease}
             className='w-12 h-12 cursor-pointer dark:text-white'/>

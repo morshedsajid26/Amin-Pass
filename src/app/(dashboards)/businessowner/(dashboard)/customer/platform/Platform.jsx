@@ -53,8 +53,8 @@ const Platform = () => {
   const currentItems = baseOnTitle.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="grid grid-cols-3 gap-10">
-      <div className="bg-[#F9F9F9] dark:bg-transparent rounded-2xl  p-5 flex flex-col items-center gap-2 dark:border dark:border-white">
+    <div className="grid grid-cols-12 gap-10">
+      <div className="bg-[#F9F9F9] dark:bg-transparent rounded-2xl  p-5 flex flex-col items-center gap-2 dark:border dark:border-white col-span-12 md:col-span-3">
         <Image src={tenants} alt="user" className="dark:invert" />
         <p className="font-inter text-[#121212] dark:text-white">
           Total Customers
@@ -63,13 +63,13 @@ const Platform = () => {
           324
         </p>
       </div>
-      <div className="bg-[#F9F9F9] dark:bg-transparent dark:border dark:border-white rounded-2xl  p-5 flex flex-col items-center gap-2">
+      <div className="bg-[#F9F9F9] dark:bg-transparent dark:border dark:border-white rounded-2xl  p-5 flex flex-col items-center gap-2 col-span-12 md:col-span-3">
         <Image src={visit} alt="bill" className="dark:invert" />
         <p className="font-inter text-[#121212] dark:text-white">Total visit this month</p>
         <p className="font-inter font-semibold dark:text-white text-[#121212]">324</p>
       </div>
 
-      <div className="col-span-3">
+      <div className="col-span-12">
         <div className="flex items-end justify-between">
           <Dropdown
             label="Segment"
@@ -88,7 +88,9 @@ const Platform = () => {
           </div>
         </div>
         <div className="w-full">
-          <Table TableHeads={TableHeads} TableRows={currentItems} />
+        <div className="overflow-auto">
+            <Table TableHeads={TableHeads} TableRows={currentItems} />
+        </div>
 
           <Pagination
             totalPages={totalPages}

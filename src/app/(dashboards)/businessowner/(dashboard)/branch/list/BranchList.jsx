@@ -87,7 +87,9 @@ const BranchList = () => {
       {loading ? (
         <p className="text-center font-inter">Loading branches...</p>
       ) : (
-        <Table TableHeads={TableHeads} TableRows={currentItems} />
+       <div className="overflow-auto">
+         <Table TableHeads={TableHeads} TableRows={currentItems} />
+       </div>
       )}
 
       <Pagination

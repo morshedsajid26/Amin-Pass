@@ -6,8 +6,8 @@ import QR from "@/public/QR.png";
 import Link from "next/link";
 
 export default function Create() {
-  const [stampCount, setStampCount] = useState(6);  
-const [activeStamps, setActiveStamps] = useState(2);
+  const [stampCount, setStampCount] = useState(6);
+  const [activeStamps, setActiveStamps] = useState(2);
 
   const [logo, setLogo] = useState(null);
   const [stampBg, setStampBg] = useState(null);
@@ -29,46 +29,46 @@ const [activeStamps, setActiveStamps] = useState(2);
     if (file) setStampBg(URL.createObjectURL(file));
   };
 
-  
-function getOrdinal(n) {
-  const s = ["th", "st", "nd", "rd"],
-    v = n % 100;
-  return n + (s[(v - 20) % 10] || s[v] || s[0]);
-}
+  function getOrdinal(n) {
+    const s = ["th", "st", "nd", "rd"],
+      v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+  }
 
   return (
-    <div>
-      <div className="flex gap-14 w-full mt-10">
+    <div className="">
+      <div className="flex flex-col md:flex-row gap-14 w-full mt-10 ">
         {/* LEFT SIDE SETTINGS */}
-        <div className="w-1/2 space-y-8">
+        <div className="md:w-1/2 space-y-8">
           {/* Stamp Count */}
           <div>
             <h3 className="font-inter font-semibold text-xl mb-3">
               Stamps Count
             </h3>
 
-              <div className="flex gap-3 flex-wrap">
-    {[...Array(12)].map((_, i) => {
-      const num = i + 1;
-      return (
-        <button
-          key={num}
-          onClick={() => setStampCount(num)}
-          className={`w-10 h-10 rounded-full border transition font-inter 
-          ${stampCount === num
-            ? "bg-black dark:bg-[#373737] text-white"
-            : "bg-white border-black text-black"
+            <div className="flex gap-3 flex-wrap">
+              {[...Array(12)].map((_, i) => {
+                const num = i + 1;
+                return (
+                  <button
+                    key={num}
+                    onClick={() => setStampCount(num)}
+                    className={`w-10 h-10 rounded-full border transition font-inter 
+          ${
+            stampCount === num
+              ? "bg-black dark:bg-[#373737] text-white"
+              : "bg-white border-black text-black"
           }`}
-        >
-          {num}
-        </button>
-      );
-    })}
-  </div>
-</div>
+                  >
+                    {num}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
-{/* Active Stamp Count */}
-{/* <div className="mt-6">
+          {/* Active Stamp Count */}
+          {/* <div className="mt-6">
   <h3 className="font-inter font-semibold text-xl mb-3">
     Active Stamps
   </h3>
@@ -200,107 +200,112 @@ function getOrdinal(n) {
         </div>
 
         {/* RIGHT SIDE PREVIEW */}
-        <div className="w-1/2 flex justify-center">
-  <div className="border-4 dark:border-[#141414] rounded-3xl w-[280px] h-[540px] bg-white shadow-xl px-1 py-5 relative overflow-hidden">
+        <div className="md:w-1/2 flex justify-center">
+          <div className="border-4 dark:border-[#141414] rounded-3xl w-[280px] h-[540px] bg-white shadow-xl px-1 py-5 relative overflow-hidden">
+            {/* Header */}
+            <div className="px-4">
+              <span className="text-xl absolute left-4 top-4">←</span>
+              <h3 className="text-center font-inter text-lg mb-4">Wallet</h3>
+            </div>
 
-    {/* Header */}
-    <div className="px-4">
-      <span className="text-xl absolute left-4 top-4">←</span>
-      <h3 className="text-center font-inter text-lg mb-4">Wallet</h3>
-    </div>
+            {/* Scroll Area */}
+            <div
+              className="rounded-xl  pb-4 overflow-y-scroll hide-scrollbar"
+              style={{
+                backgroundColor: colors.cardBg,
+                height: "calc(540px - 70px)",
+              }}
+            >
+              {/* Logo */}
+              <div className="h-12 flex justify-center mb-3">
+                {logo ? (
+                  <Image
+                    src={logo}
+                    width={60}
+                    height={60}
+                    alt="Logo"
+                    className="object-contain"
+                  />
+                ) : (
+                  <p className="text-center text-sm text-gray-400">
+                    Company Logo
+                  </p>
+                )}
+              </div>
 
-    {/* Scroll Area */}
-    <div
-      className="rounded-xl  pb-4 overflow-y-scroll hide-scrollbar"
-      style={{
-        backgroundColor: colors.cardBg,
-        height: "calc(540px - 70px)",
-      }}
-    >
+              {/* Stamp BG */}
+              {stampBg && (
+                <Image
+                  src={stampBg}
+                  width={300}
+                  height={80}
+                  alt="Stamp BG"
+                  className="rounded-lg mb-3 object-cover"
+                />
+              )}
 
-      {/* Logo */}
-      <div className="h-12 flex justify-center mb-3">
-        {logo ? (
-          <Image
-            src={logo}
-            width={60}
-            height={60}
-            alt="Logo"
-            className="object-contain"
-          />
-        ) : (
-          <p className="text-center text-sm text-gray-400">Company Logo</p>
-        )}
-      </div>
+              {/* Stamps */}
+              <div className="flex flex-wrap justify-center gap-2 mb-4">
+                {[...Array(stampCount)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="w-6 h-6 rounded-full"
+                    style={{
+                      backgroundColor:
+                        i < activeStamps ? colors.active : colors.inactive,
+                    }}
+                  ></div>
+                ))}
+              </div>
 
-      {/* Stamp BG */}
-      {stampBg && (
-        <Image
-          src={stampBg}
-          width={300}
-          height={80}
-          alt="Stamp BG"
-          className="rounded-lg mb-3 object-cover"
-        />
-      )}
+              {/* Dynamic Reward Text */}
+              <p
+                className="text-center font-inter text-lg font-semibold mt-2"
+                style={{ color: colors.text }}
+              >
+                {getOrdinal(stampCount + 1)} ☕ on us
+              </p>
 
-      {/* Stamps */}
-      <div className="flex flex-wrap justify-center gap-2 mb-4">
-  {[...Array(stampCount)].map((_, i) => (
-    <div
-      key={i}
-      className="w-6 h-6 rounded-full"
-      style={{
-        backgroundColor: i < activeStamps ? colors.active : colors.inactive,
-      }}
-    ></div>
-  ))}
-</div>
+              {/* Stats Row */}
+              <div className="flex justify-between items-center w-full mb-4 px-1 mt-2 ">
+                <div className="text-center">
+                  <p
+                    className="text-[16px] font-inter"
+                    style={{ color: colors.text }}
+                  >
+                    Stamps Remain
+                  </p>
+                  <p
+                    className="text-[16px] font-inter font-semibold"
+                    style={{ color: colors.text }}
+                  >
+                    {stampCount - activeStamps}
+                  </p>
+                </div>
 
-      {/* Dynamic Reward Text */}
-      <p
-        className="text-center font-inter text-lg font-semibold mt-2"
-        style={{ color: colors.text }}
-      >
-        {getOrdinal(stampCount + 1)} ☕ on us
-      </p>
+                <div className="text-center">
+                  <p
+                    className="text-[16px] font-inter"
+                    style={{ color: colors.text }}
+                  >
+                    Available
+                  </p>
+                  <p
+                    className="text-[16px] font-inter font-semibold"
+                    style={{ color: colors.text }}
+                  >
+                    0 rewards
+                  </p>
+                </div>
+              </div>
 
-      {/* Stats Row */}
-      <div className="flex justify-between items-center w-full mb-4 px-1 mt-2 ">
-        <div className="text-center">
-          <p className="text-[16px] font-inter" style={{ color: colors.text }}>
-            Stamps Remain
-          </p>
-          <p
-            className="text-[16px] font-inter font-semibold"
-            style={{ color: colors.text }}
-          >
-            {stampCount - activeStamps}
-          </p>
+              {/* QR */}
+              <div className="mt-4 flex justify-center">
+                <Image src={QR} alt="QR" />
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div className="text-center">
-          <p className="text-[16px] font-inter" style={{ color: colors.text }}>
-            Available
-          </p>
-          <p
-            className="text-[16px] font-inter font-semibold"
-            style={{ color: colors.text }}
-          >
-            0 rewards
-          </p>
-        </div>
-      </div>
-
-      {/* QR */}
-      <div className="mt-4 flex justify-center">
-        <Image src={QR} alt="QR" />
-      </div>
-
-    </div>
-  </div>
-</div>
-
       </div>
 
       <div>

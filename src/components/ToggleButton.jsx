@@ -3,7 +3,7 @@ import React from "react";
 
 export default function ToggleButton({ isAnnual, setIsAnnual }) {
   return (
-    <div className="flex items-center justify-center gap-3">
+    <div className="flex items-center justify-center gap-3 ">
       {/* Monthly Label */}
       <span
         className={`font-inter font-semibold md:text-2xl ${
@@ -16,7 +16,7 @@ export default function ToggleButton({ isAnnual, setIsAnnual }) {
       {/* Toggle Switch */}
       <button
         onClick={() => setIsAnnual(!isAnnual)}
-        className={`relative md:w-20 w-10 h-4 md:h-6 flex items-center rounded-full transition-colors duration-300 ${
+        className={`relative md:w-20 w-10 h-4 md:h-6 flex items-center rounded-full transition-colors duration-300 cursor-pointer ${
           isAnnual ? "bg-[#015093]" : "bg-gray-800"
         }`}
       >

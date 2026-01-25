@@ -55,7 +55,7 @@ const GeneralSettings = () => {
   }
 
   return (
-    <div className="w-[530px] gap-8 mt-10">
+    <div className="md:w-[530px] w-full gap-8 mt-10">
       {/* Logo */}
       <div>
         <p className="font-inter text-xl mb-2 dark:text-white">

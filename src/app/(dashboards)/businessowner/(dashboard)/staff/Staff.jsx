@@ -63,7 +63,7 @@ const Staff = () => {
   const currentItems = baseOnTitle.slice(startIndex, startIndex + itemsPerPage);
   return (
     <div>
-      <div className="flex items-center justify-center gap-40 mt-10">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-5 md:gap-40 mt-10">
         <Dropdown
           placeholder="Main Branch"
           options={["1", "2", "3", "4", "5", "6"]}
@@ -75,7 +75,7 @@ const Staff = () => {
         <div className="relative ">
           <input
             type="text"
-            className="border outline-none border-[#000000] dark:border-white py-3.5  px-12 w-[462px] rounded-[15px] text-[#000000] dark:placeholder:text-white placeholder:text-[#000000] font-inter"
+            className="border outline-none border-[#000000] dark:border-white py-3.5  px-12 w-full md:w-[462px] rounded-[15px] text-[#000000] dark:placeholder:text-white placeholder:text-[#000000] font-inter"
             placeholder="Search Reward"
           />
           <FaSearch className=" absolute top-1/2 left-6 -translate-y-1/2 text-[#7AA3CC]" />
@@ -91,7 +91,9 @@ const Staff = () => {
         </Link>
       </div>
 
-      <Table TableHeads={TableHeads} TableRows={currentItems} />
+      <div className="overflow-auto">
+        <Table TableHeads={TableHeads} TableRows={currentItems} />
+      </div>
 
       <Pagination
         totalPages={totalPages}
@@ -101,7 +103,7 @@ const Staff = () => {
 
       {viewOpen && (
         <div className="fixed inset-0  bg-[#D9D9D9]/80 flex items-center justify-center z-50 ">
-          <div className="bg-white dark:bg-[#141414] rounded-4xl py-14 px-14 w-[50%]  ">
+          <div className="bg-white dark:bg-[#141414] rounded-4xl py-14 px-14 md:w-[50%] w-[90%] ">
              
             <div className="flex items-start justify-between">
               <h3 className="font-inter text-[32px] border-b-2 border-black/70 dark:border-white/70 pb-2 w-[30%] mb-6 dark:text-white">Staff Information</h3>
@@ -142,10 +144,10 @@ const Staff = () => {
             <div className="flex justify-center items-center gap-12 mt-15">
               <button 
                onClick={() => setDeleteOpen(true)}
-              className="border border-[#7AA3CC] text-[#010101] dark:text-white font-semibold text-xl font-inter py-3  px-20 rounded-lg cursor-pointer mt-12">
+              className="border border-[#7AA3CC] text-[#010101] dark:text-white font-semibold text-xl font-inter py-3  md:px-20 px-15 rounded-lg cursor-pointer mt-12">
                 Delete
               </button>
-              <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl  font-inter py-3 px-20 rounded-lg cursor-pointer mt-12">
+              <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl  font-inter py-3 px-15 md:px-20 rounded-lg cursor-pointer mt-12">
                 Edit
               </button>
             </div>
@@ -155,7 +157,7 @@ const Staff = () => {
 
        {deleteOpen && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div className="bg-[#000000] rounded-3xl p-10 w-[30%] relative text-center">
+          <div className="bg-[#000000] rounded-3xl p-10 md:w-[30%] relative text-center">
             <button
               onClick={() => setDeleteOpen(false)}
               className="absolute top-4 right-4 text-[#000000]"

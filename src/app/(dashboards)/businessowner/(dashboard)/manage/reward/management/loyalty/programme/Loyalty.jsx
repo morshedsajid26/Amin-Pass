@@ -8,7 +8,7 @@ import { FaPlus } from 'react-icons/fa';
 
 const LoyaltyCard = () => {
   return (
-    <div className='w-[410px]'>
+    <div className='md:w-[410px] w-full'>
 
     <div className="bg-[#7AA3CC] rounded-2xl w-full  p-4 shadow-md">
       {/* Header */}
@@ -16,7 +16,7 @@ const LoyaltyCard = () => {
         <div className="flex items-center gap-2">
           <div className=" flex items-center justify-center">
             <Image
-             src={coffee} // তোমার coffee icon এখানে দিও
+             src={coffee} 
               alt="Coffee Icon"
               
             />
@@ -32,7 +32,7 @@ const LoyaltyCard = () => {
       {/* Banner Image */}
       <div className="rounded-md overflow-hidden mb-4">
         <Image
-          src={loyalty} // তোমার loyalty banner image
+          src={loyalty} 
           alt="Loyalty Banner"
           width={400}
           height={100}
@@ -49,7 +49,7 @@ const LoyaltyCard = () => {
       {/* QR Code */}
       <div className="flex justify-center mb-4">
         <Image
-          src={qrCode}// তোমার QR code image
+          src={qrCode}
           alt="QR Code"
           width={120}
           height={120}

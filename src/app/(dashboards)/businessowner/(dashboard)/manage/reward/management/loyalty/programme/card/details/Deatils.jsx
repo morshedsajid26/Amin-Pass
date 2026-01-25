@@ -11,26 +11,30 @@ const Deatils = () => {
   const [stampValue, setStampValue] = useState("1");
   return (
     <div>
-      <div className="grid grid-cols-2 gap-y-10   gap-x-20 mt-7">
+      <div className="grid grid-cols-12 gap-y-10 gap-5   md:gap-20 mt-7">
         <InputField
           label={`Card Description`}
           // placeholder={`Collect stamps to get reward`}
           inputClass={`font-inter  `}
+          className={`col-span-12 md:col-span-6`}
         />
         <InputField
           label={`How to earn a stamp`}
           // placeholder={`Buy anything to get a stamp`}
           inputClass={`font-inter `}
+          className={`col-span-12 md:col-span-6`}
         />
         <InputField
           label={`Company Name`}
           // placeholder={`Company Name`}
           inputClass={`font-inter `}
+          className={`col-span-12 md:col-span-6`}
         />
         <InputField
           label={`Earned Reward Message`}
           // placeholder={`Reward is earned and waiting for you!`}
           inputClass={`font-inter `}
+          className={`col-span-12 md:col-span-6`}
         />
       </div>
 
@@ -41,9 +45,9 @@ const Deatils = () => {
         </h3>
 
         {/* Radio Groups */}
-        <div className="grid grid-cols-2 gap-10 mt-6">
+        <div className="grid grid-cols-12 gap-10 mt-6">
           {/* Barcode Type */}
-          <div>
+          <div className="col-span-12 md:col-span-6">
             <h4 className="font-inter text-2xl font-medium mb-4 dark:text-white">
               Barcode Type
             </h4>
@@ -72,7 +76,7 @@ const Deatils = () => {
           </div>
 
           {/* Reward Program */}
-          <div>
+          <div className="col-span-12 md:col-span-6">
             <h4 className="font-inter text-2xl font-medium mb-4 dark:text-white">
               Reward Program
             </h4>

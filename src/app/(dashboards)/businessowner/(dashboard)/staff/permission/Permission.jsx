@@ -72,7 +72,7 @@ const Permission = () => {
        
 
 
-        <table className={`w-[50%] border-collapse overflow-hidden `}>
+        <table className={`md:w-[50%] border-collapse overflow-hidden `}>
     
       <thead>
         <tr className="">

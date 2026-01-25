@@ -54,19 +54,24 @@ const Edit = () => {
       </div>
 
       {/* Form Section */}
-      <div className="grid grid-cols-2 gap-y-10 gap-x-20 mt-7">
-        <InputField label="Shop Name" placeholder="" inputClass="font-inter" />
-        <InputField label="Address" placeholder="" inputClass="font-inter" />
-        <InputField label="Owner Name" placeholder="" inputClass="font-inter" />
+      <div className="grid grid-cols-12 gap-y-10 md:gap-x-20 mt-7">
+        <InputField label="Shop Name" placeholder="" inputClass="font-inter"
+        className={`col-span-12 md:col-span-6`} />
+        <InputField label="Address" placeholder="" inputClass="font-inter"
+        className={`col-span-12 md:col-span-6`} />
+        <InputField label="Owner Name" placeholder="" inputClass="font-inter"
+        className={`col-span-12 md:col-span-6`} />
         <InputField
           label="Owner Gmail"
           placeholder=""
+          className={`col-span-12 md:col-span-6`}
           inputClass="font-inter"
         />
         <InputField
           label="Owner Number"
           placeholder=""
           inputClass="font-inter"
+          className={`col-span-12 md:col-span-6`}
         />
 
         {/* QR Code Section */}
