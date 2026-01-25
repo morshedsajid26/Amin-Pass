@@ -42,11 +42,11 @@ const Reward = () => {
           </div>
         </div>
 
-        <div className="flex justify-center items-center gap-12 mt-15">
-          <button className="border border-[#7AA3CC] text-[#010101] font-semibold text-xl font-inter py-3  px-20 rounded-lg cursor-pointer mt-12">
+        <div className="flex justify-center items-center gap-5 md:gap-12 mt-15">
+          <button className="border border-[#7AA3CC] text-[#010101] font-semibold text-xl font-inter py-3  px-15 md:px-20 rounded-lg cursor-pointer mt-12">
             Delete
           </button>
-          <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl  font-inter py-3 px-20 rounded-lg cursor-pointer mt-12">
+          <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl  font-inter py-3 px-15 md:px-20 rounded-lg cursor-pointer mt-12">
             Edit
           </button>
         </div>

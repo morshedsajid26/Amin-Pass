@@ -68,7 +68,7 @@ const Settings = () => {
 
   
 
- <table className={`w-[50%] border-collapse overflow-hidden mt-10`}>
+ <table className={`md:w-[50%] w-full border-collapse overflow-hidden mt-10`}>
     
       <thead>
         <tr className="">

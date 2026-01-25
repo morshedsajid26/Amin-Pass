@@ -25,7 +25,7 @@ const GeneralSettings = () => {
   };
 
   return (
-    <div className="w-[530px] gap-8 mt-10">
+    <div className="md:w-[530px] w-full gap-8 mt-10">
       <div>
         <p className="font-inter text-xl mb-2">Profile Image</p>
         <Image src={Avatar} alt="profile" />
@@ -67,7 +67,7 @@ const GeneralSettings = () => {
 
       {viewOpen && (
         <div className="fixed inset-0 bg-[#D9D9D9]/80 flex items-center justify-center z-50">
-          <div className="bg-[#EFEFEF] rounded-3xl p-10">
+          <div className="bg-[#EFEFEF] rounded-3xl p-5 md:p-10">
             <div className="flex justify-end">
               <FiX
                 onClick={() => setViewOpen(false)}
@@ -123,7 +123,7 @@ const GeneralSettings = () => {
             <div className="text-center">
               <button
                 onClick={() => setViewOpen(false)}
-                className="bg-[#7AA3CC] text-[#000000] w-[30%] font-bold font-inter py-3 mt-14 rounded-lg cursor-pointer"
+                className="bg-[#7AA3CC] text-[#000000] w-[30%] font-bold font-inter py-3 mt-5  md:mt-14 rounded-lg cursor-pointer"
               >
                 Save
               </button>

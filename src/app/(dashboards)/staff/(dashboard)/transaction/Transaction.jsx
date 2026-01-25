@@ -161,7 +161,9 @@ const ActionButton = ()=>{
 
   
       <div className=''>
-      <Table TableHeads={TableHeads} TableRows={currentItems} />
+      <div className='overflow-auto'>
+        <Table TableHeads={TableHeads} TableRows={currentItems} />
+      </div>
 
       <Pagination
         totalPages={totalPages}
@@ -175,7 +177,7 @@ const ActionButton = ()=>{
 
       {viewOpen && (
         <div className="fixed inset-0  bg-[#D9D9D9]/80 flex items-center justify-center z-50 ">
-          <div className="bg-[#EFEFEF] rounded-3xl  pt-10 pb-10 px-10 w-[40%]">
+          <div className="bg-[#EFEFEF] rounded-3xl  pt-10 pb-10 px-10 w-[90%] md:w-[40%]">
            
             <div className="flex justify-end">
             <FiX 

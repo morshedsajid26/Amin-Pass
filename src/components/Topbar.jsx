@@ -18,7 +18,7 @@ const Topbar = () => {
   return (
     <div className=" flex items-center justify-between ">
       {pathname === "/systemowner/home"  ? (
-        <div className="relative ml-[10%]">
+        <div className="relative md:block hidden ml-[10%]">
           <input
             type="text"
             className="border outline-none border-[#000000] py-[14px] px-12 w-[462px] rounded-[15px] text-[#000000] placeholder:text-[#000000] font-inter"

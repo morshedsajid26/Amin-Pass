@@ -12,8 +12,8 @@ const Notification = () => {
       <Bredcumb />
 
       <div className="bg-white rounded-3xl p-5">
-        <div className="w-[60%]">
-          <div className="flex  gap-11 border-b border-black/20 pb-4">
+        <div className="md:w-[60%] w-full">
+          <div className="flex gap-2  md:gap-11 border-b border-black/20 pb-4">
             <button className="font-inter font-medium text-2xl py-3 px-9 bg-[#F6F6F6] rounded-lg border border-[#D4AF37]">
               For All Customer
             </button>
@@ -28,7 +28,7 @@ const Notification = () => {
             className="bg-[#EEEEEE] resize-none w-full font-inter outline-0 p-4 mt-4 rounded-2xl h-[160px]"
             placeholder="Write the messege"
           >
-            {" "}
+           
           </textarea>
 
           <div className="flex justify-end">
@@ -40,7 +40,7 @@ const Notification = () => {
       </div>
 
       <div className="bg-white rounded-3xl p-5 mt-14">
-        <div className="w-[60%]">
+        <div className="md:w-[60%] w-full">
           <div className="   border-b border-black/20 pb-4">
             <h3 className="font-inter font-medium text-2xl">History</h3>
           </div>
@@ -52,8 +52,8 @@ const Notification = () => {
             placeholder=""
             readOnly
           >
-            {" "}
-          </textarea>
+            
+          </textarea> 
         </div>
       </div>
     </div>

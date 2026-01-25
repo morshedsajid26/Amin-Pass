@@ -53,10 +53,10 @@ const Home = () => {
     <div>
       <Bredcumb/>
 
-    <div className='grid grid-cols-8 gap-10'>
+    <div className='grid grid-cols-12 gap-10'>
 
 
-      <div className='bg-[#F9F9F9] rounded-2xl col-span-2 p-5 flex flex-col items-center gap-2'>
+      <div className='bg-[#F9F9F9] rounded-2xl col-span-12 md:col-span-3 p-5 flex flex-col items-center gap-2'>
          
             <Image src={tenants} alt='user'/>
           <p className="font-inter text-[#121212]">
@@ -66,7 +66,7 @@ const Home = () => {
             324
           </p>
       </div>
-     <div className='bg-[#F9F9F9] rounded-2xl col-span-2 p-5 flex flex-col items-center gap-2'>
+     <div className='bg-[#F9F9F9] rounded-2xl col-span-12 md:col-span-3 p-5 flex flex-col items-center gap-2'>
           <Image src={visit} alt='user'/>
           <p className="font-inter text-[#121212]">
             Total visit this month
@@ -77,8 +77,10 @@ const Home = () => {
       </div>
 
 
-      <div className='col-span-8'>
-      <Table TableHeads={TableHeads} TableRows={currentItems} />
+      <div className='col-span-12'>
+      <div className='overflow-auto'>
+        <Table TableHeads={TableHeads} TableRows={currentItems} />
+      </div>
 
       <Pagination
         totalPages={totalPages}
