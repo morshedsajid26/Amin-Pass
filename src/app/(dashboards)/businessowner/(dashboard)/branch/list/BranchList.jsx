@@ -7,7 +7,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import Cookies from "js-cookie";
-import { BUSINESSOWNER_BASE_URL } from "@/src/config/api";
+import { BASE_URL } from "@/src/config/api";
 
 const BranchList = () => {
   const [branches, setBranches] = useState([]);
@@ -37,7 +37,7 @@ useEffect(() => {
       }
 
       const res = await fetch(
-        `${BUSINESSOWNER_BASE_URL}/business-owner/branchs/all`,
+        `${BASE_URL}/business-owner/branchs/all`,
         {
           method: "GET",
           headers: {

@@ -18,7 +18,7 @@ import AddIcon from "@/public/AddIcon.png";
 import LogoutIcon from "@/public/LogoutIcon.png";
 import logo from "@/public/Aminpass.png";
 import Cookies from "js-cookie";
-import { BUSINESSOWNER_BASE_URL } from "../config/api";
+import { BASE_URL } from "../config/api";
 
 const navitems = [
   { name: "Overview", link: "/businessowner/home", icon: homeIcon },
@@ -42,7 +42,7 @@ const handleLogout = async () => {
     const accessToken = Cookies.get("accessToken");
 
     if (accessToken) {
-      await fetch(`${BUSINESSOWNER_BASE_URL}/auth/logout`, {
+      await fetch(`${BASE_URL}/auth/logout`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,

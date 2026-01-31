@@ -6,7 +6,7 @@ import Dropdown from "@/src/components/Dropdown";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { BUSINESSOWNER_BASE_URL } from "@/src/config/api";
+import { BASE_URL } from "@/src/config/api";
 
 const Add = () => {
   const router = useRouter();
@@ -41,7 +41,7 @@ const Add = () => {
         const accessToken = Cookies.get("accessToken");
 
         const res = await fetch(
-          `${BUSINESSOWNER_BASE_URL}/business-owner/branchs/my-branches`,
+          `${BASE_URL}/business-owner/branchs/my-branches`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -86,7 +86,7 @@ const Add = () => {
 
     try {
       const res = await fetch(
-        `${BUSINESSOWNER_BASE_URL}/business-owner/manage-staff/create`,
+        `${BASE_URL}/business-owner/manage-staff/create`,
         {
           method: "POST",
           headers: {

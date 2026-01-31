@@ -8,7 +8,7 @@ import Dropdown from "@/src/components/Dropdown";
 import Pagination from "@/src/components/Pagination";
 import Link from "next/link";
 import Cookies from "js-cookie";
-import { BUSINESSOWNER_BASE_URL } from "@/src/config/api";
+import { BASE_URL } from "@/src/config/api";
 
 const Platform = () => {
   const [customers, setCustomers] = useState([]);
@@ -30,7 +30,7 @@ const Platform = () => {
         const token = Cookies.get("accessToken");
 
         const res = await fetch(
-          `${BUSINESSOWNER_BASE_URL}/business-owner/all-customers/all`,
+          `${BASE_URL}/business-owner/all-customers/all`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

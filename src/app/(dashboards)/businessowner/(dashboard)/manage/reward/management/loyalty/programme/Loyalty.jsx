@@ -8,7 +8,7 @@ import qrCode from "@/public/qrCode.png";
 import Link from "next/link";
 import { FaPlus } from "react-icons/fa";
 import Cookies from "js-cookie";
-import { BUSINESSOWNER_BASE_URL } from "@/src/config/api";
+import { BASE_URL } from "@/src/config/api";
 
 /* ---------------- CARD COMPONENT ---------------- */
 const LoyaltyCard = ({ card, onDeleteClick }) => {
@@ -103,7 +103,7 @@ const Loyalty = () => {
         const accessToken = Cookies.get("accessToken");
 
         const res = await fetch(
-          `${BUSINESSOWNER_BASE_URL}/business-owner/cards/business`,
+          `${BASE_URL}/business-owner/cards/business`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -146,7 +146,7 @@ const Loyalty = () => {
       const accessToken = Cookies.get("accessToken");
 
       const res = await fetch(
-        `${BUSINESSOWNER_BASE_URL}/business-owner/cards/${deleteCardId}`,
+        `${BASE_URL}/business-owner/cards/${deleteCardId}`,
         {
           method: "DELETE",
           headers: {

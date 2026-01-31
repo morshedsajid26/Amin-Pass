@@ -1,7 +1,7 @@
 "use client";
 
 import Bredcumb from "@/src/components/Bredcumb";
-import { BUSINESSOWNER_BASE_URL } from "@/src/config/api";
+import { BASE_URL } from "@/src/config/api";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -27,7 +27,7 @@ const Reward = () => {
         const accessToken = Cookies.get("accessToken");
 
         const res = await fetch(
-          `${BUSINESSOWNER_BASE_URL}/business-owner/earn-reward/all`,
+          `${BASE_URL}/business-owner/earn-reward/all`,
           {
             method: "GET",
             headers: {
@@ -74,7 +74,7 @@ const Reward = () => {
       const token = Cookies.get("accessToken");
 
       await fetch(
-        `${BUSINESSOWNER_BASE_URL}/business-owner/earn-reward/${deleteId}`,
+        `${BASE_URL}/business-owner/earn-reward/${deleteId}`,
         {
           method: "DELETE",
           headers: {

@@ -5,7 +5,7 @@ import InputField from "@/src/components/InputField";
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { BUSINESSOWNER_BASE_URL } from "@/src/config/api";
+import { BASE_URL } from "@/src/config/api";
 
 const AddBranch = () => {
   const [formData, setFormData] = useState({
@@ -35,7 +35,7 @@ const AddBranch = () => {
     const accessToken = Cookies.get("accessToken"); 
 
     const res = await fetch(
-      `${BUSINESSOWNER_BASE_URL}/business-owner/branchs/create`,
+      `${BASE_URL}/business-owner/branchs/create`,
       {
         method: "POST",
         headers: {

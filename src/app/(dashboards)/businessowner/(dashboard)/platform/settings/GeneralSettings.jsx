@@ -7,7 +7,7 @@ import QR from "@/public/QR.png";
 import { LuImport } from "react-icons/lu";
 import Link from "next/link";
 import Cookies from "js-cookie";
-import { BUSINESSOWNER_BASE_URL } from "@/src/config/api";
+import { BASE_URL } from "@/src/config/api";
 
 const GeneralSettings = () => {
   const [profile, setProfile] = useState(null);
@@ -21,7 +21,7 @@ const GeneralSettings = () => {
         const token = Cookies.get("token");
 
         const res = await fetch(
-          `${BUSINESSOWNER_BASE_URL}/api/owner/me`,
+          `${BASE_URL}/api/owner/me`,
           {
             method: "GET",
             headers: {

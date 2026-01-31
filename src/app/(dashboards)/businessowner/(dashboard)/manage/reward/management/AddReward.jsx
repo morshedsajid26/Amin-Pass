@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import logo from "@/public/rewardLogo.png";
 import InputField from "@/src/components/InputField";
 import Cookies from "js-cookie";
-import { BUSINESSOWNER_BASE_URL } from "@/src/config/api";
+import { BASE_URL } from "@/src/config/api";
 import Dropdown from "@/src/components/Dropdown";
 
 const AddReward = () => {
@@ -43,7 +43,7 @@ const AddReward = () => {
         const accessToken = Cookies.get("accessToken");
 
         const res = await fetch(
-          `${BUSINESSOWNER_BASE_URL}/business-owner/branchs/my-branches`,
+          `${BASE_URL}/business-owner/branchs/my-branches`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -107,7 +107,7 @@ const AddReward = () => {
 
     try {
       const res = await fetch(
-        `${BUSINESSOWNER_BASE_URL}/business-owner/earn-reward/create`,
+        `${BASE_URL}/business-owner/earn-reward/create`,
         {
           method: "POST",
           headers: {

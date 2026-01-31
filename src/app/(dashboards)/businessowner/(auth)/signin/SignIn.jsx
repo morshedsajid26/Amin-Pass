@@ -7,7 +7,7 @@ import Password from "@/src/components/Password";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import { BUSINESSOWNER_BASE_URL } from "@/src/config/api";
+import { BASE_URL } from "@/src/config/api";
 
 const SignIn = () => {
   const router = useRouter();
@@ -24,7 +24,7 @@ const SignIn = () => {
     setLoading(true);
   
     try {
-      const res = await fetch(`${BUSINESSOWNER_BASE_URL}/auth/login`, {
+      const res = await fetch(`${BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
