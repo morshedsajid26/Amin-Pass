@@ -13,7 +13,7 @@ const PaymentCard = () => {
 
         <div className="  ">
             <h3 className="font-inter text-[32px] mt-20">Payment Method</h3>
-    <div className="bg-[#AFC5D3] dark:bg-[#7AA3CC]/50 rounded-2xl p-8 w-[50%] shadow-md mt-10 mx-auto  dark:border dark:border-[#CFCFCF]">
+    <div className="bg-[#AFC5D3] dark:bg-[#7AA3CC]/50 rounded-2xl p-8  md:w-[50%] shadow-md mt-10 mx-auto  dark:border dark:border-[#CFCFCF]">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center gap-2">
@@ -33,17 +33,17 @@ const PaymentCard = () => {
       {/* Card Number */}
       <div className="mb-5 grid grid-cols-7 items-center gap-4 ">
         <div className="col-span-3">
-            <label className="font-inter text-[#000000] dark:text-white font-medium ">
+            <label className=" text-sm md:text-base font-inter text-[#000000] dark:text-white font-medium ">
           Card number
         </label>
-        <p className="text-sm font-inter text-[#333333] dark:text-[#C5C5C5] mb-2">
-          Enter the 16-digit card number on the card
+        <p className="md:text-sm text-xs font-inter text-[#333333] dark:text-[#C5C5C5] mb-2">
+          Enter the 16-digit card number 
         </p>
         </div>
         <div className="relative col-span-4 ">
           <FaCreditCard className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 " />
           <input
-            type="text"
+            type="number"
             placeholder=""
             className="w-full px-10 py-2 rounded-lg bg-[#FFFFFF] outline-none font-inter text-[#000000]"
           />
@@ -54,10 +54,10 @@ const PaymentCard = () => {
       {/* Card Owner */}
       <div className="mb-5  grid grid-cols-7 items-center gap-4">
         <div className="col-span-3">
-            <label className="font-inter text-[#000000] dark:text-white font-medium ">
+            <label className="text-sm md:text-base font-inter text-[#000000] dark:text-white font-medium ">
           Card owner
         </label>
-        <p className="text-sm font-inter text-[#333333] dark:text-[#C5C5C5] mb-2">Enter the name on the card</p>
+        <p className="md:text-sm text-xs font-inter text-[#333333] dark:text-[#C5C5C5] mb-2">Enter the name on the card</p>
         </div>
         <input
           type="text"
@@ -67,33 +67,33 @@ const PaymentCard = () => {
       </div>
 
       {/* Expiry + CVV */}
-      <div className="grid grid-cols-7 items-center gap-5 mb-5">
-        <div className="col-span-5 grid grid-cols-5 gap-4">
-          <div className="col-span-3" >
-            <label className="font-inter text-[#000000] dark:text-white font-medium block">
+      <div className="grid grid-cols-12 items-center gap-5 mb-5 ">
+        <div className="col-span-9 grid grid-cols-12 gap-4 bg-amber-300">
+          <div className="col-span-8" >
+            <label className="text-sm md:text-base font-inter text-[#000000] dark:text-white font-medium block">
             Expiry date
           </label>
-          <p className="text-sm font-inter text-[#333333] dark:text-[#C5C5C5] mb-2 w-full">
+          <p className="md:text-sm text-xs font-inter text-[#333333] dark:text-[#C5C5C5] mb-2 w-full">
             Enter the expiration date of the card
           </p>
           </div>
-          <div className="col-span-2 flex items-center gap-2">
+          <div className=" flex items-center gap-2 col-span-4">
             <input
-              type="text"
+              type="number"
               placeholder="MM"
               className="w-20 py-2 px-3 rounded-lg bg-white outline-none text-[#000000]  font-inter text-center"
             />
             <span className="text-lg font-bold text-[#000000]">/</span>
             <input
-              type="text"
+              type="number"
               placeholder="YY"
               className="w-20 py-2 px-3 rounded-lg bg-white outline-none text-[#000000] font-inter text-center"
             />
           </div>
         </div>
 
-        <div className="col-span-2 grid grid-cols-3 items-center">
-        <div className="col-span-2">
+        <div className="col-span-3 grid grid-cols-2  items-center">
+        <div className="col-span-">
               <label className="font-inter text-[#000000] dark:text-white font-medium block">
             CVV2
           </label>

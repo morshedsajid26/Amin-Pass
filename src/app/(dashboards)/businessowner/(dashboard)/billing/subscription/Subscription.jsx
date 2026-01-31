@@ -50,11 +50,11 @@ const Subscription = () => {
 
       {viewOpen && (
         <div className="fixed inset-0  bg-[#D9D9D9]/80 flex items-center justify-center z-50 ">
-          <div className="bg-white dark:bg-black rounded-4xl py-14 px-14 w-[80%] overflow-scroll hide-scrollbar  ">
-            <div className=" grid grid-cols-2 font-inter gap-20 text-[#000000]  ">
+          <div className="bg-white dark:bg-black rounded-4xl md:py-14 md:px-14 px-5 py-5  md:w-[80%] overflow-scroll hide-scrollbar  ">
+            <div className=" grid grid-cols-12 font-inter gap-20 text-[#000000]  ">
               <Dropdown
                 label="Current Plan"
-                className={`gap-2`}
+                className={`gap-2 col-span-12 md:col-span-6`}
                 labelClass={`font-inter text-xl text-[#000000]`}
                 placeholder="Monthly"
                 options={["Monthly", "Yearly"]}
@@ -64,7 +64,7 @@ const Subscription = () => {
 
               <Dropdown
                 label="Priority"
-                className={`gap-2`}
+                className={`gap-2 col-span-12 md:col-span-6`}
                 labelClass={`font-inter text-xl text-[#000000]`}
                 placeholder="$25"
                 options={["$25", "$2500"]}
