@@ -24,21 +24,22 @@ const Reward = () => {
     const fetchRewards = async () => {
       try {
         setLoading(true);
-        const token = Cookies.get("token");
+        const accessToken = Cookies.get("accessToken");
 
         const res = await fetch(
-          `${BUSINESSOWNER_BASE_URL}/api/owner/rewards`,
+          `${BUSINESSOWNER_BASE_URL}/business-owner/earn-reward/all`,
           {
             method: "GET",
             headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+              Accept: "application/json",
             },
           }
         );
 
         const json = await res.json();
-        setRewards(Array.isArray(json?.data?.data) ? json.data.data : []);
+
+        setRewards(Array.isArray(json?.data) ? json.data : []);
       } catch (err) {
         console.error("Reward fetch error:", err);
         setRewards([]);
@@ -50,9 +51,9 @@ const Reward = () => {
     fetchRewards();
   }, []);
 
-  // 🔍 Search
+  // 🔍 Search (FIXED)
   const filteredRewards = rewards.filter((item) =>
-    item.name?.toLowerCase().includes(search.toLowerCase())
+    item.rewardName?.toLowerCase().includes(search.toLowerCase())
   );
 
   // 🗑 Open delete modal
@@ -70,10 +71,10 @@ const Reward = () => {
   // ✅ Confirm delete
   const confirmDelete = async () => {
     try {
-      const token = Cookies.get("token");
+      const token = Cookies.get("accessToken");
 
       await fetch(
-        `${BUSINESSOWNER_BASE_URL}/api/owner/rewards/${deleteId}`,
+        `${BUSINESSOWNER_BASE_URL}/business-owner/earn-reward/${deleteId}`,
         {
           method: "DELETE",
           headers: {
@@ -133,47 +134,49 @@ const Reward = () => {
               <div className="flex justify-between border-b border-[#000000]/10 dark:border-white py-4">
                 <span className="font-medium">Created Date:</span>
                 <span className="font-normal">
-                  {formatDate(reward.created_at)}
+                  {formatDate(reward.createdAt)}
                 </span>
               </div>
 
               <div className="flex justify-between border-b border-[#000000]/10 dark:border-white py-4">
                 <span className="font-medium">Reward Name:</span>
-                <span className="font-normal">{reward.name}</span>
+                <span className="font-normal">{reward.rewardName}</span>
               </div>
 
               <div className="flex justify-between border-b border-[#000000]/10 dark:border-white py-4">
-                <span className="font-medium">Reward Points:</span>
-                <span className="font-normal">{reward.threshold}</span>
+                <span className="font-medium">Threshold:</span>
+                <span className="font-normal">{reward.earnPoint}</span>
               </div>
 
               <div className="flex justify-between border-b border-[#000000]/10 dark:border-white py-4">
                 <span className="font-medium">Reward Type:</span>
-                <span className="font-normal">{reward.reward_type}</span>
+                <span className="font-normal">{reward.rewardType}</span>
               </div>
 
               <div className="flex justify-between border-b border-[#000000]/10 dark:border-white py-4">
                 <span className="font-medium">Expiry Days:</span>
                 <span className="font-normal">
-                  {formatDate(reward.expire_date)}
+                  {reward.expiryDays} Days
                 </span>
               </div>
 
-              <div className="flex justify-between border-b border-[#000000]/10 dark:border-white py-4"> 
+              <div className="flex justify-between border-b border-[#000000]/10 dark:border-white py-4">
                 <span className="font-medium">Earning Rule:</span>
-                <span className="font-normal">{reward.earning_rule}</span>
+                <span className="font-normal">{reward.earningRule}</span>
               </div>
 
-              <div className="flex justify-between border-b border-[#000000]/10 dark:border-white  py-4">
-                <span className="font-medium">Reward:</span>
+              <div className="flex justify-between border-b border-[#000000]/10 dark:border-white py-4">
+                <span className="font-medium">Reward Status:</span>
                 <span
                   className={
-                    reward.is_active
+                    reward.rewardStatus === "ACTIVE"
                       ? "text-[#009006]"
                       : "text-red-500"
                   }
                 >
-                  {reward.is_active ? "Active" : "Inactive"}
+                  {reward.rewardStatus === "ACTIVE"
+                    ? "Active"
+                    : "Inactive"}
                 </span>
               </div>
             </div>
@@ -199,7 +202,7 @@ const Reward = () => {
         ))
       )}
 
-      {/* 🔴 Delete Confirmation Modal (DESIGN MATCHED) */}
+      {/* 🔴 Delete Confirmation Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white dark:bg-[#141414] rounded-4xl py-10 px-20 w-[520px] font-inter">

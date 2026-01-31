@@ -52,6 +52,7 @@ const handleLogout = async () => {
 
     
     Cookies.remove("accessToken", { path: "/" });
+    Cookies.remove("businessId", { path: "/" });
 
     window.location.href = "/businessowner/signin";
 
@@ -60,6 +61,7 @@ const handleLogout = async () => {
 
     
     Cookies.remove("accessToken", { path: "/" });
+    Cookies.remove("businessId", { path: "/" });
 
     window.location.href = "/businessowner/signin";
   }

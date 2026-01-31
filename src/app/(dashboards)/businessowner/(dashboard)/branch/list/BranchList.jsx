@@ -10,10 +10,11 @@ import Cookies from "js-cookie";
 import { BUSINESSOWNER_BASE_URL } from "@/src/config/api";
 
 const BranchList = () => {
-  const [baseOnTitle, setBaseOnTitle] = useState([]);
+  const [branches, setBranches] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
+  // TABLE HEADS (unchanged)
   const TableHeads = [
     { Title: "Branch Name", key: "branch", width: "20%" },
     { Title: "Branch Location", key: "location", width: "30%" },
@@ -21,54 +22,68 @@ const BranchList = () => {
     { Title: "Manager Name", key: "manager", width: "20%" },
   ];
 
-  // 🔹 Fetch branches
-  useEffect(() => {
-    const fetchBranches = async () => {
-      setLoading(true);
-      try {
-        const token = Cookies.get("token");
+  // FETCH BRANCHES -----------------------------------
+useEffect(() => {
+  const fetchBranches = async () => {
+    setLoading(true);
 
-        const res = await fetch(
-          `${BUSINESSOWNER_BASE_URL}/api/owner/branches`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+    try {
+      const accessToken = Cookies.get("accessToken");
+      const businessId = Cookies.get("businessId");
 
-        const data = await res.json();
-
-        if (!res.ok) {
-          console.error(data);
-          return;
-        }
-
-        // 🔁 API data → Table format
-        const rows = data.branches.map((item) => ({
-          branch: item.name,
-          location: item.address,
-          staffs: item.staffs,
-          manager: item.manager_name,
-        }));
-
-        setBaseOnTitle(rows);
-      } catch (error) {
-        console.error("Branch fetch error:", error);
-      } finally {
-        setLoading(false);
+      if (!businessId) {
+        setBranches([]);
+        return;
       }
-    };
 
-    fetchBranches();
-  }, []);
+      const res = await fetch(
+        `${BUSINESSOWNER_BASE_URL}/business-owner/branchs/all`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            Accept: "application/json",
+          },
+        }
+      );
 
-  // 🔹 Pagination
+      if (res.status === 404) {
+        setBranches([]);
+        return;
+      }
+
+      const json = await res.json();
+
+      if (!res.ok) {
+        setBranches([]);
+        return;
+      }
+
+      const rows = (json.data || []).map((item) => ({
+        branch: item.name || "-",
+        location: item.address || "-",
+        staffs: item.staffCount,
+        manager: item.managerName || "N/A",
+      }));
+
+      setBranches(rows);
+    } catch (error) {
+      setBranches([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchBranches();
+}, []);
+
+
+
+  // PAGINATION ---------------------------------------
   const itemsPerPage = 10;
-  const totalPages = Math.ceil(baseOnTitle.length / itemsPerPage);
+  const totalPages = Math.ceil(branches.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = baseOnTitle.slice(
+  const currentItems = branches.slice(
     startIndex,
     startIndex + itemsPerPage
   );
@@ -77,7 +92,10 @@ const BranchList = () => {
     <div>
       <Bredcumb />
 
-      <Link href="/businessowner/branch/list/add/branch" className="flex justify-end mb-6">
+      <Link
+        href="/businessowner/branch/list/add/branch"
+        className="flex justify-end mb-6"
+      >
         <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl font-inter py-3 px-5 rounded-lg cursor-pointer flex items-center gap-2">
           <FaPlus />
           Add New Branch
@@ -87,9 +105,9 @@ const BranchList = () => {
       {loading ? (
         <p className="text-center font-inter">Loading branches...</p>
       ) : (
-       <div className="overflow-auto">
-         <Table TableHeads={TableHeads} TableRows={currentItems} />
-       </div>
+        <div className="overflow-auto">
+          <Table TableHeads={TableHeads} TableRows={currentItems} />
+        </div>
       )}
 
       <Pagination

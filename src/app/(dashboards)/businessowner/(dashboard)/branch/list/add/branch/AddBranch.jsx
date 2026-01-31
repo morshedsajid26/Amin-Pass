@@ -9,10 +9,10 @@ import { BUSINESSOWNER_BASE_URL } from "@/src/config/api";
 
 const AddBranch = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    location: "",
-    staffs: "",
-    manager_name: "",
+    branchName: "",
+    branchLocation: "",
+    staffCount: "",
+    managerName: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -32,21 +32,21 @@ const AddBranch = () => {
   setMessage("");
 
   try {
-    const token = Cookies.get("token"); // 🔴 exact cookie name
+    const accessToken = Cookies.get("accessToken"); 
 
     const res = await fetch(
-      `${BUSINESSOWNER_BASE_URL}/api/owner/branches`,
+      `${BUSINESSOWNER_BASE_URL}/business-owner/branchs/create`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
-          name: formData.name,
-          address: formData.location,   // 🔴 backend expects "address"
-          staffs: Number(formData.staffs),
-          manager_name: formData.manager_name,
+          branchName: formData.branchName,
+          branchLocation: formData.branchLocation,  
+          staffCount: formData.staffCount,
+          managerName: formData.managerName,
         }),
       }
     );
@@ -61,10 +61,10 @@ const AddBranch = () => {
     setMessage("✅ Branch created successfully");
 
     setFormData({
-      name: "",
-      location: "",
-      staffs: "",
-      manager_name: "",
+      branchName: "",
+      branchLocation: "",
+      staffCount: "",
+      managerName: "",
     });
   } catch (error) {
     console.error(error);
@@ -82,18 +82,18 @@ const AddBranch = () => {
       <div className="grid grid-cols-12 gap-10">
         <InputField
           label="Business Name"
-          value={formData.name}
+          value={formData.branchName}
           onChange={(e) =>
-            handleChange("name", e.target.value)
+            handleChange("branchName", e.target.value)
           }
           className={`col-span-12 md:col-span-6`}
         />
 
         <InputField
           label="Branch Location"
-          value={formData.location}
+          value={formData.branchLocation}
           onChange={(e) =>
-            handleChange("location", e.target.value)
+            handleChange("branchLocation", e.target.value)
           }
           className={`col-span-12 md:col-span-6`}
         />
@@ -101,18 +101,18 @@ const AddBranch = () => {
         <InputField
           label="Number of Staff"
           type="number"
-          value={formData.staffs}
+          value={formData.staffCount}
           onChange={(e) =>
-            handleChange("staffs", e.target.value)
+            handleChange("staffCount", e.target.value)
           }
           className={`col-span-12 md:col-span-6`}
         />
 
         <InputField
           label="Manager Name"
-          value={formData.manager_name}
+          value={formData.managerName}
           onChange={(e) =>
-            handleChange("manager_name", e.target.value)
+            handleChange("managerName", e.target.value)
           }
           className={`col-span-12 md:col-span-6`}
         />

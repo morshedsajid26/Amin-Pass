@@ -40,6 +40,8 @@ const SignIn = () => {
   
       if (res.ok) {
         Cookies.set("accessToken", data.data.accessToken);
+        Cookies.set("businessId", data.data.businessId);
+        
         router.push("/businessowner/home");
       } else {
         setMessage(data.message || "Login failed");
