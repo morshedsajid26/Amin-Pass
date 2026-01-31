@@ -11,50 +11,47 @@ import { FaPlus } from "react-icons/fa";
 import { FiX } from "react-icons/fi";
 import Avatar from "@/public/Avatar.png";
 import Cookies from "js-cookie";
+import { BASE_URL } from "@/src/config/api";
 
 const Management = () => {
   const [tenants, setTenants] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  // Modal controls
   const [viewOpen, setViewOpen] = useState(false);
   const [selectedTenant, setSelectedTenant] = useState(null);
 
-  // Fetch Tenants -----------------------------------
+  // FETCH TENANTS -----------------------------------
   useEffect(() => {
     const fetchTenants = async () => {
       try {
-        const token = Cookies.get("token");
+        const accessToken = Cookies.get("accessToken");
 
-        const res = await fetch(
-          "http://127.0.0.1:8000/api/admin/get-all-tenants",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const res = await fetch(`${BASE_URL}/system-owner/tenants`, {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          method: "GET",
+        });
 
-        const data = await res.json();
+        const result = await res.json();
 
         if (res.ok) {
-          const formatted = data.tenants.map((item) => ({
+          const formatted = result.data.map((item) => ({
             id: item.id,
-            name: item.business?.name || "N/A",
-            email: item.business?.email || "N/A",
-            date: item.created_at?.slice(0, 10) || "N/A",
-            subscription: item.business?.status || "pending",
-            location: "1 Location",
-            raw: item, // full data for modal
+            name: item.businessName || "N/A",
+            email: item.email || "N/A",
+            date: item.createdOn?.slice(0, 10) || "N/A",
+            subscription: item.subscription || "N/A",
+            location: item.location || "N/A",
+            status: item.status,
+            raw: item,
           }));
 
           setTenants(formatted);
         } else {
-          console.log("Error:", data.message);
+          console.log("Error:", result.message);
         }
       } catch (error) {
         console.log("Fetch error:", error);
@@ -76,7 +73,7 @@ const Management = () => {
     { Title: "Action", key: "action", width: "10%" },
   ];
 
-  // Action Button -------------------------------------
+  // ACTION BUTTON ------------------------------------
   const ActionButton = ({ tenant }) => (
     <button
       onClick={() => {
@@ -89,7 +86,7 @@ const Management = () => {
     </button>
   );
 
-  // Pagination ----------------------------------------
+  // PAGINATION ---------------------------------------
   const itemsPerPage = 10;
   const totalPages = Math.ceil(tenants.length / itemsPerPage);
   const startIdx = (currentPage - 1) * itemsPerPage;
@@ -100,17 +97,14 @@ const Management = () => {
     action: <ActionButton tenant={row.raw} />,
   }));
 
-  // DETAILS COMPONENT ---------------------------------
+  // DETAILS COMPONENT --------------------------------
   const Details = ({ data }) => {
     const detailItems = [
-      ["Business Name:", data.business?.name || "-"],
-      ["Industry Type:", data.business?.slug || "-"],
-      ["Registration Date:", data.created_at?.slice(0, 10) || "-"],
-      ["Total Branch:", "1"],
-      ["Plan Type:", data.business?.status || "-"],
-      ["Billing Status:", data.business?.status || "-"],
-      ["Domain:", data.domain || "-"],
-      ["Database:", data.database || "-"],
+      ["Business Name:", data.businessName || "-"],
+      ["Registration Date:", data.createdOn?.slice(0, 10) || "-"],
+      ["Plan Type:", data.subscription || "-"],
+      ["Billing Status:", data.status || "-"],
+      ["Location:", data.location || "-"],
     ];
 
     return (
@@ -132,7 +126,7 @@ const Management = () => {
     <div>
       <Bredcumb />
 
-      {/* TOP BAR ------------------------------------------------- */}
+      {/* TOP BAR */}
       <div className="flex items-center justify-between">
         <Dropdown
           placeholder="Active"
@@ -147,7 +141,7 @@ const Management = () => {
         </Link>
       </div>
 
-      {/* TABLE + PAGINATION ------------------------------------- */}
+      {/* TABLE + PAGINATION */}
       {loading ? (
         <p className="text-xl font-inter py-10 text-center">
           Loading tenants...
@@ -155,7 +149,7 @@ const Management = () => {
       ) : (
         <>
           <div className="overflow-x-auto">
-            <Table TableHeads={TableHeads} TableRows={tableRows}/>
+            <Table TableHeads={TableHeads} TableRows={tableRows} />
           </div>
 
           <Pagination
@@ -166,7 +160,7 @@ const Management = () => {
         </>
       )}
 
-      {/* VIEW MODAL --------------------------------------------- */}
+      {/* VIEW MODAL */}
       {viewOpen && selectedTenant && (
         <div className="fixed inset-0 bg-[#D9D9D9]/80 flex items-center justify-center z-50">
           <div className="bg-gradient-to-b from-[#A8C4D8] to-[#E4DBC2] rounded-3xl w-[50%] max-h-[85vh] flex flex-col gap-y-10 overflow-hidden">
@@ -190,26 +184,26 @@ const Management = () => {
                   />
                   <div>
                     <h2 className="font-inter text-2xl font-medium text-[#000000]">
-                      {selectedTenant.business?.name}
+                      {selectedTenant.businessName}
                     </h2>
                     <p className="text-xl text-[#000000]">
-                      {selectedTenant.business?.email}
+                      {selectedTenant.email}
                     </p>
                   </div>
                 </div>
 
                 <div className="font-inter text-2xl text-[#000000]">
                   <div className="flex justify-between border-b border-[#000000]/10 py-4">
-                    <span className="font-medium">Address:</span>
+                    <span className="font-medium">Location:</span>
                     <span className="font-normal">
-                      {selectedTenant.business?.address || "N/A"}
+                      {selectedTenant.location}
                     </span>
                   </div>
 
                   <div className="flex justify-between py-4">
-                    <span className="font-medium">Phone Number:</span>
+                    <span className="font-medium">Status:</span>
                     <span className="font-normal">
-                      {selectedTenant.business?.phone || "N/A"}
+                      {selectedTenant.status}
                     </span>
                   </div>
                 </div>

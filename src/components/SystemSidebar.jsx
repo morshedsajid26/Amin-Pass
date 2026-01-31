@@ -32,33 +32,33 @@ const SystemSidebar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
-   const handleLogout = async () => {
-    try {
-      const token = Cookies.get("token");
-  
-      if (!token) {
-        console.log("No token found");
-      } else {
-        await fetch("http://127.0.0.1:8000/api/admin/logout", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-      }
-  
-      // Clear token from localStorage
-      Cookies.remove("token");
-  
-      // Redirect to login page
-      window.location.href = "/systemowner/signin";
-  
-    } catch (error) {
-      console.log("Logout error:", error);
-      Cookies.remove("token");
-      window.location.href = "/systemowner/signin";
+const handleLogout = async () => {
+  try {
+    const accessToken = Cookies.get("accessToken");
+
+    if (accessToken) {
+      await fetch(`${BASE_URL}/customer/auth/logout`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
     }
-  };
+
+    
+    Cookies.remove("accessToken", { path: "/" });
+
+    window.location.href = "/systemowner/signin";
+
+  } catch (error) {
+    console.log("Logout error:", error);
+
+    
+    Cookies.remove("accessToken", { path: "/" });
+
+    window.location.href = "/systemowner/signin";
+  }
+};
 
   return (
     <>

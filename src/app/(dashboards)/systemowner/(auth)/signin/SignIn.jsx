@@ -8,6 +8,7 @@ import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { BASE_URL } from "@/src/config/api";
 
 
 const SignIn = () => {
@@ -20,50 +21,38 @@ const SignIn = () => {
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+ const handleLogin = async (e) => {
+  e.preventDefault();
+  setLoading(true);
 
-    setLoading(true);
-    setMessage("");
-    setIsSuccess(false);
+  try {
+    const res = await fetch(`${BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
 
-    try {
-      const formData = new FormData();
-      formData.append("email", email);
-      formData.append("password", password);
+    const data = await res.json();
+    console.log("data",data);
 
-      const res = await fetch("http://127.0.0.1:8000/api/admin/login", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await res.json();
-      console.log("LOGIN RESPONSE:", data);
-
-      if (res.ok) {
-        setMessage("Login successful!");
-        setIsSuccess(true);
-
-        // Save JWT Token
-        if (data.token) {
-          Cookies.set("token", data.token);
-        }
-
-        // Redirect after 1.5 seconds
-        setTimeout(() => {
-          router.push("/systemowner/home");
-        }, 500);
-      } else {
-        setMessage(JSON.stringify(data));
-        setIsSuccess(false);
-      }
-    } catch (error) {
-      setMessage("Something went wrong!");
-      setIsSuccess(false);
+    if (res.ok) {
+      Cookies.set("accessToken", data.data.accessToken);
+      router.push("/systemowner/home");
+    } else {
+      setMessage(data.message || "Login failed");
     }
+  } catch (err) {
+    setMessage("Something went wrong!");
+  }
 
-    setLoading(false);
-  };
+  setLoading(false);
+};
+
   return (
     <main className="bg-white grid justify-center items-center overflow-y-auto hide-scrollbar py-30 px-11 rounded-3xl  ">
       <form

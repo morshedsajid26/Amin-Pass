@@ -1,13 +1,18 @@
 "use client";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
-const data = [
-  { name: "High Priority", value: 40, color: "#878D96" },
-  { name: "Medium Priority", value: 20, color: "#C1C7CD" },
-  { name: "Low Priority", value: 30, color: "#A2A9B0" },
-];
+// const data = [
+//   { name: "High Priority", value: 40, color: "#878D96" },
+//   { name: "Medium Priority", value: 20, color: "#C1C7CD" },
+//   { name: "Low Priority", value: 30, color: "#A2A9B0" },
+// ];
 
-export default function SupportTicketChart() {
+export default function SupportTicketChart({ data = {} }) {
+   const chartData = [
+    { name: "High Priority", value: data.high ?? 0, color: "#878D96" },
+    { name: "Medium Priority", value: data.medium ?? 0, color: "#C1C7CD" },
+    { name: "Low Priority", value: data.low ?? 0, color: "#A2A9B0" },
+  ];
   return (
     <div className="bg-white rounded-2xl p-5  flex flex-col items-center">
       
@@ -15,7 +20,7 @@ export default function SupportTicketChart() {
       <ResponsiveContainer width="100%" height={200}>
         <PieChart>
           <Pie
-            data={data}
+            data={chartData}
             dataKey="value"
             nameKey="name"
             outerRadius={90}
@@ -23,7 +28,7 @@ export default function SupportTicketChart() {
              endAngle={-270}
             stroke="none"
           >
-            {data.map((entry, index) => (
+            {chartData.map((entry, index) => (
               <Cell key={index} fill={entry.color} />
             ))}
           </Pie>
@@ -31,7 +36,7 @@ export default function SupportTicketChart() {
       </ResponsiveContainer>
 
       <ul className="mt-4 w-full">
-        {data.map((item, index) => (
+        {chartData.map((item, index) => (
           <li key={index} className="flex justify-between items-center mb-2">
             <div className="flex items-center gap-2">
               <span

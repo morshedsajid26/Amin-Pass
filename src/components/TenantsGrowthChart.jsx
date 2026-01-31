@@ -1,29 +1,20 @@
 "use client";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
-const data = [
-  { name: "Jan", tenants: 30 },
-  { name: "Feb", tenants: 15 },
-  { name: "Mar", tenants: 45 },
-  { name: "Apr", tenants: 30 },
-  { name: "May", tenants: 70 },
-  { name: "Jun", tenants: 25 },
-  { name: "July", tenants: 18 },
-  { name: "Aug", tenants: 27 },
-  { name: "Sep", tenants: 38 },
-  { name: "Oct", tenants: 37 },
-  { name: "Nov", tenants: 55 },
-  { name: "Dec", tenants: 80 },
-];
 
-export default function TenantsGrowthChart() {
+export default function TenantsGrowthChart({ data = [] }) {
+
+   const chartData = data.map((item) => ({
+    name: item.month,
+    tenants: item.count,
+  }));
   return (
     <div className="bg-white rounded-2xl p-8">
       
       <ResponsiveContainer width="100%" height={300} >
         <BarChart width={500}
         height={400}
-        data={data}
+        data={chartData}
         margin={{
           top: 0,
           right: 0,
