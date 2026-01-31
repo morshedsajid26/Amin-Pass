@@ -2,7 +2,7 @@
 import React from "react";
 
 const ProgressBar = ({ data }) => {
-  // max value বের করে, progress bar এর width হিসাব করবে
+  
   const maxValue = Math.max(...data.map((item) => item.claims));
 
   return (

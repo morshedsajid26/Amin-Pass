@@ -1,184 +1,219 @@
 "use client";
+
 import Bredcumb from "@/src/components/Bredcumb";
 import Dropdown from "@/src/components/Dropdown";
 import InputField from "@/src/components/InputField";
 import Table from "@/src/components/Table";
 import React, { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
+import Cookies from "js-cookie";
+import { BASE_URL } from "@/src/config/api";
 
 const Activation = () => {
-  const [baseOnTitle, setBaseOnTitle] = useState([]);
+  const token = Cookies.get("accessToken");
+
+  const [plans, setPlans] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+
   const [viewOpen, setViewOpen] = useState(false);
+  const [selectedPlanId, setSelectedPlanId] = useState(null);
 
-  let ActionButton = () => {
-    return (
-      <div>
-        <button
-          onClick={() => setViewOpen(true)}
-          className="bg-[#7AA3CC] font-inter font-medium py-2 px-11 rounded-full text-[#121212] cursor-pointer  hover:bg-[#7AA3CC]/80 transition-all duration-300"
-        >
-          Edit
-        </button>
-      </div>
-    );
-  };
+  const [formData, setFormData] = useState({
+    planName: "",
+    price: "",
+    location: "",
+    card: "",
+    status: "",
+    cardTypes: [],
+  });
 
-  const TableHeads = [
-    { Title: "Plan Name", key: "name", width: "20%" },
-    { Title: "Price", key: "price", width: "20%" },
-    { Title: "Feature", key: "feature", width: "20%" },
-    { Title: "Location", key: "location", width: "20%" },
-    { Title: "Action", key: "action", width: "20%" },
-  ];
-
-  const TableRows = [
-    {
-      name: "James Carter",
-      id: "#1245",
-      price: "10/08/2025",
-      feature: "10:45 AM",
-      location: "2 Location",
-      action: <ActionButton />,
-    },
-  ];
-
+  /* ================= FETCH ALL PLANS ================= */
   useEffect(() => {
-    setBaseOnTitle(TableRows);
+    const fetchPlans = async () => {
+      try {
+        const res = await fetch(`${BASE_URL}/system-owner/plans`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const json = await res.json();
+
+        if (res.ok) {
+          setPlans(json.data);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchPlans();
   }, []);
 
-  const itemsPerPage = 10;
+  /* ================= FETCH SINGLE PLAN ================= */
+  const openEdit = async (id) => {
+    setSelectedPlanId(id);
+    setViewOpen(true);
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = baseOnTitle.slice(startIndex, startIndex + itemsPerPage);
+    try {
+      const res = await fetch(`${BASE_URL}/system-owner/plans/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const json = await res.json();
+
+      if (res.ok && json.data) {
+        const p = json.data;
+
+        setFormData({
+          planName: p.name || "",
+          price: p.price || "",
+          location: p.locationCount || "",
+          card: p.cardCount || "",
+          status: p.status || "",
+          cardTypes: p.cardTypes || [],
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  /* ================= SAVE ================= */
+  const handleSave = async () => {
+    try {
+      const payload = {
+        name: formData.planName,
+        price: Number(formData.price),
+        locationCount: Number(formData.location),
+        cardCount: Number(formData.card),
+        status: formData.status,
+        cardTypes: formData.cardTypes,
+      };
+
+      const res = await fetch(
+        `${BASE_URL}/system-owner/plans/${selectedPlanId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      if (res.ok) {
+        setViewOpen(false);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  /* ================= TABLE ================= */
+  const TableHeads = [
+    { Title: "Plan Name", key: "name" },
+    { Title: "Price", key: "price" },
+    { Title: "Feature", key: "feature" },
+    { Title: "Location", key: "location" },
+    { Title: "Action", key: "action" },
+  ];
+
+  const TableRows = plans.map((p) => ({
+    name: p.name,
+    price: p.price,
+    feature: `${p.cardCount} Cards`,
+    location: `${p.locationCount} Location`,
+    action: (
+      <button
+        onClick={() => openEdit(p.id)}
+        className="bg-[#7AA3CC] py-2 px-11 rounded-full"
+      >
+        Edit
+      </button>
+    ),
+  }));
 
   return (
     <div>
       <Bredcumb />
 
       <div className="overflow-x-auto">
-        <Table TableHeads={TableHeads} TableRows={currentItems} />
+        <Table TableHeads={TableHeads} TableRows={TableRows} />
       </div>
 
+      {/* ================= MODAL ================= */}
       {viewOpen && (
-        <div className="fixed inset-0  bg-[#D9D9D9]/80 flex items-center justify-center z-50 ">
-          <div className="bg-linear-to-b from-[#A8C4D8] to-[#E4DBC2] rounded-3xl   p-12 md:w-[50%] w-full overflow-y-auto md:h-[80%] h-full hide-scrollbar">
+        <div className="fixed inset-0 bg-[#D9D9D9]/80 flex justify-center items-center z-50">
+          <div className="bg-linear-to-b from-[#A8C4D8] to-[#E4DBC2] rounded-3xl p-12 md:w-[50%] w-full h-[80%] overflow-y-auto">
             <div className="flex justify-end">
               <FiX
                 onClick={() => setViewOpen(false)}
-                className="w-7 h-7 mb-5 cursor-pointer "
+                className="w-7 h-7 cursor-pointer"
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-x-18 gap-y-8">
+            <div className="grid grid-cols-2 gap-8">
               <Dropdown
-                label="Select Plan "
-                placeholder="Starter"
-                labelClass={`text-2xl `}
-                className={`   gap-2  font-inter md:col-span-1 col-span-2 `}
-                inputClass="text-base border rounded-2xl  py-3 px-4"
+                label="Select Plan"
+                labelClass={`text-xl mb-2 font-inter `}
+                placeholder={formData.planName}
                 options={["Starter", "Grow", "Business"]}
-                optionClass={`text-base`}
+                inputClass={`border p-4 rounded-xl`}
               />
 
               <InputField
+                label="Price"
                 type="number"
-                label={`Price`}
-                labelClass={`text-2xl `}
-                className={` md:col-span-1 col-span-2`}
-                placeholder={`Price`}
-                inputClass="text-base border rounded-2xl  py-3 px-4"
+                value={formData.price}
+                onChange={(e) =>
+                  setFormData({ ...formData, price: e.target.value })
+                }
+              />
+
+              <InputField
+                label="Location"
+                value={formData.location}
+                onChange={(e) =>
+                  setFormData({ ...formData, location: e.target.value })
+                }
+              />
+
+              <InputField
+                label="Card"
+                value={formData.card}
+                onChange={(e) =>
+                  setFormData({ ...formData, card: e.target.value })
+                }
               />
 
               <Dropdown
-                label="Location Select"
-                placeholder="1"
-                labelClass={`text-2xl `}
-                className={`   gap-2  font-inter  md:col-span-1 col-span-2 `}
-                inputClass="text-base border rounded-2xl  py-3 px-4"
-                options={["1", "2", "3"]}
-                optionClass={`text-base`}
+                label="Plan Status"
+                placeholder={formData.status}
+                labelClass={`text-xl mb-2 font-inter `}
+                options={["Active", "Inactive"]}
+                inputClass={`border p-4 rounded-xl`}
+                onSelect={(v) =>
+                  setFormData({ ...formData, status: v })
+                }
               />
-
-              <Dropdown
-                label="Card Select"
-                placeholder="1"
-                labelClass={`text-2xl `}
-                className={`   gap-2  font-inter  md:col-span-1 col-span-2`}
-                inputClass="text-base border rounded-2xl  py-3 px-4"
-                options={["1", "2", "3"]}
-                optionClass={`text-base`}
-              />
-
-              <Dropdown
-                label="Plan "
-                placeholder="Active"
-                labelClass={`text-2xl `}
-                className={`   gap-2  font-inter   md:col-span-1 col-span-2`}
-                inputClass="text-base border rounded-2xl  py-3 px-4"
-                options={["Active", "Inctive"]}
-                optionClass={`text-base`}
-              />
-
-              <div className=" md:col-span-1 col-span-2">
-                <p className="font-inter text-2xl text-[#000000] mb-4">
-                  Card Type
-                </p>
-
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center gap-2.5">
-                    <input
-                      type="checkbox"
-                      className=" accent-[#80B3FF] w-5 h-5"
-                    />
-                    <p className="text-[#000000] font-inter text-2xl font-medium ">
-                      Points Card
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-2.5">
-                    <input
-                      type="checkbox"
-                      className=" accent-[#80B3FF] w-5 h-5"
-                    />
-                    <p className="text-[#000000] font-inter text-2xl font-medium ">
-                      Stamp Card
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-2.5">
-                    <input
-                      type="checkbox"
-                      className=" accent-[#80B3FF] w-5 h-5"
-                    />
-                    <p className="text-[#000000] font-inter text-2xl font-medium ">
-                      Reward Card
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-2.5">
-                    <input
-                      type="checkbox"
-                      className=" accent-[#80B3FF] w-5 h-5"
-                    />
-                    <p className="text-[#000000] font-inter text-2xl font-medium ">
-                      Membership Card
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
 
-            <div className="mt-22 flex items-center gap-8 justify-center">
-              <button 
-              onClick={() => setViewOpen(false)}
-              className="border border-[#7AA3CC] font-bold font-inter px-20 py-3 rounded-md text-[#000000]  cursor-pointer ">
+            <div className="mt-20 flex justify-center gap-8">
+              <button
+                onClick={() => setViewOpen(false)}
+                className="border border-[#7AA3CC] px-20 py-3 rounded-md font-inter font-bold text-[#000000]"
+              >
                 Close
               </button>
 
-              <button 
-              onClick={() => setViewOpen(false)}
-              className="bg-[#7AA3CC] font-bold font-inter px-20 py-3  rounded-md text-[#000000] cursor-pointer ">
+              <button
+                onClick={handleSave}
+                className="bg-[#7AA3CC] px-20 py-3 rounded-md font-inter font-bold text-[#000000]"
+              >
                 Save
               </button>
             </div>

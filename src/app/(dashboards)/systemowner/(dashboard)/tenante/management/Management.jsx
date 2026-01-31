@@ -202,9 +202,7 @@ const Management = () => {
 
                   <div className="flex justify-between py-4">
                     <span className="font-medium">Status:</span>
-                    <span className="font-normal">
-                      {selectedTenant.status}
-                    </span>
+                    <span className="font-normal">{selectedTenant.status}</span>
                   </div>
                 </div>
               </div>
@@ -214,7 +212,9 @@ const Management = () => {
 
               {/* EDIT BUTTON */}
               <div className="flex justify-center mt-10 pb-5">
-                <Link href="/systemowner/tenante/management/addtenant">
+                <Link
+                  href={`/systemowner/tenante/management/addtenant?id=${selectedTenant.id}`}
+                >
                   <button className="bg-[#7AA3CC] font-bold font-inter px-20 py-3 rounded-md text-[#000000] cursor-pointer">
                     Edit
                   </button>

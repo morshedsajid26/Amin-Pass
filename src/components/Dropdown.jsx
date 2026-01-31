@@ -6,22 +6,30 @@ const Dropdown = ({
   label = "",
   placeholder = "",
   options = [],
+  value,              // ✅ NEW (optional)
   onSelect,
   className,
   inputClass,
   spanClass,
   optionClass,
   labelClass,
-  icon
+  icon,
 }) => {
   const [selected, setSelected] = useState("");
   const [show, setShow] = useState(false);
   const dropdownRef = useRef(null);
 
-  const handleSelect = (value) => {
-    setSelected(value);
+  /* 🔥 SYNC WITH PARENT VALUE */
+  useEffect(() => {
+    if (value !== undefined && value !== null) {
+      setSelected(value);
+    }
+  }, [value]);
+
+  const handleSelect = (item) => {
+    setSelected(item);
     setShow(false);
-    if (onSelect) onSelect(value);
+    onSelect?.(item);
   };
 
   useEffect(() => {
@@ -32,49 +40,60 @@ const Dropdown = ({
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
-    <div
-      ref={dropdownRef}
-      className={`flex flex-col   relative ${className}`}
-    >
+    <div ref={dropdownRef} className={`flex flex-col relative ${className}`}>
       {/* Label */}
-      <label className={`font-inter text-[#000000] dark:text-white  ${labelClass}`}>
-        {label}
-       
-      </label>
+      {label && (
+        <label
+          className={`font-inter text-[#000000] dark:text-white ${labelClass}`}
+        >
+          {label}
+        </label>
+      )}
 
-      {/* Input Box */}
+      {/* Input */}
       <div className="relative">
-        <div onClick={() => setShow(!show)}>
+        <div onClick={() => setShow((p) => !p)}>
           <input
             readOnly
-            value={selected || ""}
-            className={`w-full bg-transparent outline-none text-[#000000] dark:text-white placeholder:text-[#000000] dark:placeholder:text-white   cursor-pointer ${inputClass}`}
+            value={selected}
             placeholder={placeholder}
+            className={`w-full bg-transparent outline-none cursor-pointer 
+              text-[#000000] dark:text-white 
+              placeholder:text-[#000000] dark:placeholder:text-white
+              ${inputClass}`}
           />
 
-          {/* Arrow Icon */}
-          <div className={`w-6 h-6  flex items-center justify-center absolute top-1/2 -translate-y-1/2 right-6 text-[#000000] dark:text-white ${icon}`}>
+          {/* Arrow */}
+          <div
+            className={`w-6 h-6 absolute top-1/2 -translate-y-1/2 right-6 
+              flex items-center justify-center text-[#000000] dark:text-white ${icon}`}
+          >
             {show ? <FaCaretUp /> : <FaCaretDown />}
           </div>
         </div>
 
-        {/* Dropdown Menu */}
+        {/* Options */}
         <div
-          className={`absolute left-0 top-[105%] w-full bg-white  border border-[#CED2E5] rounded-md shadow-md  text-[#000000] z-30 transition-all duration-300 text-center overflow-y-scroll hide-scrollbar  ${optionClass} ${
-            show
-              ? "opacity-100 visible max-h-40 overflow-auto"
-              : "opacity-0 invisible max-h-0 overflow-hidden"
-          }`}
+          className={`absolute left-0 top-[105%] w-full bg-white border 
+            border-[#CED2E5] rounded-md shadow-md z-30 text-center
+            transition-all duration-300 hide-scrollbar
+            ${optionClass}
+            ${
+              show
+                ? "opacity-100 visible max-h-40 overflow-auto"
+                : "opacity-0 invisible max-h-0 overflow-hidden"
+            }`}
         >
           {options.map((item, index) => (
             <div
               key={index}
               onClick={() => handleSelect(item)}
-              className="py-2 hover:bg-[#7AA3CC] hover:text-white cursor-pointer"
+              className="py-2 cursor-pointer hover:bg-[#7AA3CC] hover:text-white"
             >
               {item}
             </div>

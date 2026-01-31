@@ -19,7 +19,7 @@ import Cookies from "js-cookie";
 
 const navitems = [
   { name: "Overview", link: "/systemowner/home", icon: homeIcon },
-  { name: "Tenant Permission", link: "/systemowner/permission/control", icon: VisibilityIcon },
+  // { name: "Tenant Permission", link: "/systemowner/permission/control", icon: VisibilityIcon },
   { name: "Tenants", link: "/systemowner/tenante/management", icon: UserIcon },
   { name: "Plan Activation", link: "/systemowner/plan/activation", icon: ActivationIcon },
   { name: "Audit Logs", link: "/systemowner/audit/logs", icon: AuditIcon },
