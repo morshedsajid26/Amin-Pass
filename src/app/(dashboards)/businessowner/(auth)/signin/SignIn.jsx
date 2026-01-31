@@ -19,50 +19,38 @@ const SignIn = () => {
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleLogin = async (e) => {
+   const handleLogin = async (e) => {
     e.preventDefault();
-
     setLoading(true);
-    setMessage("");
-    setIsSuccess(false);
-
+  
     try {
-      const formData = new FormData();
-      formData.append("email", email);
-      formData.append("password", password);
-
-      const res = await fetch(`${BUSINESSOWNER_BASE_URL}/api/owner/login`, {
+      const res = await fetch(`${BUSINESSOWNER_BASE_URL}/auth/login`, {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
       });
-
+  
       const data = await res.json();
-      console.log("LOGIN RESPONSE:", data);
-
+      console.log("data",data);
+  
       if (res.ok) {
-        setMessage("Login successful!");
-        setIsSuccess(true);
-
-        // Save JWT Token
-        if (data.token) {
-          Cookies.set("token", data.token);
-        }
-
-        
-        setTimeout(() => {
-          router.push("/businessowner/home");
-        }, 500);
+        Cookies.set("accessToken", data.data.accessToken);
+        router.push("/businessowner/home");
       } else {
-        setMessage(JSON.stringify(data));
-        setIsSuccess(false);
+        setMessage(data.message || "Login failed");
       }
-    } catch (error) {
+    } catch (err) {
       setMessage("Something went wrong!");
-      setIsSuccess(false);
     }
-
+  
     setLoading(false);
   };
+  
 
   return (
     <main className="bg-white dark:bg-[#141414] grid justify-center items-center overflow-y-auto hide-scrollbar py-30 px-11 rounded-3xl">

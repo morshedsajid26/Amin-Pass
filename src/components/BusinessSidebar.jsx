@@ -18,6 +18,7 @@ import AddIcon from "@/public/AddIcon.png";
 import LogoutIcon from "@/public/LogoutIcon.png";
 import logo from "@/public/Aminpass.png";
 import Cookies from "js-cookie";
+import { BUSINESSOWNER_BASE_URL } from "../config/api";
 
 const navitems = [
   { name: "Overview", link: "/businessowner/home", icon: homeIcon },
@@ -36,30 +37,30 @@ const BusinessSidebar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleLogout = async () => {
+const handleLogout = async () => {
   try {
-    const token = Cookies.get("token");
+    const accessToken = Cookies.get("accessToken");
 
-    if (!token) {
-      console.log("No token found");
-    } else {
-      await fetch(`${BUSINESSOWNER_BASE_URL}/api/owner/logout`, {
+    if (accessToken) {
+      await fetch(`${BUSINESSOWNER_BASE_URL}/auth/logout`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
     }
 
-    // Clear token from localStorage
-    Cookies.remove("token");
+    
+    Cookies.remove("accessToken", { path: "/" });
 
-    // Redirect to login page
     window.location.href = "/businessowner/signin";
 
   } catch (error) {
     console.log("Logout error:", error);
-    Cookies.remove("token");
+
+    
+    Cookies.remove("accessToken", { path: "/" });
+
     window.location.href = "/businessowner/signin";
   }
 };
