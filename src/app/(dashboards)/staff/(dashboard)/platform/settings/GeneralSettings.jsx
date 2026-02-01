@@ -1,18 +1,26 @@
 "use client";
+
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Avatar from "@/public/Avatar.png";
 import { FiX } from "react-icons/fi";
+import Cookies from "js-cookie";
+import { BASE_URL } from "@/src/config/api";
 
 const GeneralSettings = () => {
   const [viewOpen, setViewOpen] = useState(false);
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const newPinRefs = useRef([]);
   const confirmPinRefs = useRef([]);
 
+  /* ---------------- PIN INPUT HELPERS ---------------- */
   const handleChange = (e, index, refs) => {
     const value = e.target.value.replace(/[^0-9]/g, "");
     e.target.value = value;
+
     if (value && index < refs.current.length - 1) {
       refs.current[index + 1].focus();
     }
@@ -24,47 +32,114 @@ const GeneralSettings = () => {
     }
   };
 
+  const getPinValue = (refs) =>
+    refs.current.map((el) => el?.value || "").join("");
+
+  /* ---------------- GET PROFILE ---------------- */
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = Cookies.get("accessToken");
+        if (!token) return;
+
+        const res = await fetch(
+          "https://test13.fireai.agency/api/staff/settings",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+
+        setProfile(data.data || data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  /* ---------------- SET PIN ---------------- */
+  const handleSavePin = async () => {
+    const pin = getPinValue(newPinRefs);
+    const confirmPin = getPinValue(confirmPinRefs);
+
+    if (pin.length !== 6 || confirmPin.length !== 6) {
+      setError("PIN must be exactly 6 digits");
+      return;
+    }
+
+    if (pin !== confirmPin) {
+      setError("PIN and Confirm PIN do not match");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError("");
+
+      const token = Cookies.get("token");
+
+      const res = await fetch(
+        `${BASE_URL}/staff/auth/set-pin`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            pin: pin,
+            confirmPin: confirmPin, // ✅ EXACT backend key
+          }),
+        }
+      );
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Failed to set PIN");
+
+      // success
+      setViewOpen(false);
+
+      newPinRefs.current.forEach((i) => i && (i.value = ""));
+      confirmPinRefs.current.forEach((i) => i && (i.value = ""));
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /* ---------------- UI ---------------- */
   return (
     <div className="md:w-[530px] w-full gap-8 mt-10">
+      {/* Profile */}
       <div>
         <p className="font-inter text-xl mb-2">Profile Image</p>
         <Image src={Avatar} alt="profile" />
       </div>
 
+      {/* Info */}
       <div className="font-inter text-xl text-[#000000] mt-10">
-        <div className="flex justify-between border-b border-[#000000]/10 py-4">
-          <span className="font-medium">My Name:</span>
-          <span className="font-normal">#1252</span>
-        </div>
-
-        <div className="flex justify-between border-b border-[#000000]/10 py-4">
-          <span className="font-medium">Role:</span>
-          <span className="font-normal">Manager</span>
-        </div>
-
-        <div className="flex justify-between border-b border-[#000000]/10 py-4">
-          <span className="font-medium">Assigned Location:</span>
-          <span className="font-normal">Dhaka, Bangladesh</span>
-        </div>
-
-        <div className="flex justify-between border-b border-[#000000]/10 py-4">
-          <span className="font-medium">Email:</span>
-          <span className="font-normal">example@gmail.com</span>
-        </div>
-
-        <div className="flex justify-between py-4">
-          <span className="font-medium">Phone Number:</span>
-          <span className="font-normal">01896064584</span>
-        </div>
+        <Info label="My Name" value={profile?.name} />
+        <Info label="Role" value={profile?.role} />
+        <Info label="Assigned Location" value={profile?.location} />
+        <Info label="Email" value={profile?.email} />
+        <Info label="Phone Number" value={profile?.phone} last />
       </div>
 
       <button
         onClick={() => setViewOpen(true)}
-        className="bg-[#7AA3CC] text-[#000000] w-[30%] font-bold font-inter py-3 mt-14 rounded-lg cursor-pointer"
+        className="bg-[#7AA3CC] text-[#000000] w-[30%] font-bold font-inter py-3 mt-14 rounded-lg"
       >
         Set Your PIN
       </button>
 
+      {/* ---------------- MODAL ---------------- */}
       {viewOpen && (
         <div className="fixed inset-0 bg-[#D9D9D9]/80 flex items-center justify-center z-50">
           <div className="bg-[#EFEFEF] rounded-3xl p-5 md:p-10">
@@ -74,58 +149,36 @@ const GeneralSettings = () => {
                 className="w-7 h-7 mb-5 cursor-pointer"
               />
             </div>
+
             <h3 className="font-inter font-medium text-2xl text-center mb-12">
               Set a new PIN
             </h3>
 
-            {/* New PIN */}
-            <div className="flex flex-col gap-6">
-              <label className="font-inter text-xl text-[#333333]">New PIN</label>
-              <div className="flex gap-4 justify-center">
-                {[...Array(6)].map((_, i) => (
-                  <input
-                    key={i}
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    maxLength={1}
-                    ref={(el) => (newPinRefs.current[i] = el)}
-                    onChange={(e) => handleChange(e, i, newPinRefs)}
-                    onKeyDown={(e) => handleKeyDown(e, i, newPinRefs)}
-                    className="appearance-none w-[47px] h-[49px] border border-[#7AA3CC] rounded-[10px] text-center outline-none text-xl font-inter font-bold text-[#005FA8]"
-                  />
-                ))}
-              </div>
-            </div>
+            <PinInput
+              label="New PIN"
+              refs={newPinRefs}
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+            />
 
-            {/* Confirm PIN */}
-            <div className="mt-6 flex flex-col gap-6">
-              <label className="font-inter text-xl text-[#333333]">
-                Confirm PIN
-              </label>
-              <div className="flex gap-4 justify-center">
-                {[...Array(6)].map((_, i) => (
-                  <input
-                    key={i}
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    maxLength={1}
-                    ref={(el) => (confirmPinRefs.current[i] = el)}
-                    onChange={(e) => handleChange(e, i, confirmPinRefs)}
-                    onKeyDown={(e) => handleKeyDown(e, i, confirmPinRefs)}
-                    className="appearance-none w-[47px] h-[49px] border border-[#7AA3CC] rounded-[10px] text-center outline-none text-xl font-inter font-bold text-[#005FA8]"
-                  />
-                ))}
-              </div>
-            </div>
+            <PinInput
+              label="Confirm PIN"
+              refs={confirmPinRefs}
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+            />
+
+            {error && (
+              <p className="text-red-500 text-center mt-4">{error}</p>
+            )}
 
             <div className="text-center">
               <button
-                onClick={() => setViewOpen(false)}
-                className="bg-[#7AA3CC] text-[#000000] w-[30%] font-bold font-inter py-3 mt-5  md:mt-14 rounded-lg cursor-pointer"
+                onClick={handleSavePin}
+                disabled={loading}
+                className="bg-[#7AA3CC] text-[#000000] w-[30%] font-bold font-inter py-3 mt-10 rounded-lg"
               >
-                Save
+                {loading ? "Saving..." : "Save"}
               </button>
             </div>
           </div>
@@ -136,3 +189,37 @@ const GeneralSettings = () => {
 };
 
 export default GeneralSettings;
+
+/* ---------------- SMALL COMPONENTS ---------------- */
+
+const Info = ({ label, value, last }) => (
+  <div
+    className={`flex justify-between py-4 ${
+      !last && "border-b border-[#000000]/10"
+    }`}
+  >
+    <span className="font-medium">{label}:</span>
+    <span className="font-normal">{value || "-"}</span>
+  </div>
+);
+
+const PinInput = ({ label, refs, onChange, onKeyDown }) => (
+  <div className="flex flex-col gap-6 mb-6">
+    <label className="font-inter text-xl text-[#333333]">{label}</label>
+    <div className="flex gap-4 justify-center">
+      {[...Array(6)].map((_, i) => (
+        <input
+          key={i}
+          type="text"
+          maxLength={1}
+          ref={(el) => (refs.current[i] = el)}
+          onChange={(e) => onChange(e, i, refs)}
+          onKeyDown={(e) => onKeyDown(e, i, refs)}
+          className="w-[47px] h-[49px] border border-[#7AA3CC]
+          rounded-[10px] text-center outline-none text-xl
+          font-inter font-bold text-[#005FA8]"
+        />
+      ))}
+    </div>
+  </div>
+);

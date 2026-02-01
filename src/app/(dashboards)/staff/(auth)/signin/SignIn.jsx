@@ -1,69 +1,116 @@
-import Image from 'next/image'
-import React from 'react'
+"use client";
 
-import InputField from '@/src/components/InputField'
-import Password from '@/src/components/Password'
-import { FcGoogle } from "react-icons/fc";
-import Link from 'next/link';
-
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import InputField from "@/src/components/InputField";
+import Password from "@/src/components/Password";
+import Link from "next/link";
+import { BASE_URL } from "@/src/config/api";
+import Cookies from "js-cookie";
 
 const SignIn = () => {
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!email || !password) {
+      setError("Email and password are required");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      
+      const res = await fetch(
+        `${BASE_URL}/staff/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+
+          body: JSON.stringify({
+            email: email.trim(),
+            password,
+          }),
+        },
+      );
+      
+      const data = await res.json();
+      Cookies.set("token", data.data.token, { secure: true, sameSite: 'Lax' });
+      console.log("LOGIN RESPONSE:", data);
+
+      if (!res.ok) {
+        throw new Error(data.message || "Login failed");
+      }
+      router.push("/staff/customer/platform");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-     <main className="bg-white grid justify-center items-center overflow-y-auto hide-scrollbar py-30 px-11 rounded-3xl  ">
-      <form className="gap-5 flex flex-col items-center w-[480px] ">
+    <main className="bg-white grid justify-center items-center py-20 px-11 rounded-3xl">
+      <form
+        onSubmit={handleSubmit}
+        className="gap-5 flex flex-col items-center w-[480px]"
+      >
+        <h3 className="font-inter font-medium text-[32px] text-[#333333] mb-4">
+          Signin to Account
+        </h3>
 
-        
+        <p className="font-inter text-[#333333] mb-4">
+          Please enter your email and password to continue
+        </p>
 
-      <h3 className='font-inter font-medium text-[32px] text-[#333333] mb-6 mt-'>Signin to Account</h3>
+    
+        <InputField
+          label="Email Address"
+          type={`email`}
+          labelClass={`text-[#333333] text-[16px]`}
+          inputClass={`border-[#005FA8] rounded-[4px]  text-[#5C5C5C] py-3 placeholder:text-[#5C5C5C]`}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      <p className='font-inter  text-[#333333]'>Please enter your email and password to continue</p>
+        <Password
+          label="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      <InputField
-      label='Email Address'
-      type={`email`}
-      labelClass={`text-[#333333] text-[16px]`}
-      placeholder=''
-      inputClass={`border-[#005FA8] rounded-[4px]  text-[#5C5C5C] py-3 placeholder:text-[#5C5C5C]`}
-      
-      />
-      <Password
-      label='Password'
-      // placeholder="Enter your password"
-      />
+        {error && (
+          <p className="text-red-500 text-sm w-full text-left">{error}</p>
+        )}
 
-      <div className="flex justify-between items-center  w-full ">
-          <div className="flex items-center gap-2.5">
-            <input type="checkbox" className="w-4 h-4 accent-[#005FA8]" />
-            <p className="text-[#333333] font-inter ">Remember Password</p>
-          </div>
-        
-        </div>
-
-
-
-      <Link className='w-full' href='/staff/customer/platform'>
-      <button className='bg-[#7AA3CC] text-[#010101] font-semibold text-xl w-full font-inter py-3 rounded-lg cursor-pointer mt-12'>
-        Sign In
-      </button>
-      
-      </Link>
-
-      <p className='font-inter '>
-        Don’t have an account? 
-        
-        <a href="/staff/signup"
-        className='font-bold'
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl w-full py-3 rounded-lg mt-8"
         >
-         Sign up
-        </a>
-      </p>
+          {loading ? "Signing in..." : "Sign In"}
+        </button>
 
-     
-      
+        <p className="font-inter mt-3">
+          Don’t have an account?
+          <Link href="/staff/signup" className="font-bold ml-1">
+            Sign up
+          </Link>
+        </p>
       </form>
-
     </main>
-  )
-}
+  );
+};
 
-export default SignIn
+export default SignIn;
