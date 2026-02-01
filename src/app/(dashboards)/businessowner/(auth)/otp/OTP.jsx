@@ -1,43 +1,31 @@
 "use client";
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { BASE_URL } from "@/src/config/api";
 
 const OTP = () => {
-  const [loading, setLoading] = useState(false);
-  const inputs = useRef([]);
   const router = useRouter();
+  const inputs = useRef([]);
 
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState(["", "", "", ""]); 
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
-  const handleChange = (e, index) => {
-    const value = e.target.value.replace(/[^0-9]/g, "");
-    if (!value) return;
-
-    const newOtp = [...otp];
-    newOtp[index] = value;
-    setOtp(newOtp);
-
-    if (index < 3) {
-      inputs.current[index + 1].focus();
-    }
-  };
-
-  const handleKeyDown = (e, index) => {
-    if (e.key === "Backspace" && !otp[index] && index > 0) {
-      inputs.current[index - 1].focus();
-    }
-  };
-
   useEffect(() => {
     axios.defaults.withCredentials = true;
+
+    const storedEmail = sessionStorage.getItem("resetEmail");
+    if (storedEmail) {
+      setEmail(storedEmail);
+    }
   }, []);
 
-  useEffect(() => {
+   useEffect(() => {
     const storedEmail = sessionStorage.getItem("resetEmail");
     if (!storedEmail) {
       router.push("/businessowner/forgotpassword");
@@ -46,15 +34,75 @@ const OTP = () => {
     }
   }, [router]);
 
+  // ===============================
+  // HANDLE CHANGE
+  // ===============================
+  const handleChange = (e, index) => {
+    const value = e.target.value.replace(/\D/g, "");
+    if (!value) return;
+
+    const newOtp = [...otp];
+    newOtp[index] = value[0];
+    setOtp(newOtp);
+
+    if (index < otp.length - 1) {
+      inputs.current[index + 1].focus();
+    }
+  };
+
+  // ===============================
+  // HANDLE BACKSPACE
+  // ===============================
+  const handleKeyDown = (e, index) => {
+    if (e.key === "Backspace") {
+      e.preventDefault();
+
+      const newOtp = [...otp];
+
+      if (otp[index]) {
+        newOtp[index] = "";
+        setOtp(newOtp);
+      } else if (index > 0) {
+        newOtp[index - 1] = "";
+        setOtp(newOtp);
+        inputs.current[index - 1].focus();
+      }
+    }
+  };
+
+  // ===============================
+  // HANDLE PASTE
+  // ===============================
+  const handlePaste = (e) => {
+    e.preventDefault();
+    const pasteData = e.clipboardData
+      .getData("text")
+      .replace(/\D/g, "")
+      .slice(0, 6);
+
+    if (!pasteData) return;
+
+    const newOtp = [...otp];
+    pasteData.split("").forEach((char, i) => {
+      newOtp[i] = char;
+    });
+
+    setOtp(newOtp);
+    inputs.current[pasteData.length - 1]?.focus();
+  };
+
+  // ===============================
+  // SUBMIT
+  // ===============================
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
-    const finalOtp = otp.join(""); 
+    const otp = otp.join("");
 
-    if (finalOtp.length !== 4) {
-      setError("Please enter all 4 digits");
+    if (otp.length !== 6) {
+      setError("Please enter all 6 digits");
       return;
     }
 
@@ -62,15 +110,13 @@ const OTP = () => {
       setLoading(true);
 
       const res = await axios.post(
-        "http://127.0.0.1:8000/api/password/verify-otp",
+        `${BASE_URL}/auth/verify-forgot-password-otp`,
         {
-          email: email,
-          otp: finalOtp, 
+          email,
+          otp: otp,
         },
         {
-          withCredentials: true,
           headers: {
-            Accept: "application/json",
             "Content-Type": "application/json",
           },
         }
@@ -81,15 +127,13 @@ const OTP = () => {
         setTimeout(() => {
           router.push("/businessowner/newpassword");
         }, 800);
-      } else {
-        setError(res.data.message || "Invalid OTP");
       }
     } catch (err) {
-      const msg =
+      setError(
         err?.response?.data?.message ||
-        err?.message ||
-        "OTP verification failed";
-      setError(msg);
+          err?.message ||
+          "OTP verification failed"
+      );
     } finally {
       setLoading(false);
     }
@@ -103,11 +147,11 @@ const OTP = () => {
         </h1>
         <p className="font-inter text-[16px] text-[#333333] dark:text-white mt-6">
           We sent a code to your email address. Please check your email for the
-          4 digit code.
+          6 digit code.
         </p>
 
         <div className="flex gap-4 justify-center my-[82px]">
-          {[...Array(4)].map((_, i) => (
+          {[...Array(6)].map((_, i) => (
             <input
               key={i}
               type="text"

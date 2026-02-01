@@ -7,6 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { BASE_URL } from "@/src/config/api";
 
 const ForgotPass = () => {
   const router = useRouter();
@@ -30,7 +31,7 @@ const ForgotPass = () => {
       setLoading(true);
 
       // ✅ OTP send request to backend
-      const res = await axios.post("http://127.0.0.1:8000/api/password/send-otp", {
+      const res = await axios.post(`${BASE_URL}/auth/forgot-password`, {
         email: email,
       });
       console.log("OTP API RESPONSE:", res.data);
