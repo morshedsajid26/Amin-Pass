@@ -119,7 +119,7 @@ const handleClick = async () => {
                 {redeemData?.customerName || "—"}
               </h2>
               <p className="font-inter font-medium text-[#000000] dark:text-white">
-                {redeemData?.customerEmail || ""}
+                {redeemData?.branchName || ""}
               </p>
             </div>
           </div>
