@@ -1,15 +1,11 @@
 "use client";
-import Link from "next/link";
 import React, { useState } from "react";
 import { FaGift, FaStamp } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
-const CardType = ({ onSelect }) => {
+const CardType = () => {
   const [selected, setSelected] = useState("stamp");
-
-  const handleSelect = (type) => {
-    setSelected(type);
-    if (onSelect) onSelect(type);
-  };
+  const router = useRouter();
 
   const cards = [
     {
@@ -22,39 +18,54 @@ const CardType = ({ onSelect }) => {
       label: "Reward Card",
       icon: <FaGift className="w-12 h-12" />,
     },
-    
   ];
 
+  /* ================= CONTINUE ================= */
+  const handleContinue = () => {
+    // ✅ only save card type
+    localStorage.setItem(
+      "cardSetup",
+      JSON.stringify({
+        cardType: selected.toUpperCase(), // STAMP | REWARD
+      })
+    );
+
+    // ✅ go to next step
+    router.push(
+      "/businessowner/manage/reward/management/loyalty/programme/card/details"
+    );
+  };
+
   return (
-
     <div>
-    <div className="grid grid-cols-12 gap-5 md:gap-0  mt-8">
-      {cards.map((card) => (
-        <div
-          key={card.id}
-          onClick={() => handleSelect(card.id)}
-          className={`md:w-[310px] py-8 cursor-pointer rounded-2xl flex flex-col justify-center items-center border transition-all duration-300  col-span-12 md:col-span-6
-            ${
-              selected === card.id
-                ? "bg-black dark:bg-white dark:text-black text-white border-white dark:border-black"
-                : "bg-white dark:bg-black dark:text-white  text-black border-gray-300 hover:shadow-md"
-            }`}
+      <div className="grid grid-cols-12 gap-5 md:gap-0 mt-8">
+        {cards.map((card) => (
+          <div
+            key={card.id}
+            onClick={() => setSelected(card.id)}
+            className={`md:w-[310px] py-8 cursor-pointer rounded-2xl flex flex-col justify-center items-center border transition-all duration-300 col-span-12 md:col-span-6
+              ${
+                selected === card.id
+                  ? "bg-black dark:bg-white dark:text-black text-white border-white dark:border-black"
+                  : "bg-white dark:bg-black dark:text-white text-black border-gray-300 hover:shadow-md"
+              }`}
+          >
+            {card.icon}
+            <p className="font-inter text-2xl font-medium mt-4">
+              {card.label}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex justify-center mt-25">
+        <button
+          onClick={handleContinue}
+          className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl font-inter py-3 px-25 rounded-lg"
         >
-          {card.icon}
-          <p className="font-inter text-2xl font-medium mt-4">{card.label}</p>
-        </div>
-      ))}
-    </div>
-
-    <div>
-      <Link href='/businessowner/manage/reward/management/loyalty/programme/card/details' className="flex justify-center mt-25">
-      <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl  font-inter py-3 px-25 rounded-lg cursor-pointer flex items-center gap-2">
-      
-           Continue
-          </button>
-          </Link>
-    </div>
-      
+          Continue
+        </button>
+      </div>
     </div>
   );
 };

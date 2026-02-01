@@ -21,7 +21,18 @@ const LoyaltyCard = ({ card, onDeleteClick }) => {
         {/* Header */}
         <div className="flex justify-between items-center mb-3">
           <div className="flex items-center gap-2">
-            <Image src={coffee} alt="Coffee Icon" />
+            {card.logo ? (
+              <Image
+                src={card.logo}
+                alt="Company Logo"
+                width={32}
+                height={32}
+                className="object-contain"
+              />
+            ) : (
+              <Image src={coffee} alt="Default Logo" />
+            )}
+
             <span
               className="font-bold font-inter"
               style={{ color: card.textColor || "#000" }}
@@ -38,15 +49,26 @@ const LoyaltyCard = ({ card, onDeleteClick }) => {
           </div>
         </div>
 
-        {/* Banner */}
-        <div className="rounded-md overflow-hidden mb-4">
-          <Image
-            src={loyalty}
-            alt="Loyalty Banner"
-            width={400}
-            height={100}
-            className="w-full object-cover"
-          />
+        {/* Stamp Background */}
+        <div className="rounded-md overflow-hidden mb-4 flex justify-center">
+          {card.stampBackground ? (
+            <Image
+              src={card.stampBackground}
+              alt="Stamp Background"
+              width={400}
+      height={120}
+      quality={100}
+              className="w-[200px] h-full object-cover"
+            />
+          ) : (
+            <Image
+              src={loyalty}
+              alt="Default Banner"
+              width={400}
+              height={100}
+              className="w-full object-cover"
+            />
+          )}
         </div>
 
         {/* Reward Info */}
@@ -58,27 +80,21 @@ const LoyaltyCard = ({ card, onDeleteClick }) => {
           <p className="capitalize">{card.cardType.replace("_", " ")}</p>
         </div>
 
-        {/* QR Code */}
+        {/* QR */}
         <div className="flex justify-center mb-4">
-          <Image
-            src={qrCode}
-            alt="QR Code"
-            width={120}
-            height={120}
-            className="rounded-md border border-gray-200"
-          />
+          <Image src={qrCode} alt="QR Code" width={120} height={120} />
         </div>
       </div>
 
       {/* Buttons */}
       <div className="flex justify-center gap-8 mt-6">
-        <button className="border border-[#7AA3CC] font-inter font-medium py-2.5 px-15 rounded-md">
+        <button className="border border-[#7AA3CC] py-2.5 px-15 rounded-md font-semibold">
           Edit
         </button>
 
         <button
           onClick={() => onDeleteClick(card.id)}
-          className="bg-[#ED4539] border border-[#7AA3CC] font-inter font-medium py-2.5 px-14 rounded-md text-white"
+          className="bg-[#ED4539] py-2.5 px-14 rounded-md text-white font-semibold"
         >
           Delete
         </button>
@@ -86,6 +102,7 @@ const LoyaltyCard = ({ card, onDeleteClick }) => {
     </div>
   );
 };
+
 
 /* ---------------- MAIN PAGE ---------------- */
 const Loyalty = () => {

@@ -173,6 +173,7 @@ const AddReward = () => {
         {/* Reward Type */}
         <Dropdown
           label="Reward Type"
+          labelClass={`text-xl mb-2`}
           options={["EARN", "REDEEM", "FREE_ITEM"]}
           onSelect={(value) => handleChange("rewardType", value)}
           className="col-span-12 md:col-span-6"
@@ -197,6 +198,7 @@ const AddReward = () => {
         {/* Branch Dropdown (NAME show, ID store) */}
         <Dropdown
           label="Branch"
+          labelClass={`text-xl mb-2`}
           options={branches.map((b) => b.name)}
           onSelect={(name) => {
             const branch = branches.find((b) => b.name === name);

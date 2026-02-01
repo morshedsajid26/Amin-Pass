@@ -9,7 +9,8 @@ const layout = ({children}) => {
 
     const nav = [
       { name: "Reward", link: "/businessowner/manage/reward/management" },
-       { name: "Loyalty Card", link: "/businessowner/manage/reward/management/loyalty/programme" },
+       { name: "Cards", link: "/businessowner/manage/reward/management/loyalty/programme" },
+       { name: "Loyalty Cards", link: "" },
      
     ];
   return (

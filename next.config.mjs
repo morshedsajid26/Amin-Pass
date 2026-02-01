@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+   images: {
+    domains: ["test13.fireai.agency"],
+  },
 };
 
 export default nextConfig;

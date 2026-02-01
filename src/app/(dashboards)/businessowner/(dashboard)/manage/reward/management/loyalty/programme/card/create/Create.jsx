@@ -3,14 +3,21 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { BsImages } from "react-icons/bs";
 import QR from "@/public/QR.png";
-import Link from "next/link";
+import Cookies from "js-cookie";
+import { BASE_URL } from "@/src/config/api";
+import { useRouter } from "next/navigation";
 
 export default function Create() {
-  const [stampCount, setStampCount] = useState(6);
-  const [activeStamps, setActiveStamps] = useState(2);
+  const router = useRouter();
 
-  const [logo, setLogo] = useState(null);
-  const [stampBg, setStampBg] = useState(null);
+  const [stampCount, setStampCount] = useState(6);
+  const [activeStamps, setActiveStamps] = useState(0);
+
+  const [logoFile, setLogoFile] = useState(null);
+  const [logoPreview, setLogoPreview] = useState(null);
+
+  const [stampBgFile, setStampBgFile] = useState(null);
+  const [stampBgPreview, setStampBgPreview] = useState(null);
 
   const [colors, setColors] = useState({
     cardBg: "#FFFFFF",
@@ -19,26 +26,100 @@ export default function Create() {
     inactive: "#626262",
   });
 
+  /* ================= FILE HANDLERS ================= */
   const handleLogoUpload = (e) => {
     const file = e.target.files?.[0];
-    if (file) setLogo(URL.createObjectURL(file));
+    if (file) {
+      setLogoFile(file);
+      setLogoPreview(URL.createObjectURL(file));
+    }
   };
 
   const handleStampBgUpload = (e) => {
     const file = e.target.files?.[0];
-    if (file) setStampBg(URL.createObjectURL(file));
+    if (file) {
+      setStampBgFile(file);
+      setStampBgPreview(URL.createObjectURL(file));
+    }
   };
 
+  /* ================= ORDINAL ================= */
   function getOrdinal(n) {
     const s = ["th", "st", "nd", "rd"],
       v = n % 100;
     return n + (s[(v - 20) % 10] || s[v] || s[0]);
   }
 
+  /* ================= FINAL CREATE ================= */
+  const handleCreate = async () => {
+    const token = Cookies.get("accessToken");
+    const businessId = Cookies.get("businessId");
+
+    if (!token || !businessId) {
+      alert("Business authentication missing");
+      return;
+    }
+
+    const stored = JSON.parse(localStorage.getItem("cardSetup")) || {};
+
+    const formData = new FormData();
+
+    // ===== PREVIOUS STEPS =====
+    formData.append("businessId", businessId);
+    formData.append("type", stored.cardType);
+    formData.append("cardDesc", stored.cardDesc);
+    formData.append("earnRule", stored.earnRule);
+    formData.append("companyName", stored.companyName);
+    formData.append("earnedRewardMessage", stored.earnedRewardMessage);
+    formData.append("barcodeType", stored.barcodeType);
+    formData.append("rewardProgram", stored.rewardProgram);
+    formData.append("earnValue", stored.earnValue);
+    formData.append("earnUnit", stored.earnUnit);
+
+    // ===== FINAL STEP =====
+    formData.append("stampsCount", stampCount);
+    formData.append("cardBackground", colors.cardBg);
+    formData.append("textColor", colors.text);
+    formData.append("activeStampColor", colors.active);
+    formData.append("inactiveStampColor", colors.inactive);
+
+    if (logoFile) formData.append("logo", logoFile);
+    if (stampBgFile) formData.append("stampBackground", stampBgFile);
+
+    try {
+      const res = await fetch(
+        `${BASE_URL}/business-owner/cards/create`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data?.message || "Card creation failed");
+        return;
+      }
+
+      // ✅ clear temp storage
+      localStorage.removeItem("cardSetup");
+
+      // ✅ success redirect
+      router.push("/businessowner/manage/reward/management");
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
+    }
+  };
+
   return (
-    <div className="">
-      <div className="flex flex-col md:flex-row gap-14 w-full mt-10 ">
-        {/* LEFT SIDE SETTINGS */}
+    <div>
+      <div className="flex flex-col md:flex-row gap-14 w-full mt-10">
+        {/* LEFT SETTINGS */}
         <div className="md:w-1/2 space-y-8">
           {/* Stamp Count */}
           <div>
@@ -54,11 +135,11 @@ export default function Create() {
                     key={num}
                     onClick={() => setStampCount(num)}
                     className={`w-10 h-10 rounded-full border transition font-inter 
-          ${
-            stampCount === num
-              ? "bg-black dark:bg-[#373737] text-white"
-              : "bg-white border-black text-black"
-          }`}
+                    ${
+                      stampCount === num
+                        ? "bg-black dark:bg-[#373737] text-white"
+                        : "bg-white border-black text-black"
+                    }`}
                   >
                     {num}
                   </button>
@@ -67,176 +148,82 @@ export default function Create() {
             </div>
           </div>
 
-          {/* Active Stamp Count */}
-          {/* <div className="mt-6">
-  <h3 className="font-inter font-semibold text-xl mb-3">
-    Active Stamps
-  </h3>
-
-  <div className="flex gap-3 flex-wrap">
-    {[...Array(stampCount)].map((_, i) => {
-      const num = i + 1;
-      return (
-        <button
-          key={num}
-          onClick={() => setActiveStamps(num)}
-          className={`w-10 h-10 rounded-full border transition font-inter 
-          ${activeStamps === num
-            ? "bg-black dark:bg-[#373737] text-white"
-            : "bg-white border-black text-black"
-          }`}
-        >
-          {num}
-        </button>
-      );
-    })}
-  </div>
-          </div> */}
-
-          {/* Logo Upload */}
+          {/* Logo */}
           <div>
-            <h3 className="font-inter font-semibold text-xl mb-2 dark:text-white">
+            <h3 className="font-inter font-semibold text-xl mb-2 text-black dark:text-white">
               Logo
             </h3>
-
-            <div className="border dark:border-white rounded-xl px-4 py-3 flex justify-between items-center ">
-              <div className="flex items-center gap-2">
-                <BsImages className="w-9 h-9 dark:text-white" />
-              </div>
-              <label className="cursor-pointer bg-black dark:bg-white text-white dark:text-black px-5 py-2 rounded-md font-inter">
+            <div className="border border-black dark:border-white rounded-xl px-4 py-3 flex justify-between">
+              <BsImages className="w-9 h-9 text-black dark:text-white" />
+              <label className="cursor-pointer bg-black dark:bg-white text-white dark:text-black px-5 py-2 rounded-md">
                 Select File
-                <input
-                  type="file"
-                  className="hidden"
-                  onChange={handleLogoUpload}
-                />
+                <input type="file" hidden onChange={handleLogoUpload} />
               </label>
             </div>
           </div>
 
-          {/* Background under stamps */}
+          {/* Stamp BG */}
           <div>
-            <h3 className="font-inter font-semibold text-xl mb-2 dark:text-white">
+            <h3 className="font-inter font-semibold text-xl mb-2 text-black dark:text-white">
               Background under stamps
             </h3>
-
-            <div className="border dark:border-white rounded-xl px-4 py-3 flex justify-between items-center ">
-              <BsImages className="w-9 h-9 dark:text-white" />
-              <label className="cursor-pointer bg-black dark:bg-white dark:text-black text-white px-5 py-2 rounded-md font-inter">
+            <div className="border border-black dark:border-white rounded-xl px-4 py-3 flex justify-between">
+              <BsImages className="w-9 h-9 text-black dark:text-white" />
+              <label className="cursor-pointer bg-black dark:bg-white text-white dark:text-black px-5 py-2 rounded-md">
                 Select File
-                <input
-                  type="file"
-                  className="hidden"
-                  onChange={handleStampBgUpload}
-                />
+                <input type="file" hidden onChange={handleStampBgUpload} />
               </label>
             </div>
           </div>
 
-          {/* COLORS */}
+          {/* Colors */}
           <div>
-            <h3 className="font-inter font-semibold text-xl mb-3 dark:text-white">
+            <h3 className="font-inter font-semibold text-xl mb-3 text-black dark:text-white">
               Colors
             </h3>
 
-            {/* Card BG */}
-            <div>
-              <label className="font-inter text-sm dark:text-white">
-                Card Background
-              </label>
-              <input
-                type="color"
-                value={colors.cardBg}
-                onChange={(e) =>
-                  setColors({ ...colors, cardBg: e.target.value })
-                }
-                className="w-full h-12 rounded-lg border dark:border-white mt-1"
-              />
-            </div>
-
-            {/* Text */}
-            <div className="mt-4">
-              <label className="font-inter text-sm dark:text-white">
-                Text Color
-              </label>
-              <input
-                type="color"
-                value={colors.text}
-                onChange={(e) => setColors({ ...colors, text: e.target.value })}
-                className="w-full h-12 rounded-lg border dark:border-white mt-1"
-              />
-            </div>
-
-            {/* Active Stamp */}
-            <div className="mt-4">
-              <label className="font-inter text-sm dark:text-white">
-                Active Stamp
-              </label>
-              <input
-                type="color"
-                value={colors.active}
-                onChange={(e) =>
-                  setColors({ ...colors, active: e.target.value })
-                }
-                className="w-full h-12 rounded-lg border dark:border-white mt-1"
-              />
-            </div>
-
-            {/* Inactive Stamp */}
-            <div className="mt-4">
-              <label className="font-inter text-sm dark:text-white">
-                Inactive Stamp
-              </label>
-              <input
-                type="color"
-                value={colors.inactive}
-                onChange={(e) =>
-                  setColors({ ...colors, inactive: e.target.value })
-                }
-                className="w-full h-12 rounded-lg border dark:border-white mt-1"
-              />
-            </div>
+            {[
+              ["Card Background", "cardBg"],
+              ["Text Color", "text"],
+              ["Active Stamp", "active"],
+              ["Inactive Stamp", "inactive"],
+            ].map(([label, key]) => (
+              <div key={key} className="mt-4">
+                <label className="font-inter text-sm text-black dark:text-white">{label}</label>
+                <input
+                  type="color"
+                  value={colors[key]}
+                  onChange={(e) =>
+                    setColors({ ...colors, [key]: e.target.value })
+                  }
+                  className="w-full h-12 rounded-lg border border-black dark:border-white mt-1"
+                />
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* RIGHT SIDE PREVIEW */}
+        {/* RIGHT PREVIEW (UNCHANGED) */}
         <div className="md:w-1/2 flex justify-center">
-          <div className="border-4 dark:border-[#141414] rounded-3xl w-[280px] h-[540px] bg-white shadow-xl px-1 py-5 relative overflow-hidden">
-            {/* Header */}
-            <div className="px-4">
-              <span className="text-xl absolute left-4 top-4">←</span>
-              <h3 className="text-center font-inter text-lg mb-4">Wallet</h3>
-            </div>
-
-            {/* Scroll Area */}
+          <div className="border-4 rounded-3xl w-[280px] h-[540px] bg-white shadow-xl px-1 py-5 relative overflow-hidden">
             <div
-              className="rounded-xl  pb-4 overflow-y-scroll hide-scrollbar"
+              className="rounded-xl pb-4 overflow-y-scroll hide-scrollbar"
               style={{
                 backgroundColor: colors.cardBg,
                 height: "calc(540px - 70px)",
               }}
             >
-              {/* Logo */}
               <div className="h-12 flex justify-center mb-3">
-                {logo ? (
-                  <Image
-                    src={logo}
-                    width={60}
-                    height={60}
-                    alt="Logo"
-                    className="object-contain"
-                  />
+                {logoPreview ? (
+                  <Image src={logoPreview} width={60} height={60} alt="Logo" />
                 ) : (
-                  <p className="text-center text-sm text-gray-400">
-                    Company Logo
-                  </p>
+                  <p className="text-sm text-gray-400">Company Logo</p>
                 )}
               </div>
 
-              {/* Stamp BG */}
-              {stampBg && (
+              {stampBgPreview && (
                 <Image
-                  src={stampBg}
+                  src={stampBgPreview}
                   width={300}
                   height={80}
                   alt="Stamp BG"
@@ -244,7 +231,6 @@ export default function Create() {
                 />
               )}
 
-              {/* Stamps */}
               <div className="flex flex-wrap justify-center gap-2 mb-4">
                 {[...Array(stampCount)].map((_, i) => (
                   <div
@@ -252,13 +238,14 @@ export default function Create() {
                     className="w-6 h-6 rounded-full"
                     style={{
                       backgroundColor:
-                        i < activeStamps ? colors.active : colors.inactive,
+                        i < activeStamps
+                          ? colors.active
+                          : colors.inactive,
                     }}
-                  ></div>
+                  />
                 ))}
               </div>
 
-              {/* Dynamic Reward Text */}
               <p
                 className="text-center font-inter text-lg font-semibold mt-2"
                 style={{ color: colors.text }}
@@ -266,40 +253,6 @@ export default function Create() {
                 {getOrdinal(stampCount + 1)} ☕ on us
               </p>
 
-              {/* Stats Row */}
-              <div className="flex justify-between items-center w-full mb-4 px-1 mt-2 ">
-                <div className="text-center">
-                  <p
-                    className="text-[16px] font-inter"
-                    style={{ color: colors.text }}
-                  >
-                    Stamps Remain
-                  </p>
-                  <p
-                    className="text-[16px] font-inter font-semibold"
-                    style={{ color: colors.text }}
-                  >
-                    {stampCount - activeStamps}
-                  </p>
-                </div>
-
-                <div className="text-center">
-                  <p
-                    className="text-[16px] font-inter"
-                    style={{ color: colors.text }}
-                  >
-                    Available
-                  </p>
-                  <p
-                    className="text-[16px] font-inter font-semibold"
-                    style={{ color: colors.text }}
-                  >
-                    0 rewards
-                  </p>
-                </div>
-              </div>
-
-              {/* QR */}
               <div className="mt-4 flex justify-center">
                 <Image src={QR} alt="QR" />
               </div>
@@ -308,15 +261,14 @@ export default function Create() {
         </div>
       </div>
 
-      <div>
-        <Link
-          href="/businessowner/manage/reward/management/loyalty/programme/card/create"
-          className="flex justify-center mt-25"
+      {/* CREATE */}
+      <div className="flex justify-center mt-25">
+        <button
+          onClick={handleCreate}
+          className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl font-inter py-3 px-25 rounded-lg"
         >
-          <button className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl  font-inter py-3 px-25 rounded-lg cursor-pointer flex items-center gap-2">
-            Create
-          </button>
-        </Link>
+          Create
+        </button>
       </div>
     </div>
   );

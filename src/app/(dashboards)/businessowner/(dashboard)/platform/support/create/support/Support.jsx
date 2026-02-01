@@ -113,10 +113,12 @@ const Support = () => {
 
         <Dropdown
           label="Priority"
+          labelClass={`text-xl mb-2`}
           placeholder="NORMAL"
           options={["NORMAL", "MEDIUM", "HIGH"]}
           inputClass="border p-4 rounded-2xl"
           onSelect={(val) => handleChange("priority", val)}
+          
         />
       </div>
 
