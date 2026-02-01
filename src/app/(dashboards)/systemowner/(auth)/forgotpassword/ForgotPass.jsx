@@ -72,11 +72,14 @@ const ForgotPass = () => {
 
         <InputField
           label="Email Address"
-          type="email"
+          labelClass={`text-[#333333] dark:text-white text-[16px]`}
+          inputClass={`border-[#005FA8] rounded-[4px]  text-[#5C5C5C] py-3 placeholder:text-[#5C5C5C] dark:text-white`}
           name="email"
+          type={`email`}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+  
 
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         {success && <p className="text-green-600 text-sm mt-2">{success}</p>}
