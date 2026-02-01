@@ -88,13 +88,13 @@ const LoyaltyCard = ({ card, onDeleteClick }) => {
 
       {/* Buttons */}
       <div className="flex justify-center gap-8 mt-6">
-        <button className="border border-[#7AA3CC] py-2.5 px-15 rounded-md font-semibold">
+        <button className="border border-[#7AA3CC] py-2.5 px-15 rounded-md font-semibold text-black dark:text-white">
           Edit
         </button>
 
         <button
           onClick={() => onDeleteClick(card.id)}
-          className="bg-[#ED4539] py-2.5 px-14 rounded-md text-white font-semibold"
+          className="bg-[#ED4539] py-2.5 px-14 rounded-md text-black dark:text-white font-semibold"
         >
           Delete
         </button>

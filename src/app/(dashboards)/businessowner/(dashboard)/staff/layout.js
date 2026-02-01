@@ -9,8 +9,8 @@ const layout = ({children}) => {
 
     const nav = [
       { name: "Staff Account", link: "/businessowner/staff" },
-       { name: "Staff Permission", link: "/businessowner/staff/permission" },
-        { name: "Void History", link: "/businessowner/staff/history" },
+      //  { name: "Staff Permission", link: "/businessowner/staff/permission" },
+        // { name: "Void History", link: "/businessowner/staff/history" },
      
     ];
   return (

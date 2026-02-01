@@ -28,30 +28,36 @@ const SignIn = () => {
     setError("");
 
     try {
-      
-      const res = await fetch(
-        `${BASE_URL}/staff/auth/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-
-          body: JSON.stringify({
-            email: email.trim(),
-            password,
-          }),
+      const res = await fetch(`${BASE_URL}/staff/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
-      );
-      
+        body: JSON.stringify({
+          email: email.trim(),
+          password,
+        }),
+      });
+
       const data = await res.json();
-      Cookies.set("token", data.data.token, { secure: true, sameSite: 'Lax' });
       console.log("LOGIN RESPONSE:", data);
 
       if (!res.ok) {
         throw new Error(data.message || "Login failed");
       }
+
+      /* ===== SAVE TOKEN ===== */
+      Cookies.set("token", data?.data?.token, {
+        secure: true,
+        sameSite: "Lax",
+      });
+
+      /* ===== SAVE BRANCH ID ===== */
+      if (data?.data?.branchId) {
+        localStorage.setItem("branchId", data.data.branchId);
+      }
+
       router.push("/staff/customer/platform");
     } catch (err) {
       setError(err.message);
@@ -74,12 +80,11 @@ const SignIn = () => {
           Please enter your email and password to continue
         </p>
 
-    
         <InputField
           label="Email Address"
-          type={`email`}
-          labelClass={`text-[#333333] text-[16px]`}
-          inputClass={`border-[#005FA8] rounded-[4px]  text-[#5C5C5C] py-3 placeholder:text-[#5C5C5C]`}
+          type="email"
+          labelClass="text-[#333333] text-[16px]"
+          inputClass="border-[#005FA8] rounded-[4px] text-[#5C5C5C] py-3 placeholder:text-[#5C5C5C]"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -97,7 +102,7 @@ const SignIn = () => {
         <button
           type="submit"
           disabled={loading}
-          className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl w-full py-3 rounded-lg mt-8"
+          className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl w-full py-3 rounded-lg mt-8 disabled:opacity-60"
         >
           {loading ? "Signing in..." : "Sign In"}
         </button>

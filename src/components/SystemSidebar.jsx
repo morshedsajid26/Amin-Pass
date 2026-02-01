@@ -25,7 +25,7 @@ const navitems = [
   { name: "Audit Logs", link: "/systemowner/audit/logs", icon: AuditIcon },
   { name: "Support & SLA", link: "/systemowner/support/management", icon: SupportIcon },
   { name: "Geolocation", link: "/systemowner/geo/location", icon: GeolocationIcon },
-  { name: "Settings", link: "/systemowner/platform/settings", icon: SettingsIcon },
+  { name: "Settings", link: "/systemowner/platform/settings/platform/setting", icon: SettingsIcon },
 ];
 
 const SystemSidebar = () => {

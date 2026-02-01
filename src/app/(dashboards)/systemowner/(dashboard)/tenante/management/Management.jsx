@@ -127,12 +127,12 @@ const Management = () => {
       <Bredcumb />
 
       {/* TOP BAR */}
-      <div className="flex items-center justify-between">
-        <Dropdown
+      <div className="flex items-end justify-end">
+        {/* <Dropdown
           placeholder="Active"
           className="md:w-[10%] border border-[#D4AF37] rounded-xl p-2 font-inter font-medium"
           options={["Active", "Inactive"]}
-        />
+        /> */}
 
         <Link href="/systemowner/tenante/management/addtenant">
           <button className="bg-[#7AA3CC] font-medium font-inter px-2 py-3 rounded-md text-[#000000] flex items-center gap-2 cursor-pointer">
@@ -211,7 +211,7 @@ const Management = () => {
               <Details data={selectedTenant} />
 
               {/* EDIT BUTTON */}
-              <div className="flex justify-center mt-10 pb-5">
+              {/* <div className="flex justify-center mt-10 pb-5">
                 <Link
                   href={`/systemowner/tenante/management/addtenant?id=${selectedTenant.id}`}
                 >
@@ -219,7 +219,7 @@ const Management = () => {
                     Edit
                   </button>
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

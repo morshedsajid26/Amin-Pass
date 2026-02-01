@@ -64,7 +64,7 @@ const Topbar = () => {
             </Link>
           ) : (
             // DISABLED ICON: Other dashboards
-            <IoMdNotificationsOutline className="h-8 w-8 text-[#020202]" />
+            <IoMdNotificationsOutline className="h-8 w-8 text-[#020202] hidden" />
           )}
 
         <Image src={Avatar} alt="profile" />

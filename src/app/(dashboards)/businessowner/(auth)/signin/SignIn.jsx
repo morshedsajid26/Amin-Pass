@@ -119,12 +119,12 @@ const SignIn = () => {
           {loading ? "Processing..." : "Log In"}
         </button>
 
-        <p className="text-center mt-5 font-inter dark:text-white">
+        {/* <p className="text-center mt-5 font-inter dark:text-white">
           Don't have an Account?{" "}
           <a href="/signup" className="text-[#7AA3CC]">
             SignUp
           </a>
-        </p>
+        </p> */}
       </form>
     </main>
   );

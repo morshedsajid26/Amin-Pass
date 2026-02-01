@@ -114,8 +114,8 @@ const Support = () => {
         <Dropdown
           label="Priority"
           labelClass={`text-xl mb-2`}
-          placeholder="NORMAL"
-          options={["NORMAL", "MEDIUM", "HIGH"]}
+          placeholder="Select Priority"
+          options={["LOW", "MEDIUM", "HIGH"]}
           inputClass="border p-4 rounded-2xl"
           onSelect={(val) => handleChange("priority", val)}
           
@@ -125,7 +125,7 @@ const Support = () => {
       <div className="mt-22 flex justify-center gap-8">
         <button
           onClick={() => router.back()}
-          className="border border-[#7AA3CC] px-20 py-3 rounded-md"
+          className="border border-[#7AA3CC] px-20 py-3 rounded-md text-black dark:text-white font-semibold"
         >
           Close
         </button>
@@ -133,7 +133,7 @@ const Support = () => {
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="bg-[#7AA3CC] px-20 py-3 rounded-md disabled:opacity-50"
+          className="bg-[#7AA3CC] px-20 py-3 rounded-md disabled:opacity-50 text-black dark:text-white font-semibold"
         >
           {loading ? "Sending..." : "Send"}
         </button>

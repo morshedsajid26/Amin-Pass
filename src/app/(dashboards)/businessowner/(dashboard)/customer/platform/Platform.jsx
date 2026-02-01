@@ -108,11 +108,11 @@ const Platform = () => {
             options={["All", "Regular", "At Risk"]}
           />
 
-          <Link href="/businessowner/customer/platform/customer/review">
+          {/* <Link href="/businessowner/customer/platform/customer/review">
             <button className="font-inter font-medium text-[#000000] py-3.5 px-5 bg-[#7AA3CC] rounded-lg">
               View Customer Feedback
             </button>
-          </Link>
+          </Link> */}
         </div>
 
         <div className="w-full">

@@ -4,7 +4,6 @@ import Bredcumb from "@/src/components/Bredcumb";
 import InputField from "@/src/components/InputField";
 import React, { useState } from "react";
 import Cookies from "js-cookie";
-import axios from "axios";
 import { BASE_URL } from "@/src/config/api";
 
 const AddBranch = () => {
@@ -13,68 +12,82 @@ const AddBranch = () => {
     branchLocation: "",
     staffCount: "",
     managerName: "",
+    branchImage: null, // ✅ new
   });
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  // 🔹 input change handler
+  /* ---------------- INPUT HANDLERS ---------------- */
   const handleChange = (name, value) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  // 🔹 submit handler
- const handleSubmit = async () => {
-  setLoading(true);
-  setMessage("");
+  const handleImageChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      branchImage: e.target.files[0],
+    }));
+  };
 
-  try {
-    const accessToken = Cookies.get("accessToken"); 
+  /* ---------------- SUBMIT ---------------- */
+  const handleSubmit = async () => {
+    setLoading(true);
+    setMessage("");
 
-    const res = await fetch(
-      `${BASE_URL}/business-owner/branchs/create`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({
-          branchName: formData.branchName,
-          branchLocation: formData.branchLocation,  
-          staffCount: formData.staffCount,
-          managerName: formData.managerName,
-        }),
+    try {
+      const accessToken = Cookies.get("accessToken");
+
+      const payload = new FormData();
+      payload.append("branchName", formData.branchName);
+      payload.append("branchLocation", formData.branchLocation);
+      payload.append("staffCount", formData.staffCount);
+      payload.append("managerName", formData.managerName);
+
+      if (formData.branchImage) {
+        payload.append("branchImage", formData.branchImage); // ✅ image
       }
-    );
 
-    const data = await res.json();
+      const res = await fetch(
+        `${BASE_URL}/business-owner/branchs/create`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            // ❌ Content-Type দিয়ো না (FormData হলে)
+          },
+          body: payload,
+        }
+      );
 
-    if (!res.ok) {
-      console.log(data); // 🔥 validation error দেখাবে
-      throw new Error(data.message || "Failed");
+      const data = await res.json();
+
+      if (!res.ok) {
+        console.log(data);
+        throw new Error(data.message || "Failed");
+      }
+
+      setMessage("✅ Branch created successfully");
+
+      setFormData({
+        branchName: "",
+        branchLocation: "",
+        staffCount: "",
+        managerName: "",
+        branchImage: null,
+      });
+    } catch (error) {
+      console.error(error);
+      setMessage("❌ Failed to create branch");
+    } finally {
+      setLoading(false);
     }
+  };
 
-    setMessage("✅ Branch created successfully");
-
-    setFormData({
-      branchName: "",
-      branchLocation: "",
-      staffCount: "",
-      managerName: "",
-    });
-  } catch (error) {
-    console.error(error);
-    setMessage("❌ Failed to create branch");
-  } finally {
-    setLoading(false);
-  }
-};
-
-
+  /* ---------------- UI ---------------- */
   return (
     <div>
       <Bredcumb />
@@ -86,7 +99,7 @@ const AddBranch = () => {
           onChange={(e) =>
             handleChange("branchName", e.target.value)
           }
-          className={`col-span-12 md:col-span-6`}
+          className="col-span-12 md:col-span-6"
         />
 
         <InputField
@@ -95,7 +108,7 @@ const AddBranch = () => {
           onChange={(e) =>
             handleChange("branchLocation", e.target.value)
           }
-          className={`col-span-12 md:col-span-6`}
+          className="col-span-12 md:col-span-6"
         />
 
         <InputField
@@ -105,7 +118,7 @@ const AddBranch = () => {
           onChange={(e) =>
             handleChange("staffCount", e.target.value)
           }
-          className={`col-span-12 md:col-span-6`}
+          className="col-span-12 md:col-span-6"
         />
 
         <InputField
@@ -114,8 +127,20 @@ const AddBranch = () => {
           onChange={(e) =>
             handleChange("managerName", e.target.value)
           }
-          className={`col-span-12 md:col-span-6`}
+          className="col-span-12 md:col-span-6"
         />
+
+
+         <InputField
+          label="Branch Image"
+          type={`file`}
+          accept="image/*"
+          onChange={handleImageChange}
+          className="col-span-12  "
+          inputClass="w-full border border-[#000000] p-4 rounded-2xl font-inter-inter"
+        />
+
+        
       </div>
 
       <div className="flex flex-col items-center">
