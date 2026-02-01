@@ -9,11 +9,33 @@ import {
 } from "recharts";
 
 export default function CustomerVisitChart({ data = [] }) {
-  // 🔥 API data → chart format
-  const chartData = data.map((item) => ({
-    name: item.month || item.name, // safety
-    visits: item.visits || 0,
-  }));
+  // 🔒 Static months (always show)
+  const MONTHS = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+  ];
+
+  /**
+   * data expected format example:
+   * [
+   *   { month: "Jan", visits: 12 },
+   *   { month: "Mar", visits: 5 },
+   * ]
+   */
+
+  // 🔥 Merge static months + dynamic data
+  const chartData = MONTHS.map((month) => {
+    const found = data.find(
+      (item) =>
+        item.month === month ||
+        item.name === month
+    );
+
+    return {
+      name: month,                 // ✅ always static
+      visits: found ? Number(found.visits) : 0, // ✅ dynamic
+    };
+  });
 
   return (
     <div className="bg-white dark:bg-[#141414] rounded-2xl p-8">
