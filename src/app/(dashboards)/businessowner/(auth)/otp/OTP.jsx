@@ -140,7 +140,7 @@ const OTP = () => {
   };
 
   return (
-    <div className="bg-white dark:bg-[#141414] grid justify-center items-center overflow-y-auto hide-scrollbar py-20 px-15 rounded-3xl">
+    <div className="bg-white dark:bg-[#141414] grid justify-center items-center overflow-y-auto hide-scrollbar py-20 px-15 rounded-3xl font-inter" onPaste={handlePaste}>
       <form className="flex flex-col items-center text-center w-[480px]" onSubmit={handleSubmit}>
         <h1 className="text-[32px] text-[#333333] dark:text-white font-inter font-medium">
           Check your email

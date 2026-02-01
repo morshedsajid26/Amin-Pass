@@ -1,12 +1,10 @@
 "use client";
-import React, { useState } from "react";
 
+import React, { useState } from "react";
 import InputField from "@/src/components/InputField";
-import Password from "@/src/components/Password";
-import { FcGoogle } from "react-icons/fc";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { BASE_URL } from "@/src/config/api";
 
 const ForgotPass = () => {
   const router = useRouter();
@@ -16,6 +14,9 @@ const ForgotPass = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  // ===============================
+  // SUBMIT
+  // ===============================
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -29,61 +30,64 @@ const ForgotPass = () => {
     try {
       setLoading(true);
 
-      // ✅ OTP send request to backend
-      const res = await axios.post("http://127.0.0.1:8000/api/admin/password/send-otp", {
-        email: email,
-      });
-      console.log("OTP API RESPONSE:", res.data);
+      const res = await axios.post(
+        `${BASE_URL}/customer/auth/forgot-password`,
+        {
+          email: email, // ✅ API expects ONLY email
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (res.status === 200 && res.data.status === "success") {
+      if (res.status === 200) {
         setSuccess("OTP sent successfully!");
         sessionStorage.setItem("resetEmail", email);
         router.push("/businessowner/otp");
-      } else {
-        setError(res.data.message || "Failed to send OTP");
       }
     } catch (err) {
-      console.error("OTP Send Error:", err);
-      setError(err.response?.data?.message || "Failed to send OTP");
+      setError(
+        err?.response?.data?.message || "Failed to send OTP"
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main className="bg-white  dark:bg-[#141414] grid justify-center items-center overflow-y-auto hide-scrollbar py-30 px-11 rounded-3xl  ">
+    <main className="bg-white dark:bg-[#141414] grid place-items-center py-30 px-10 font-inter rounded-3xl">
       <form
-        onClick={handleSubmit}
-        className="gap-5 flex flex-col items-center w-[480px] "
+        onSubmit={handleSubmit} // ✅ FIXED
+        className="gap-5 flex flex-col items-center w-[480px]"
       >
-        <h3 className="font-inter font-medium text-[32px] text-[#333333] dark:text-white">
+        <h3 className="text-[32px] font-medium dark:text-white">
           Forget Password?
         </h3>
 
-        <p className="font-inter  text-[#333333] dark:text-white mb-5">
+        <p className="dark:text-white mb-5 text-center">
           Please enter your email to get verification code
         </p>
 
         <InputField
           label="Email Address"
-          type={`email`}
-          labelClass={`text-[#333333] dark:text-white text-[16px]`}
-          inputClass={`border-[#005FA8] rounded-[4px]  text-[#5C5C5C] py-3 placeholder:text-[#5C5C5C] dark:text-white`}
+          type="email"
           name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-  {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+
+        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         {success && <p className="text-green-600 text-sm mt-2">{success}</p>}
 
-        
-          <button 
+        <button
           type="submit"
           disabled={loading}
-          className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl w-full font-inter py-3 rounded-lg cursor-pointer mt-5">
-           {loading ? "Sending OTP..." : "Continue"}
-          </button>
-       
+          className="bg-[#7AA3CC] text-[#010101] font-semibold text-xl w-full py-3 rounded-lg mt-5 disabled:opacity-50"
+        >
+          {loading ? "Sending OTP..." : "Continue"}
+        </button>
       </form>
     </main>
   );

@@ -52,7 +52,7 @@ const ForgotPass = () => {
   };
 
   return (
-    <main className="bg-white  dark:bg-[#141414] grid justify-center items-center overflow-y-auto hide-scrollbar py-30 px-11 rounded-3xl  ">
+    <main className="bg-white  dark:bg-[#141414] grid justify-center items-center overflow-y-auto hide-scrollbar py-30 px-11 rounded-3xl font-inter ">
       <form
         onClick={handleSubmit}
         className="gap-5 flex flex-col items-center w-[480px] "

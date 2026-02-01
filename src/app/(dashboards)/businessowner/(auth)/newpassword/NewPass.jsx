@@ -83,7 +83,7 @@ const NewPass = () => {
   };
 
   return (
-    <main className="bg-white dark:bg-[#141414] grid place-items-center py-30 px-10 rounded-3xl">
+    <main className="bg-white dark:bg-[#141414] grid place-items-center py-30 px-10 rounded-3xl font-inter">
       <form
         onSubmit={handleSubmit} // ✅ FIXED
         className="flex flex-col items-center gap-7 w-[480px]"
