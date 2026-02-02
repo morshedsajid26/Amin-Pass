@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import InputField from "@/src/components/InputField";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -23,7 +24,9 @@ const ForgotPass = () => {
     setSuccess("");
 
     if (!email) {
-      setError("Please enter your email address");
+      const msg = "Please enter your email address";
+      setError(msg);
+      toast.error(msg);
       return;
     }
 
@@ -43,14 +46,16 @@ const ForgotPass = () => {
       );
 
       if (res.status === 200) {
-        setSuccess("OTP sent successfully!");
+        const msg = "OTP sent successfully!";
+        setSuccess(msg);
+        toast.success(msg);
         sessionStorage.setItem("resetEmail", email);
         router.push("/businessowner/otp");
       }
     } catch (err) {
-      setError(
-        err?.response?.data?.message || "Failed to send OTP"
-      );
+      const msg = err?.response?.data?.message || "Failed to send OTP";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -81,8 +86,7 @@ const ForgotPass = () => {
         />
   
 
-        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-        {success && <p className="text-green-600 text-sm mt-2">{success}</p>}
+        {/* notifications shown via toast */}
 
         <button
           type="submit"

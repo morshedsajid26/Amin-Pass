@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
+import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { BASE_URL } from "@/src/config/api";
@@ -37,12 +38,16 @@ const LogIn = () => {
     const branchId = localStorage.getItem("branchId"); //    FROM LOCAL
 
     if (pin.length !== 6) {
-      setError("PIN must be 6 digits");
+      const msg = "PIN must be 6 digits";
+      setError(msg);
+      toast.error(msg);
       return;
     }
 
     if (!branchId) {
-      setError("Branch not found. Please login again.");
+      const msg = "Branch not found. Please login again.";
+      setError(msg);
+      toast.error(msg);
       return;
     }
 
@@ -76,8 +81,10 @@ const LogIn = () => {
       // localStorage.setItem("requirePinSetup", data.requirePinSetup);
 
       router.push("/staff/customer/platform");
-    } catch (err) {
-      setError(err.message);
+      } catch (err) {
+      const msg = err.message || "Login failed";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -113,9 +120,7 @@ const LogIn = () => {
           ))}
         </div>
 
-        {error && (
-          <p className="text-red-500 text-sm mt-4">{error}</p>
-        )}
+        {/* notifications shown via toast */}
 
         <button
           onClick={handleLogin}

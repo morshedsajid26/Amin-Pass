@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Password from "@/src/components/Password";
 import { BASE_URL } from "@/src/config/api";
@@ -45,12 +46,16 @@ const NewPass = () => {
     const { password, confirmPassword } = formData;
 
     if (!password || !confirmPassword) {
-      setError("Please fill all fields");
+      const msg = "Please fill all fields";
+      setError(msg);
+      toast.error(msg);
       return;
     }
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      const msg = "Passwords do not match";
+      setError(msg);
+      toast.error(msg);
       return;
     }
 
@@ -73,10 +78,9 @@ const NewPass = () => {
         router.push("/businessowner/success");
       }
     } catch (err) {
-      setError(
-        err?.response?.data?.message ||
-          "Failed to reset password. Try again."
-      );
+      const msg = err?.response?.data?.message || "Failed to reset password. Try again.";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -111,7 +115,7 @@ const NewPass = () => {
           onChange={handleChange}
         />
 
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {/* notifications shown via toast */}
 
         <button
           type="submit"

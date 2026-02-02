@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import InputField from "@/src/components/InputField";
 import Password from "@/src/components/Password";
@@ -20,7 +21,9 @@ const SignIn = () => {
     e.preventDefault();
 
     if (!email || !password) {
-      setError("Email and password are required");
+      const msg = "Email and password are required";
+      setError(msg);
+      toast.error(msg);
       return;
     }
 
@@ -60,7 +63,9 @@ const SignIn = () => {
 
       router.push("/staff/customer/platform");
     } catch (err) {
-      setError(err.message);
+      const msg = err.message || "Login failed";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -95,9 +100,7 @@ const SignIn = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        {error && (
-          <p className="text-red-500 text-sm w-full text-left">{error}</p>
-        )}
+        {/* notifications shown via toast */}
 
         <button
           type="submit"

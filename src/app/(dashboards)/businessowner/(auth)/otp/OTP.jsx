@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import axios from "axios";
 import { BASE_URL } from "@/src/config/api";
 
@@ -102,7 +103,9 @@ const OTP = () => {
     const otp = otp.join("");
 
     if (otp.length !== 6) {
-      setError("Please enter all 6 digits");
+      const msg = "Please enter all 6 digits";
+      setError(msg);
+      toast.error(msg);
       return;
     }
 
@@ -123,17 +126,18 @@ const OTP = () => {
       );
 
       if (res.status === 200) {
-        setSuccess("OTP Verified Successfully!");
+        const msg = "OTP Verified Successfully!";
+        setSuccess(msg);
+        toast.success(msg);
         setTimeout(() => {
           router.push("/businessowner/newpassword");
         }, 800);
       }
     } catch (err) {
-      setError(
-        err?.response?.data?.message ||
-          err?.message ||
-          "OTP verification failed"
-      );
+      const msg =
+        err?.response?.data?.message || err?.message || "OTP verification failed";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -166,8 +170,7 @@ const OTP = () => {
           ))}
         </div>
 
-        {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
-        {success && <p className="text-green-600 text-sm mt-1">{success}</p>}
+        {/* notifications shown via toast */}
 
         <button
           type="submit"

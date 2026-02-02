@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 import InputField from "@/src/components/InputField";
 import Password from "@/src/components/Password";
@@ -23,29 +24,42 @@ const ForgotPass = () => {
     setSuccess("");
 
     if (!email) {
-      setError("Please enter your email address");
+      const msg = "Please enter your email address";
+      setError(msg);
+      toast.error(msg);
       return;
     }
 
     try {
       setLoading(true);
 
-      //    OTP send request to backend
-      const res = await axios.post(`${BASE_URL}/auth/forgot-password`, {
-        email: email,
-      });
+      // OTP send request to backend
+      const res = await axios.post(
+        `${BASE_URL}/auth/forgot-password`,
+        { email: email },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
       console.log("OTP API RESPONSE:", res.data);
 
       if (res.status === 200 && res.data.status === "success") {
-        setSuccess("OTP sent successfully!");
+        const msg = "OTP sent successfully!";
+        setSuccess(msg);
+        toast.success(msg);
         sessionStorage.setItem("resetEmail", email);
         router.push("/businessowner/otp");
       } else {
-        setError(res.data.message || "Failed to send OTP");
+        const msg = res.data.message || "Failed to send OTP";
+        setError(msg);
+        toast.error(msg);
       }
     } catch (err) {
       console.error("OTP Send Error:", err);
-      setError(err.response?.data?.message || "Failed to send OTP");
+      const msg = err.response?.data?.message || "Failed to send OTP";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -54,7 +68,7 @@ const ForgotPass = () => {
   return (
     <main className="bg-white  dark:bg-[#141414] grid justify-center items-center overflow-y-auto hide-scrollbar py-30 px-11 rounded-3xl font-inter ">
       <form
-        onClick={handleSubmit}
+        onSubmit={handleSubmit}
         className="gap-5 flex flex-col items-center w-[480px] "
       >
         <h3 className="font-inter font-medium text-[32px] text-[#333333] dark:text-white">
@@ -74,8 +88,7 @@ const ForgotPass = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-  {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-        {success && <p className="text-green-600 text-sm mt-2">{success}</p>}
+  {/* notifications shown via toast */}
 
         
           <button 
