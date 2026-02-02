@@ -2,6 +2,7 @@
 import InputField from "@/src/components/InputField";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const Deatils = () => {
   const router = useRouter();
@@ -39,10 +40,16 @@ const Deatils = () => {
       })
     );
 
-    router.push(
-      "/businessowner/manage/reward/management/loyalty/programme/card/create"
-    );
+    toast.success("Details saved!");
+
+    setTimeout(() => {
+      router.push(
+        "/businessowner/manage/reward/management/loyalty/programme/card/create"
+      );
+    }, 500);
   };
+
+  
 
   return (
     <div>
@@ -111,8 +118,8 @@ const Deatils = () => {
               <input
                 type="radio"
                 name="barcode"
-                checked={barcodeType === "bar"}
-                onChange={() => setBarcodeType("bar")}
+                checked={barcodeType === "bar_code"}
+                onChange={() => setBarcodeType("bar_code")}
                 className="w-10 h-10 accent-black"
               />
               <span className="text-lg font-inter dark:text-white">

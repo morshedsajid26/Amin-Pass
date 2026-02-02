@@ -77,7 +77,9 @@ const LoyaltyCard = ({ card, onDeleteClick }) => {
           style={{ color: card.textColor || "#000" }}
         >
           <p>{card.cardDesc}</p>
-          <p className="capitalize">{card.cardType.replace("_", " ")}</p>
+          <p className="capitalize">
+            {card.cardType ? card.cardType.replace(/_/g, " ") : "stamp card"}
+          </p>
         </div>
 
         {/* QR */}
@@ -131,6 +133,8 @@ const Loyalty = () => {
         const json = await res.json();
 
         if (res.ok && Array.isArray(json.data)) {
+          // Debug log to check API response
+          console.log("Cards from API:", json.data);
           setCards(json.data);
         } else {
           setCards([]);

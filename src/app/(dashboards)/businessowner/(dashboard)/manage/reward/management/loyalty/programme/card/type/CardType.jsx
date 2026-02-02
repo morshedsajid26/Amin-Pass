@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { FaGift, FaStamp } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const CardType = () => {
   const [selected, setSelected] = useState("stamp");
@@ -23,17 +24,22 @@ const CardType = () => {
   /* ================= CONTINUE ================= */
   const handleContinue = () => {
     //    only save card type
+    const cardTypeValue = selected === "stamp" ? "stamp_card" : "reward_card";
     localStorage.setItem(
       "cardSetup",
       JSON.stringify({
-        cardType: selected.toUpperCase(), // STAMP | REWARD
+        cardType: cardTypeValue,
       })
     );
 
+    toast.success(`${selected === "stamp" ? "Stamp" : "Reward"} card selected!`);
+
     //    go to next step
-    router.push(
-      "/businessowner/manage/reward/management/loyalty/programme/card/details"
-    );
+    setTimeout(() => {
+      router.push(
+        "/businessowner/manage/reward/management/loyalty/programme/card/details"
+      );
+    }, 500);
   };
 
   return (

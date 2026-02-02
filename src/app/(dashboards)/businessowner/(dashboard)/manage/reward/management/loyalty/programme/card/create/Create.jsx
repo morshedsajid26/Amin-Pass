@@ -6,6 +6,7 @@ import QR from "@/public/QR.png";
 import Cookies from "js-cookie";
 import { BASE_URL } from "@/src/config/api";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function Create() {
   const router = useRouter();
@@ -56,7 +57,7 @@ export default function Create() {
     const businessId = Cookies.get("businessId");
 
     if (!token || !businessId) {
-      alert("Business authentication missing");
+      toast.error("Business authentication missing");
       return;
     }
 
@@ -66,9 +67,9 @@ export default function Create() {
 
     // ===== PREVIOUS STEPS =====
     formData.append("businessId", businessId);
-    formData.append("type", stored.cardType);
+    formData.append("cardType", stored.cardType);
     formData.append("cardDesc", stored.cardDesc);
-    formData.append("earnRule", stored.earnRule);
+    formData.append("earnRuleType", stored.earnRule);
     formData.append("companyName", stored.companyName);
     formData.append("earnedRewardMessage", stored.earnedRewardMessage);
     formData.append("barcodeType", stored.barcodeType);
@@ -101,7 +102,8 @@ export default function Create() {
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data?.message || "Card creation failed");
+        const errorMsg = data?.message || "Card creation failed";
+        toast.error(errorMsg);
         return;
       }
 
@@ -109,10 +111,13 @@ export default function Create() {
       localStorage.removeItem("cardSetup");
 
       //    success redirect
-      router.push("/businessowner/manage/reward/management");
+      toast.success("Card created successfully!");
+      setTimeout(() => {
+        router.push("/businessowner/manage/reward/management/loyalty/programme");
+      }, 1500);
     } catch (err) {
       console.error(err);
-      alert("Something went wrong");
+      toast.error("Something went wrong");
     }
   };
 
