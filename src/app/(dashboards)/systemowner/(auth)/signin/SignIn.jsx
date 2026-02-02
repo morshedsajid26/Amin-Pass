@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-
+import toast from "react-hot-toast";
 import InputField from "@/src/components/InputField";
 import Password from "@/src/components/Password";
 import { FcGoogle } from "react-icons/fc";
@@ -41,13 +41,18 @@ const SignIn = () => {
     console.log("data",data);
 
     if (res.ok) {
+      toast.success("Login successful!");
       Cookies.set("accessToken", data.data.accessToken);
       router.push("/systemowner/home");
     } else {
-      setMessage(data.message || "Login failed");
+      const msg = data.message || "Login failed";
+      setMessage(msg);
+      toast.error(msg);
     }
   } catch (err) {
-    setMessage("Something went wrong!");
+    const msg = "Something went wrong!";
+    setMessage(msg);
+    toast.error(msg);
   }
 
   setLoading(false);
@@ -96,15 +101,7 @@ const SignIn = () => {
           </a>
         </div>
 
-        {message && (
-          <p
-            className={`text-center mt-2 ${
-              isSuccess ? "text-green-600" : "text-red-600"
-            }`}
-          >
-            {message}
-          </p>
-        )}
+        {/* notifications shown via toast */}
 
        <button
           type="submit"
