@@ -25,7 +25,7 @@ const Support = () => {
   /* ================= TABLE HEADS ================= */
   const TableHeads = [
     { Title: "Business Name", key: "name", width: "15%" },
-    { Title: "Ticket ID", key: "id", width: "15%" },
+    { Title: "Ticket ID", key: "id", width: "15%", render: (row) => row.displayId || row.id },
     { Title: "Date", key: "date", width: "15%" },
     { Title: "Issue", key: "issue", width: "15%" },
     { Title: "Priority", key: "priority", width: "10%" },
@@ -51,15 +51,29 @@ const Support = () => {
         const json = await res.json();
         if (!res.ok) throw new Error(json.message);
 
-        const formatted = json.data.tickets.map((item) => ({
-          id: item.ticketId,
-          name: item.businessName || "—",
-          date: item.createdAt?.slice(0, 10),
-          issue: item.issue,
-          priority: item.priority,
-          description: item.description,
-          raw: item,
-        }));
+        // helper to show only last 4 characters and prefix with '#'
+        const formatId = (val) => {
+          if (!val) return "—";
+          const s = String(val).replace(/-/g, "");
+          const last = s.slice(-4);
+          return "#" + last;
+        };
+
+        const formatted = json.data.tickets.map((item) => {
+          const rawId = item.ticketId || item.id;
+          return {
+            id: rawId,
+            displayId: formatId(rawId),
+            name: item.businessName || item.name || "—",
+            date: (item.createdAt || item.date)?.slice
+              ? (item.createdAt || item.date).slice(0, 10)
+              : (item.createdAt || item.date) || "—",
+            issue: item.issue || item.subject || item.status || "—",
+            priority: item.priority || "—",
+            description: item.description || item.details || "—",
+            raw: item,
+          };
+        });
 
         setTickets(formatted);
         setTotalPages(json.data.meta.totalPages || 1);
@@ -170,7 +184,7 @@ const Support = () => {
                 <h2 className="font-inter text-2xl font-medium">
                   {selectedTicket.name}
                 </h2>
-                <p className="text-xl">{selectedTicket.id}</p>
+                <p className="text-xl">{selectedTicket.displayId || selectedTicket.id}</p>
               </div>
             </div>
 

@@ -46,16 +46,16 @@ const History = () => {
   function ActionCell({ status }) {
     const s = String(status || "pending").toLowerCase();
 
-    if (s === "approved") return <Badge color="blue">✅Approved</Badge>;
-    if (s === "rejected") return <Badge color="red">❌Rejected</Badge>;
+    if (s === "approved") return <Badge color="blue">  Approved</Badge>;
+    if (s === "rejected") return <Badge color="red"> Rejected</Badge>;
 
     return (
       <div className="flex items-center justify-center gap-3 text-[16px] font-inter ">
         <OutlineBtn tone="blue">
-          ✅ 
+             
           Approve
           </OutlineBtn>
-        <OutlineBtn tone="red">❌ Reject</OutlineBtn>
+        <OutlineBtn tone="red">  Reject</OutlineBtn>
       </div>
     );
   }

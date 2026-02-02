@@ -27,7 +27,6 @@ const AddTenant = () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
 
   /* ================= HANDLER ================= */
   const handleChange = (key, value) => {
@@ -40,7 +39,6 @@ const AddTenant = () => {
   /* ================= SUBMIT ================= */
   const handleSubmit = async () => {
     setLoading(true);
-    setMessage("");
 
     try {
       const token = Cookies.get("accessToken");
@@ -78,15 +76,15 @@ const AddTenant = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        setMessage(data?.message || "❌ Tenant create failed");
+        toast.error(data?.message || "  Tenant create failed");
         return;
       }
 
-      setMessage("✅ Tenant created successfully");
+      toast.success("   Tenant created successfully");
       router.back();
     } catch (err) {
       console.error(err);
-      setMessage("❌ Something went wrong");
+      toast.error("  Something went wrong");
     } finally {
       setLoading(false);
     }

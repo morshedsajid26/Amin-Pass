@@ -2,9 +2,9 @@ import React from "react";
 
 const InputField = ({
   label,
-  name,          // ✅ ADD
-  value,         // ✅ ADD
-  onChange,      // ✅ REQUIRED
+  name,          //    ADD
+  value,         //    ADD
+  onChange,      //    REQUIRED
   type = "text",
   placeholder,
   className = "",
@@ -23,9 +23,9 @@ const InputField = ({
 
       <input
         type={type}
-        name={name}              // ✅ MUST
-        value={value ?? ""}      // ✅ MUST (avoid undefined)
-        onChange={onChange}      // ✅ MUST
+        name={name}              //    MUST
+        value={value ?? ""}      //    MUST (avoid undefined)
+        onChange={onChange}      //    MUST
         placeholder={placeholder}
         className={`border border-[#000000] dark:border-white outline-none p-4 
           text-[#121212] dark:text-white placeholder:text-[#121212] 

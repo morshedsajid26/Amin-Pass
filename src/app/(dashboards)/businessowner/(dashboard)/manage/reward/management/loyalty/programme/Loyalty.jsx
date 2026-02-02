@@ -179,7 +179,7 @@ const Loyalty = () => {
         return;
       }
 
-      // ✅ UPDATE UI
+      //    UPDATE UI
       setCards((prev) => prev.filter((c) => c.id !== deleteCardId));
       closeDeleteModal();
     } catch {

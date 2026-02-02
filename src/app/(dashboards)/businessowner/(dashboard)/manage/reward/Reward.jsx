@@ -62,13 +62,13 @@ const Reward = () => {
     setShowDeleteModal(true);
   };
 
-  // ❌ Close delete modal
+  //   Close delete modal
   const closeDeleteModal = () => {
     setDeleteId(null);
     setShowDeleteModal(false);
   };
 
-  // ✅ Confirm delete
+  //    Confirm delete
   const confirmDelete = async () => {
     try {
       const token = Cookies.get("accessToken");

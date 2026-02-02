@@ -90,7 +90,7 @@ const Staff = () => {
       const json = await res.json();
       if (!res.ok) throw new Error(json.message);
 
-      // ✅ remove from UI
+      //    remove from UI
       setStaffs((prev) =>
         prev.filter((staff) => staff.id !== selectedStaff.id)
       );

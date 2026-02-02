@@ -33,7 +33,7 @@ const ForgotPass = () => {
       const res = await axios.post(
         `${BASE_URL}/customer/auth/forgot-password`,
         {
-          email: email, // ✅ API expects ONLY email
+          email: email, //    API expects ONLY email
         },
         {
           headers: {
@@ -59,7 +59,7 @@ const ForgotPass = () => {
   return (
     <main className="bg-white dark:bg-[#141414] grid place-items-center py-30 px-10 font-inter rounded-3xl">
       <form
-        onSubmit={handleSubmit} // ✅ FIXED
+        onSubmit={handleSubmit} //    FIXED
         className="gap-5 flex flex-col items-center w-[480px]"
       >
         <h3 className="text-[32px] font-medium dark:text-white">

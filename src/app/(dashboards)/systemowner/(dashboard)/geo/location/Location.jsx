@@ -19,7 +19,7 @@ export default function Location() {
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
     if (!apiKey) {
-      console.error("❌ Google Maps API Key Missing.");
+      console.error("  Google Maps API Key Missing.");
       return;
     }
 

@@ -93,7 +93,7 @@ const GeneralSettings = () => {
         },
         body: JSON.stringify({
           pin,
-          confirmPin, // ✅ REQUIRED BY BACKEND
+          confirmPin, //    REQUIRED BY BACKEND
         }),
       });
 
@@ -102,7 +102,7 @@ const GeneralSettings = () => {
 
       if (!res.ok) throw new Error(data.message || "Failed to set PIN");
 
-      // ✅ SUCCESS
+      //    SUCCESS
       setViewOpen(false);
       newPinRefs.current.forEach((i) => i && (i.value = ""));
       confirmPinRefs.current.forEach((i) => i && (i.value = ""));

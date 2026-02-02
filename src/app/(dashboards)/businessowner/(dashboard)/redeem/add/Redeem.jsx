@@ -57,7 +57,7 @@ const Redeem = () => {
       const res = await fetch(
         `${BASE_URL}/business-owner/add-redeem/find-customer/${qrCode}`,
         {
-          method: "GET", // ✅ FIXED
+          method: "GET", //    FIXED
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -126,8 +126,8 @@ const Redeem = () => {
         <button
           onClick={handleSearch}
           disabled={loading}
-          className="bg-[#7AA3CC] text-[#010101]
-          font-semibold text-xl py-3 px-10 rounded-lg
+          className="bg-[#7AA3CC] dark:text-white text-[#010101]
+          font-semibold text-xl font-inter py-3 px-10 rounded-lg
           disabled:opacity-60"
         >
           {loading ? "Searching..." : "Search"}
@@ -145,7 +145,8 @@ const Redeem = () => {
             {customerData.rewardHistories.map((item) => (
               <label
                 key={item.id}
-                className={`flex items-center gap-3 border p-3 rounded cursor-pointer
+                className={`flex items-center gap-3 border p-3 rounded cursor-pointer dark:text-white text-[#010101]
+           font-inter
                   ${
                     selectedBranch?.rewardHistoryId === item.id
                       ? "border-[#005FA8]"
@@ -180,7 +181,8 @@ const Redeem = () => {
             <button
               onClick={handleNext}
               disabled={!selectedBranch}
-              className="bg-[#005FA8] text-white py-3 px-10 rounded-lg
+              className="bg-[#7AA3CC] dark:text-white text-[#010101]
+          font-semibold text-xl font-inter py-3 px-10 rounded-lg
               disabled:opacity-50"
             >
               Next

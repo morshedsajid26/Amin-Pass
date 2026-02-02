@@ -6,6 +6,7 @@ import Dropdown from "@/src/components/Dropdown";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import toast from "react-hot-toast";
 import { BASE_URL } from "@/src/config/api";
 
 const Add = () => {
@@ -24,7 +25,6 @@ const Add = () => {
   const [selectedBranchId, setSelectedBranchId] = useState("");
 
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
 
   // 🔹 INPUT HANDLER
   const handleChange = (key, value) => {
@@ -67,12 +67,11 @@ const Add = () => {
   // 🔹 SUBMIT STAFF CREATE
   const handleSubmit = async () => {
     setLoading(true);
-    setMessage("");
 
     const accessToken = Cookies.get("accessToken");
 
     if (!selectedBranchId) {
-      setMessage("❌ Please select a branch");
+      toast.error("  Please select a branch");
       setLoading(false);
       return;
     }
@@ -100,15 +99,15 @@ const Add = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        setMessage(data?.message || "❌ Staff create failed");
+        toast.error(data?.message || "  Staff create failed");
         setLoading(false);
         return;
       }
 
-      setMessage("✅ Staff created successfully");
+      toast.success("   Staff created successfully");
       router.back();
     } catch {
-      setMessage("❌ Something went wrong");
+      toast.error(" Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -141,16 +140,17 @@ const Add = () => {
           className="col-span-12 md:col-span-6"
         />
 
-        {/* 🔥 BRANCH DROPDOWN */}
+        
         <Dropdown
           label="Branch"
+          labelClass={`text-xl mb-2`}
           options={branches.map((b) => b.name)}
           onSelect={(name) => {
             const branch = branches.find((b) => b.name === name);
             setSelectedBranchId(branch?.id || "");
           }}
           className="col-span-12 md:col-span-6"
-          inputClass="rounded-2xl border p-4"
+          inputClass="rounded-2xl border p-4 font-inter text-xl"
         />
         <Password
           label="Password"
@@ -180,8 +180,6 @@ const Add = () => {
           {loading ? "Creating..." : "Create"}
         </button>
       </div>
-
-      {message && <p className="text-center mt-6 font-inter">{message}</p>}
     </div>
   );
 };

@@ -30,17 +30,17 @@ const Support = () => {
     const token = Cookies.get("accessToken");
 
     if (!businessId) {
-      setMessage("❌ Business ID not found");
+      setMessage("  Business ID not found");
       return;
     }
 
     if (!formData.issue || !formData.date) {
-      setMessage("❌ Please fill all required fields");
+      setMessage("  Please fill all required fields");
       return;
     }
 
     if (!["NORMAL", "MEDIUM", "HIGH"].includes(formData.priority)) {
-      setMessage("❌ Invalid priority selected");
+      setMessage("  Invalid priority selected");
       return;
     }
 
@@ -73,15 +73,15 @@ const Support = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        setMessage(data?.message || "❌ Failed to create support ticket");
+        setMessage(data?.message || "  Failed to create support ticket");
         return;
       }
 
-      setMessage("✅ Support ticket created successfully");
+      setMessage("   Support ticket created successfully");
       router.back();
     } catch (err) {
       console.error(err);
-      setMessage("❌ Something went wrong");
+      setMessage("  Something went wrong");
     } finally {
       setLoading(false);
     }

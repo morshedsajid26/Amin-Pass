@@ -3,6 +3,7 @@ import Topbar from '@/src/components/Topbar'
 import React from 'react'
 import BusinessSidebar from '@/src/components/BusinessSidebar'
 import { ThemeProvider } from '@/src/components/Theme-Provider'
+import { AuthProvider } from '@/src/components/AuthProvider'
 
 
 const layout = ({children}) => {
@@ -34,7 +35,7 @@ const layout = ({children}) => {
            
               <main className="flex-1 min-h-0 overflow-y-auto hide-scrollbar  pt-6 pb-[50px] md:pl-6 md:pr-12 ">
               <div className="w-full max-w-full overflow-x-hidden  ">
-              {children}
+              <AuthProvider role="business">{children}</AuthProvider>
               </div>
             </main>
   

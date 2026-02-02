@@ -32,8 +32,8 @@ export default function CustomerVisitChart({ data = [] }) {
     );
 
     return {
-      name: month,                 // ✅ always static
-      visits: found ? Number(found.visits) : 0, // ✅ dynamic
+      name: month,                 //    always static
+      visits: found ? Number(found.visits) : 0, //    dynamic
     };
   });
 

@@ -18,7 +18,7 @@ const GeneralSettings = () => {
     const fetchProfile = async () => {
       try {
         setLoading(true);
-        const token = Cookies.get("accessToken"); // ✅ FIXED
+        const token = Cookies.get("accessToken"); //    FIXED
 
         if (!token) return;
 
@@ -35,7 +35,7 @@ const GeneralSettings = () => {
         const json = await res.json();
         if (!res.ok) throw new Error(json.message);
 
-        // ✅ FIXED: correct data mapping
+        //    FIXED: correct data mapping
         setProfile(json.data);
       } catch (error) {
         console.error("Profile fetch error:", error);

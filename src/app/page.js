@@ -32,7 +32,7 @@ useEffect(() => {
 
   return (
     <div className="relative">
-      {/* ✅ Cookie Popup */}
+      {/*    Cookie Popup */}
       {cookieOpen && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
           <div className="bg-gradient-to-t from-[#F4F1EC] to-[#B3CBDB] w-[90%] sm:w-[37%] rounded-[15px] pt-[70px] px-8 sm:px-12 shadow-2xl animate-fadeIn overflow-y-auto hide-scrollbar">
@@ -68,7 +68,7 @@ useEffect(() => {
         </div>
       )}
 
-      {/* ✅ Landing Page */}
+      {/*    Landing Page */}
       <div className="bg-[#AAC5D8] md:bg-gradient-to-t from-[#F4F1EC] to-[#B3CBDB] pt-5 h-screen overflow-y-auto hide-scrollbar">
         <Navbar />
         <Banner />

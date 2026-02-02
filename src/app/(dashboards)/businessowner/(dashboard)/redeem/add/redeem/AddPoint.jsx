@@ -6,19 +6,20 @@ import Avatar from "@/public/Avatar.png";
 import Image from "next/image";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import { BASE_URL } from "@/src/config/api";
+import { formatDate } from "@/src/utils/formatDate";
 
 const AddPoint = () => {
+  const router = useRouter();
+
   /* ================= DATE ================= */
   const today = new Date();
-  const day = String(today.getDate()).padStart(2, "0");
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const year = today.getFullYear();
-  const formattedDate = `${day}/${month}/${year}`;
+  const formattedDate = formatDate(today.toISOString());
 
   /* ================= STATE ================= */
   const [count, setCount] = useState(0);
-  const [message, setMessage] = useState("");
   const [total, setTotal] = useState(0);
   const [redeemData, setRedeemData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -28,7 +29,7 @@ const AddPoint = () => {
   useEffect(() => {
     const raw = localStorage.getItem("redeemData");
     if (!raw) {
-      setMessage("❌ Redeem data missing");
+      toast.error(" Redeem data missing");
       return;
     }
 
@@ -44,17 +45,16 @@ const AddPoint = () => {
   /* ================= API CALL ================= */
 const handleClick = async () => {
   if (!count || !redeemData?.qrCode || !redeemData?.branchId) {
-    setMessage("❌ Missing required data");
+    toast.error(" Missing required data");
     return;
   }
 
   try {
     setLoading(true);
-    setMessage("");
 
     const token = Cookies.get("accessToken");
     if (!token) {
-      setMessage("❌ Unauthorized");
+      toast.error(" Unauthorized");
       return;
     }
 
@@ -87,12 +87,14 @@ const handleClick = async () => {
 
     setTotal((prev) => prev + count);
     setCount(0);
-    setMessage(`✅ ${count} Point${count > 1 ? "s" : ""} added successfully!`);
+    toast.success(` ${count} Point${count > 1 ? "s" : ""} added successfully!`);
 
-    setTimeout(() => setMessage(""), 1500);
+    setTimeout(() => {
+      router.back();
+    }, 1500);
   } catch (err) {
     console.error(err);
-    setMessage(`❌ ${err.message}`);
+    toast.error(` ${err.message}`);
   } finally {
     setLoading(false);
   }
@@ -125,9 +127,12 @@ const handleClick = async () => {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-transparent md:w-[20%] w-full rounded-2xl py-3 px-10">
-          <p className="font-inter font-medium text-2xl dark:text-white">
-            {formattedDate}
+        <div className="bg-white dark:bg-[#141414] md:w-[20%] w-full rounded-2xl py-3 px-10 flex flex-col items-center">
+          <p className="font-inter font-medium text-xl dark:text-white">
+            {formattedDate?.split(" ").slice(0, 1).join(" ")}
+          </p>
+          <p className="font-inter font-medium text-lg mt-2 dark:text-white">
+            {formattedDate?.split(" ").slice(1).join(" ")}
           </p>
           <p className="font-inter font-medium mt-3 dark:text-white">
             Visit Date
@@ -162,43 +167,38 @@ const handleClick = async () => {
         </div>
 
         <div className="h-5">
-          {message && (
-            <p className="font-inter font-medium bg-[#6AC70D] px-4 py-2 rounded-lg">
-              {message}
-            </p>
-          )}
         </div>
       </div>
 
       {/* ================= SUMMARY CARD (UNCHANGED) ================= */}
       <div className="bg-white dark:bg-[#141414] rounded-4xl py-14 px-14">
         <div className="font-inter text-2xl text-[#000000] dark:text-white">
-          <div className="flex justify-between border-b border-[#000000]/10 py-4">
+          <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/50 py-4">
             <span className="font-medium">Active Reward:</span>
             <span className="font-normal">{redeemData?.activeRewards}</span>
           </div>
 
-          <div className="flex justify-between border-b border-[#000000]/10 py-4">
+          <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/50 py-4">
             <span className="font-medium">Available Reward:</span>
             <span className="font-normal">{redeemData?.availableRewards || 0}</span>
           </div>
 
-          <div className="flex justify-between border-b border-[#000000]/10 py-4">
+          <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/50   py-4">
             <span className="font-medium">Last Reward Received:</span>
-            <span className="font-normal">{redeemData?.lastRewardReceived || 0}</span>
+            <span className="font-normal">{formatDate(redeemData?.lastRewardReceived) || "—"}</span>
           </div>
 
-          <div className="flex justify-between border-b border-[#000000]/10 py-4">
+          <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/50 py-4">
             <span className="font-medium">Reward Points:</span>
             <span className="font-normal">{redeemData?.points || 0}</span>
           </div>
 
-          <div className="flex justify-between border-b border-[#000000]/10 py-4">
+          <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/50 py-4">
             <span className="font-medium">Card Expire Date:</span>
             <span></span>
           </div>
 
-          <div className="flex justify-between border-b border-[#000000]/10 py-4">
+          <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/50 py-4">
             <span className="font-medium">Earning Rule:</span>
             <span></span>
           </div>

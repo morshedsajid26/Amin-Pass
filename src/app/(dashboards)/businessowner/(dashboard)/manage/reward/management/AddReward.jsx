@@ -75,19 +75,19 @@ const AddReward = () => {
     const businessId = Cookies.get("businessId");
 
     if (!businessId) {
-      setMessage("❌ Business not found");
+      setMessage("  Business not found");
       setLoading(false);
       return;
     }
 
     if (!selectedBranchId) {
-      setMessage("❌ Please select a branch");
+      setMessage("  Please select a branch");
       setLoading(false);
       return;
     }
 
     if (!formData.rewardType) {
-      setMessage("❌ Please select reward type");
+      setMessage("  Please select reward type");
       setLoading(false);
       return;
     }
@@ -121,12 +121,12 @@ const AddReward = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        setMessage(data?.message || "❌ Reward create failed");
+        setMessage(data?.message || "  Reward create failed");
         setLoading(false);
         return;
       }
 
-      setMessage("✅ Reward created successfully");
+      setMessage("   Reward created successfully");
 
       // 🔄 Reset
       setFormData({
@@ -139,7 +139,7 @@ const AddReward = () => {
       setSelectedBranchId("");
       setRewardStatus("ACTIVE");
     } catch {
-      setMessage("❌ Something went wrong");
+      setMessage("  Something went wrong");
     } finally {
       setLoading(false);
     }

@@ -6,7 +6,7 @@ const Dropdown = ({
   label = "",
   placeholder = "",
   options = [],
-  value,              // ✅ NEW (optional)
+  value,              //    NEW (optional)
   onSelect,
   className,
   inputClass,

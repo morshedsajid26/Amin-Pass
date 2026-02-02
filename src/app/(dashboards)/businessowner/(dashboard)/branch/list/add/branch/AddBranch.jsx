@@ -12,11 +12,10 @@ const AddBranch = () => {
     branchLocation: "",
     staffCount: "",
     managerName: "",
-    branchImage: null, // ✅ new
+    branchImage: null, //    new
   });
 
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
 
   /* ---------------- INPUT HANDLERS ---------------- */
   const handleChange = (name, value) => {
@@ -36,7 +35,6 @@ const AddBranch = () => {
   /* ---------------- SUBMIT ---------------- */
   const handleSubmit = async () => {
     setLoading(true);
-    setMessage("");
 
     try {
       const accessToken = Cookies.get("accessToken");
@@ -48,7 +46,7 @@ const AddBranch = () => {
       payload.append("managerName", formData.managerName);
 
       if (formData.branchImage) {
-        payload.append("branchImage", formData.branchImage); // ✅ image
+        payload.append("branchImage", formData.branchImage); //    image
       }
 
       const res = await fetch(
@@ -57,7 +55,7 @@ const AddBranch = () => {
           method: "POST",
           headers: {
             Authorization: `Bearer ${accessToken}`,
-            // ❌ Content-Type দিয়ো না (FormData হলে)
+            //   Content-Type দিয়ো না (FormData হলে)
           },
           body: payload,
         }
@@ -70,7 +68,7 @@ const AddBranch = () => {
         throw new Error(data.message || "Failed");
       }
 
-      setMessage("✅ Branch created successfully");
+      toast.success("   Branch created successfully");
 
       setFormData({
         branchName: "",
@@ -81,7 +79,7 @@ const AddBranch = () => {
       });
     } catch (error) {
       console.error(error);
-      setMessage("❌ Failed to create branch");
+      toast.error("  Failed to create branch");
     } finally {
       setLoading(false);
     }

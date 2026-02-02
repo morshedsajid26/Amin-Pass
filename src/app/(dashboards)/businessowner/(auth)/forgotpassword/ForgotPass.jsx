@@ -30,7 +30,7 @@ const ForgotPass = () => {
     try {
       setLoading(true);
 
-      // ✅ OTP send request to backend
+      //    OTP send request to backend
       const res = await axios.post(`${BASE_URL}/auth/forgot-password`, {
         email: email,
       });

@@ -62,7 +62,7 @@ const NewPass = () => {
       const res = await axios.post(
         `${BASE_URL}/customer/auth/reset-password`,
         {
-          newPassword: password, // ✅ ONLY FIELD API NEEDS
+          newPassword: password, //    ONLY FIELD API NEEDS
         },
         {
           headers: {
@@ -88,7 +88,7 @@ const NewPass = () => {
   return (
     <main className="bg-white dark:bg-[#141414] grid place-items-center py-30 px-10 font-inter rounded-3xl">
       <form
-        onSubmit={handleSubmit} // ✅ FIXED
+        onSubmit={handleSubmit} //    FIXED
         className="flex flex-col items-center gap-7 w-[480px]"
       >
         <h3 className="text-[32px] font-medium dark:text-white">

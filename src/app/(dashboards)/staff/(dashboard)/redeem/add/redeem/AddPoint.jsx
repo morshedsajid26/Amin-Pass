@@ -101,7 +101,7 @@ const AddPoint = () => {
       }));
 
       setMessage(
-        `✅ ${count} Point${count > 1 ? "s" : ""} added successfully`
+        `   ${count} Point${count > 1 ? "s" : ""} added successfully`
       );
       setCount(0);
 

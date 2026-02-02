@@ -34,7 +34,7 @@ const LogIn = () => {
   /* ================= LOGIN ================= */
   const handleLogin = async () => {
     const pin = getPin();
-    const branchId = localStorage.getItem("branchId"); // ✅ FROM LOCAL
+    const branchId = localStorage.getItem("branchId"); //    FROM LOCAL
 
     if (pin.length !== 6) {
       setError("PIN must be 6 digits");
@@ -57,7 +57,7 @@ const LogIn = () => {
         },
         body: JSON.stringify({
           pin,
-          branchId, // ✅ LOCAL STORAGE VALUE
+          branchId, //    LOCAL STORAGE VALUE
         }),
       });
 
@@ -66,7 +66,7 @@ const LogIn = () => {
 
       if (!res.ok) throw new Error(data.message || "Login failed");
 
-      // ✅ SAVE TOKEN + FLAGS
+      //    SAVE TOKEN + FLAGS
       Cookies.set("token", data.data.token, {
         expires: 7,
         secure: true,

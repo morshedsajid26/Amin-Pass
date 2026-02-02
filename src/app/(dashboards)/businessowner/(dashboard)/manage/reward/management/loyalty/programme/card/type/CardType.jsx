@@ -22,7 +22,7 @@ const CardType = () => {
 
   /* ================= CONTINUE ================= */
   const handleContinue = () => {
-    // ✅ only save card type
+    //    only save card type
     localStorage.setItem(
       "cardSetup",
       JSON.stringify({
@@ -30,7 +30,7 @@ const CardType = () => {
       })
     );
 
-    // ✅ go to next step
+    //    go to next step
     router.push(
       "/businessowner/manage/reward/management/loyalty/programme/card/details"
     );

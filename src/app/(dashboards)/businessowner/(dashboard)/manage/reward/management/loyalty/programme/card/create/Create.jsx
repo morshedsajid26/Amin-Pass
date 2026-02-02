@@ -105,10 +105,10 @@ export default function Create() {
         return;
       }
 
-      // ✅ clear temp storage
+      //    clear temp storage
       localStorage.removeItem("cardSetup");
 
-      // ✅ success redirect
+      //    success redirect
       router.push("/businessowner/manage/reward/management");
     } catch (err) {
       console.error(err);

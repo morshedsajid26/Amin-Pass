@@ -61,3 +61,12 @@ html, body {
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+/* Ensure native buttons and elements with role="button" show pointer cursor */
+button {
+  cursor: pointer;
+}
+
+*{
+  font-family: var(--font-inter);
+}

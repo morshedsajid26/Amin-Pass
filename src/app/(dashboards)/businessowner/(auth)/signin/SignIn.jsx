@@ -7,6 +7,7 @@ import Password from "@/src/components/Password";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import toast from "react-hot-toast";
 import { BASE_URL } from "@/src/config/api";
 
 const SignIn = () => {
@@ -14,10 +15,7 @@ const SignIn = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false);
 
    const handleLogin = async (e) => {
     e.preventDefault();
@@ -41,13 +39,13 @@ const SignIn = () => {
       if (res.ok) {
         Cookies.set("accessToken", data.data.accessToken);
         Cookies.set("businessId", data.data.businessId);
-        
+        toast.success("Login successful!");
         router.push("/businessowner/home");
       } else {
-        setMessage(data.message || "Login failed");
+        toast.error(data.message || "Login failed");
       }
     } catch (err) {
-      setMessage("Something went wrong!");
+      toast.error("Something went wrong!");
     }
   
     setLoading(false);
@@ -100,16 +98,6 @@ const SignIn = () => {
             Forgot Password?
           </a>
         </div>
-
-        {message && (
-          <p
-            className={`text-center mt-2 ${
-              isSuccess ? "text-green-600" : "text-red-600"
-            }`}
-          >
-            {message}
-          </p>
-        )}
 
         <button
           type="submit"

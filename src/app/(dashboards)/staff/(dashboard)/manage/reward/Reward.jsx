@@ -29,7 +29,7 @@ const Rewards = () => {
         if (!res.ok) throw new Error(json.message);
 
         setRewards(json.data || []);
-        setSelectedReward(json.data?.[0] || null); // ✅ first select
+        setSelectedReward(json.data?.[0] || null); //    first select
       } catch (err) {
         console.error("Rewards error:", err);
       } finally {
