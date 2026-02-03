@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import InputField from "@/src/components/InputField";
 import Password from "@/src/components/Password";
-import Link from "next/link";
 import { BASE_URL } from "@/src/config/api";
 import Cookies from "js-cookie";
 
@@ -17,11 +16,13 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  /* ===== CHECK IF ALREADY LOGGED IN ===== */
+  /* ===== CHECK IF ALREADY LOGGED IN (OLD ACCOUNT ONLY) ===== */
   useEffect(() => {
     const branchId = localStorage.getItem("branchId");
-    if (branchId) {
-      router.push("/staff/login");
+    const hasPin = Cookies.get("hasPin");
+
+    if (branchId && hasPin === "true") {
+      router.replace("/staff/login"); // ✅ logic fix only
     }
   }, [router]);
 
@@ -65,33 +66,27 @@ const SignIn = () => {
       });
 
       /* ===== SAVE BRANCH ID ===== */
-      if (data?.data?.branchId) {
+      if (data?.data?.branchId   ) {
         localStorage.setItem("branchId", data.data.branchId);
       }
 
-      /* ===== SHOW SUCCESS MESSAGE & REDIRECT BASED ON PIN STATUS ===== */
-      const requirePinSetup = data?.data?.requirePinSetup;
-      const hasPin = data?.data?.hasPin ?? data?.data?.isPinSet ?? data?.data?.pinSet;
+      /* ===== PIN LOGIC (NO UI CHANGE) ===== */
+      const hasPin =
+        data?.data?.requirePinSetup ??
+        data?.data?.isPinSet ??
+        data?.data?.pinSet ??
+        false;
 
-      if (typeof requirePinSetup === "boolean") {
-        if (requirePinSetup) {
-          toast.success("Sign in successful! Please set your PIN.");
-          setTimeout(() => router.push("/staff/customer/platform/settings"), 700);
-        } else {
-          toast.success("Sign in successful! Proceed to PIN login.");
-          setTimeout(() => router.push("/staff/login"), 700);
-        }
-      } else if (typeof hasPin === "boolean") {
-        if (hasPin) {
-          toast.success("Sign in successful! Proceed to PIN login.");
-          setTimeout(() => router.push("/staff/login"), 700);
-        } else {
-          toast.success("Sign in successful! Please set your PIN.");
-          setTimeout(() => router.push("/staff/platform/settings"), 700);
-        }
+      Cookies.set("hasPin", String(hasPin), {
+        secure: true,
+        sameSite: "Lax",
+      });
+
+      if (!hasPin) {
+        toast.success("Sign in successful! Please set your PIN.");
+        setTimeout(() => router.push("/staff/platform/settings"), 700);
       } else {
-        // Fallback: go to PIN login
-        toast.success("Sign in successful! Proceeding...");
+        toast.success("Sign in successful! Proceed to PIN login.");
         setTimeout(() => router.push("/staff/login"), 700);
       }
     } catch (err) {
@@ -103,6 +98,7 @@ const SignIn = () => {
     }
   };
 
+  /* ================= UI (UNCHANGED) ================= */
   return (
     <main className="bg-white grid justify-center items-center py-20 px-11 rounded-3xl">
       <form
@@ -132,8 +128,6 @@ const SignIn = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        {/* notifications shown via toast */}
-
         <button
           type="submit"
           disabled={loading}
@@ -141,13 +135,6 @@ const SignIn = () => {
         >
           {loading ? "Signing in..." : "Sign In"}
         </button>
-{/* 
-        <p className="font-inter mt-3">
-          Don’t have an account?
-          <Link href="/staff/signup" className="font-bold ml-1">
-            Sign up
-          </Link>
-        </p> */}
       </form>
     </main>
   );

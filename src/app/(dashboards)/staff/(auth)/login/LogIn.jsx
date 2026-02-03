@@ -18,7 +18,7 @@ const LogIn = () => {
     const branchId = localStorage.getItem("branchId");
     if (!branchId) {
       toast.error("Please sign in first");
-      router.push("/staff/signin");
+      router.replace("/staff/signin"); // 🔧 push → replace (logic only)
     }
   }, [router]);
 
@@ -44,7 +44,7 @@ const LogIn = () => {
   /* ================= LOGIN ================= */
   const handleLogin = async () => {
     const pin = getPin();
-    const branchId = localStorage.getItem("branchId"); //    FROM LOCAL
+    const branchId = localStorage.getItem("branchId");
 
     if (pin.length !== 6) {
       const msg = "PIN must be 6 digits";
@@ -57,6 +57,7 @@ const LogIn = () => {
       const msg = "Branch not found. Please login again.";
       setError(msg);
       toast.error(msg);
+      router.replace("/staff/signin");
       return;
     }
 
@@ -71,7 +72,7 @@ const LogIn = () => {
         },
         body: JSON.stringify({
           pin,
-          branchId, //    LOCAL STORAGE VALUE
+          branchId,
         }),
       });
 
@@ -80,22 +81,25 @@ const LogIn = () => {
 
       if (!res.ok) throw new Error(data.message || "Login failed");
 
-      //    SAVE TOKEN + FLAGS
+      /* ===== SAVE TOKEN (NO DESIGN CHANGE) ===== */
       Cookies.set("token", data.data.token, {
         expires: 7,
         secure: true,
-        sameSite: "strict",
+        sameSite: "Lax", // 🔧 strict → Lax (Vercel safe)
       });
 
-      // localStorage.setItem("requirePinSetup", data.requirePinSetup);
+      /* ===== MARK FINAL LOGIN ===== */
+      // Cookies.set("staffStage", "PIN_VERIFIED", {
+      //   secure: true,
+      //   sameSite: "Lax",
+      // });
 
-      //    SHOW SUCCESS MESSAGE
       toast.success("Login successful!");
 
       setTimeout(() => {
-        router.push("/staff/customer/platform");
+        router.replace("/staff/customer/platform"); // 🔧 push → replace
       }, 1000);
-      } catch (err) {
+    } catch (err) {
       const msg = err.message || "Login failed";
       setError(msg);
       toast.error(msg);
@@ -104,7 +108,7 @@ const LogIn = () => {
     }
   };
 
-  /* ================= UI ================= */
+  /* ================= UI (UNCHANGED) ================= */
   return (
     <main className="bg-white grid justify-center items-center py-30 px-11 rounded-3xl">
       <div className="gap-5 flex flex-col items-center w-[480px]">
@@ -133,8 +137,6 @@ const LogIn = () => {
             />
           ))}
         </div>
-
-        {/* notifications shown via toast */}
 
         <button
           onClick={handleLogin}

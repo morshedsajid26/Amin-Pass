@@ -33,7 +33,9 @@ const StaffSidebar = () => {
   
   
   const handleLogout = () => {
-    Cookies.remove("token");       
+    Cookies.remove("token");
+    Cookies.remove("staffStage");
+    Cookies.remove("hasPin");       
 
     router.replace("/staff/login");
   };

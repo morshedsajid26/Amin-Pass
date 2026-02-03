@@ -6,6 +6,7 @@ import Avatar from "@/public/Avatar.png";
 import { FiX } from "react-icons/fi";
 import Cookies from "js-cookie";
 import { BASE_URL } from "@/src/config/api";
+import toast from "react-hot-toast";
 
 const GeneralSettings = () => {
   const [viewOpen, setViewOpen] = useState(false);
@@ -15,6 +16,8 @@ const GeneralSettings = () => {
 
   const newPinRefs = useRef([]);
   const confirmPinRefs = useRef([]);
+
+  const hasPin = Cookies.get("hasPin");
 
   /* ================= PIN INPUT HELPERS ================= */
   const handleChange = (e, index, refs) => {
@@ -93,19 +96,32 @@ const GeneralSettings = () => {
         },
         body: JSON.stringify({
           pin,
-          confirmPin, //    REQUIRED BY BACKEND
+          confirmPin,
         }),
       });
 
       const data = await res.json();
-      console.log("SET PIN RESPONSE:", data);
-
       if (!res.ok) throw new Error(data.message || "Failed to set PIN");
 
-      //    SUCCESS
+      /* ✅ MARK PIN AS SET */
+      Cookies.set("hasPin", "true", {
+        secure: true,
+        sameSite: "Lax",
+      });
+
+      /* ✅ RESET UI */
       setViewOpen(false);
       newPinRefs.current.forEach((i) => i && (i.value = ""));
       confirmPinRefs.current.forEach((i) => i && (i.value = ""));
+
+      /* ✅ REDIRECT TO PIN LOGIN */
+      toast.success("PIN set successfully! Please log in again.");
+      setTimeout(() => {
+        Cookies.remove("token");
+        Cookies.remove("staffStage");
+        Cookies.remove("hasPin");
+        window.location.href = "/staff/login";
+      }, 1200);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -131,12 +147,15 @@ const GeneralSettings = () => {
         <Info label="Phone Number" value={profile?.phone} last />
       </div>
 
-      <button
-        onClick={() => setViewOpen(true)}
-        className="bg-[#7AA3CC] text-[#000000] w-[40%] font-bold font-inter py-3 mt-14 rounded-lg"
-      >
-        Set Your PIN
-      </button>
+      {/* ✅ ONLY BUTTON IS CONDITIONAL */}
+      {hasPin && (
+        <button
+          onClick={() => setViewOpen(true)}
+          className="bg-[#7AA3CC] text-[#000000] w-[40%] font-bold font-inter py-3 mt-14 rounded-lg"
+        >
+          Set Your PIN
+        </button>
+      )}
 
       {/* ================= MODAL ================= */}
       {viewOpen && (
@@ -167,9 +186,7 @@ const GeneralSettings = () => {
               onKeyDown={handleKeyDown}
             />
 
-            {error && (
-              <p className="text-red-500 text-center mt-4">{error}</p>
-            )}
+            {error && <p className="text-red-500 text-center mt-4">{error}</p>}
 
             <div className="text-center">
               <button
