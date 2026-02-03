@@ -9,13 +9,13 @@ import {
 } from "recharts";
 
 export default function CustomerVisitChart({ data = [] }) {
-  // 🔒 Static months (always show)
+  //  Static months (always show)
   const MONTHS = [
     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
   ];
 
-  // 🔒 Process data
+  //  Process data
   const chartData = MONTHS.map((month) => {
     const found = data.find(
       (item) =>
@@ -34,9 +34,6 @@ export default function CustomerVisitChart({ data = [] }) {
     };
   });
 
-  // Debug log
-  console.log("CustomerVisitChart - Input data:", data);
-  console.log("CustomerVisitChart - Processed chartData:", chartData);
 
   return (
     <div className="bg-white dark:bg-[#141414] rounded-2xl p-8">
