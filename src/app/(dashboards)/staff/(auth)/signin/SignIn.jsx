@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import InputField from "@/src/components/InputField";
@@ -16,6 +16,14 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  /* ===== CHECK IF ALREADY LOGGED IN ===== */
+  useEffect(() => {
+    const branchId = localStorage.getItem("branchId");
+    if (branchId) {
+      router.push("/staff/login");
+    }
+  }, [router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,7 +69,31 @@ const SignIn = () => {
         localStorage.setItem("branchId", data.data.branchId);
       }
 
-      router.push("/staff/customer/platform");
+      /* ===== SHOW SUCCESS MESSAGE & REDIRECT BASED ON PIN STATUS ===== */
+      const requirePinSetup = data?.data?.requirePinSetup;
+      const hasPin = data?.data?.hasPin ?? data?.data?.isPinSet ?? data?.data?.pinSet;
+
+      if (typeof requirePinSetup === "boolean") {
+        if (requirePinSetup) {
+          toast.success("Sign in successful! Please set your PIN.");
+          setTimeout(() => router.push("/staff/customer/platform/settings"), 700);
+        } else {
+          toast.success("Sign in successful! Proceed to PIN login.");
+          setTimeout(() => router.push("/staff/login"), 700);
+        }
+      } else if (typeof hasPin === "boolean") {
+        if (hasPin) {
+          toast.success("Sign in successful! Proceed to PIN login.");
+          setTimeout(() => router.push("/staff/login"), 700);
+        } else {
+          toast.success("Sign in successful! Please set your PIN.");
+          setTimeout(() => router.push("/staff/platform/settings"), 700);
+        }
+      } else {
+        // Fallback: go to PIN login
+        toast.success("Sign in successful! Proceeding...");
+        setTimeout(() => router.push("/staff/login"), 700);
+      }
     } catch (err) {
       const msg = err.message || "Login failed";
       setError(msg);
@@ -109,13 +141,13 @@ const SignIn = () => {
         >
           {loading ? "Signing in..." : "Sign In"}
         </button>
-
+{/* 
         <p className="font-inter mt-3">
           Don’t have an account?
           <Link href="/staff/signup" className="font-bold ml-1">
             Sign up
           </Link>
-        </p>
+        </p> */}
       </form>
     </main>
   );

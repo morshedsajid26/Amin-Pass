@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
@@ -12,6 +12,15 @@ const LogIn = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  /* ===== CHECK IF BRANCH ID EXISTS ===== */
+  useEffect(() => {
+    const branchId = localStorage.getItem("branchId");
+    if (!branchId) {
+      toast.error("Please sign in first");
+      router.push("/staff/signin");
+    }
+  }, [router]);
 
   /* ================= PIN INPUT ================= */
   const handleChange = (e, index) => {
@@ -80,7 +89,12 @@ const LogIn = () => {
 
       // localStorage.setItem("requirePinSetup", data.requirePinSetup);
 
-      router.push("/staff/customer/platform");
+      //    SHOW SUCCESS MESSAGE
+      toast.success("Login successful!");
+
+      setTimeout(() => {
+        router.push("/staff/customer/platform");
+      }, 1000);
       } catch (err) {
       const msg = err.message || "Login failed";
       setError(msg);
