@@ -4,6 +4,7 @@ import Bredcumb from "@/src/components/Bredcumb";
 import Pagination from "@/src/components/Pagination";
 import Table from "@/src/components/Table";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaUndoAlt } from "react-icons/fa";
 import { FiX } from "react-icons/fi";
 import Cookies from "js-cookie";
@@ -36,7 +37,6 @@ const Transaction = () => {
       try {
         const token = Cookies.get("token");
         const branchId = localStorage.getItem("branchId");
-
         if (!token || !branchId) return;
 
         const res = await fetch(
@@ -51,33 +51,34 @@ const Transaction = () => {
         const json = await res.json();
         if (!res.ok) throw new Error(json.message);
 
-        // 🔽 adjust based on backend response
-        const rows = json.data?.transactions || [];
-        const meta = json.data?.meta;
+        const rows = json.data.transactions || [];
+        const pagination = json.data.pagination;
 
         const formatted = rows.map((item) => ({
-          date: item.createdAt?.slice(0, 10),
+          date: item.date.slice(0, 10),
           type: item.type,
           name: item.customerName,
           points: item.points > 0 ? `+${item.points}` : item.points,
           status: item.status,
-          action: (
+          action: item.canUndo ? (
             <button
               onClick={() => {
                 setSelectedTxn(item);
                 setViewOpen(true);
               }}
-              className="border border-[#7AA3CC] rounded-lg font-inter font-medium
-              py-1.5 px-4 flex items-center gap-2 cursor-pointer"
+              className="border border-[#7AA3CC] rounded-lg py-1.5 px-4
+              flex items-center gap-2 font-inter cursor-pointer"
             >
               <FaUndoAlt />
               Undo
             </button>
+          ) : (
+            "-"
           ),
         }));
 
         setTransactions(formatted);
-        setTotalPages(meta?.totalPages || 1);
+        setTotalPages(pagination.totalPages);
       } catch (err) {
         console.error("Transaction fetch error:", err);
       }
@@ -88,20 +89,43 @@ const Transaction = () => {
 
   /* ================= HANDLE UNDO ================= */
   const handleUndoSubmit = async () => {
-    if (!undoReason.trim()) return alert("Please enter reason");
+    if (!undoReason.trim()) {
+      toast.error("Please enter reason");
+      return;
+    }
 
     try {
       const token = Cookies.get("token");
-      if (!token || !selectedTxn) return;
+      if (!token || !selectedTxn) {
+        toast.error("Authentication failed");
+        return;
+      }
 
-      // 🔧 future API call here
-      console.log("UNDO TXN:", selectedTxn.id, undoReason);
+      const res = await fetch(
+        `${BASE_URL}/staff/transactions/${selectedTxn.id}/undo`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ reason: undoReason }),
+        }
+      );
+
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.message || "Undo failed");
+
+      // 🔄 Refresh list after undo
+      toast.success("Transaction undone successfully!");
+      setCurrentPage(1);
 
       setViewOpen(false);
       setUndoReason("");
       setSelectedTxn(null);
     } catch (err) {
-      console.error(err);
+      console.error("Undo failed:", err);
+      toast.error(err.message || "Undo failed");
     }
   };
 
@@ -131,9 +155,7 @@ const Transaction = () => {
               />
             </div>
 
-            <p className="font-inter text-2xl mb-4">
-              Reason for Undo
-            </p>
+            <p className="font-inter text-2xl mb-4">Reason for Undo</p>
 
             <textarea
               value={undoReason}
