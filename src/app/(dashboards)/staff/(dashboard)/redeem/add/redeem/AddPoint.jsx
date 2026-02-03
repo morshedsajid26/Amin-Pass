@@ -8,10 +8,27 @@ import { FaMinus, FaPlus } from "react-icons/fa";
 import Bredcumb from "@/src/components/Bredcumb";
 import Avatar from "@/public/Avatar.png";
 import { BASE_URL } from "@/src/config/api";
+import { formatDate } from "@/src/utils/formatDate";
 
 const AddPoint = () => {
+  const Info = ({ label, value, last }) => (
+    <div
+      className={`
+        flex justify-between py-4
+        font-inter text-2xl
+        ${!last ? "border-b border-black/10" : ""}
+      `}
+    >
+      <span className="font-medium">{label}:</span>
+      <span className="font-normal">{value}</span>
+    </div>
+  );
+
+
   /* ================= DATE ================= */
-  const formattedDate = new Date().toLocaleDateString("en-GB");
+  // const formattedDate = new Date().toLocaleDateString("en-GB");
+  const today = new Date();
+  const formattedDate = formatDate(today.toISOString());
 
   /* ================= STATE ================= */
   const [count, setCount] = useState(0);
@@ -118,10 +135,9 @@ const AddPoint = () => {
     <div>
       <Bredcumb />
 
-      {/* ---------- TOP SECTION ---------- */}
-      <div className="flex flex-col md:flex-row items-center gap-5 md:gap-25">
-        {/* CUSTOMER INFO */}
-        <div className="bg-white w-full md:w-[50%] rounded-2xl py-2 px-6">
+       {/* ================= USER CARD (UNCHANGED) ================= */}
+      <div className="grid grid-cols-12 items-center gap-5 md:gap-10">
+        <div className="bg-white dark:bg-transparent col-span-12 md:col-span-8  rounded-2xl py-5 px-6">
           <div className="flex items-center gap-6">
             <Image
               src={Avatar}
@@ -130,24 +146,25 @@ const AddPoint = () => {
               height={80}
               className="rounded-full"
             />
-
             <div>
-              <h2 className="font-inter text-2xl font-medium text-black">
-                {safeCustomer.name}
+              <h2 className="font-inter text-2xl font-medium text-[#000000] dark:text-white">
+                {safeCustomer?.customerName || "—"}
               </h2>
-              <p className="font-inter font-medium text-black">
-                {safeCustomer.email}
+              <p className="font-inter font-medium text-[#000000] dark:text-white">
+                {safeCustomer?.customerEmail || ""}
               </p>
             </div>
           </div>
         </div>
 
-        {/* DATE */}
-        <div className="bg-white w-full md:w-[20%] rounded-2xl py-3 px-10">
-          <p className="font-inter font-medium text-2xl">
-            {formattedDate}
+        <div className="bg-white dark:bg-[#141414] col-span-12 md:col-span-4  rounded-2xl py-3 px-10 flex flex-col items-center">
+          <p className="font-inter font-medium text-xl dark:text-white">
+            {formattedDate?.split(" ").slice(0, 1).join(" ")}
           </p>
-          <p className="font-inter font-medium mt-3">
+          <p className="font-inter font-medium text-lg mt-2 dark:text-white">
+            {formattedDate?.split(" ").slice(1).join(" ")}
+          </p>
+          <p className="font-inter font-medium mt-3 dark:text-white">
             Visit Date
           </p>
         </div>
@@ -199,7 +216,7 @@ const AddPoint = () => {
         <Info label="Available Reward" value={safeReward.availableRewards} />
         <Info
           label="Last Reward Received"
-          value={safeReward.lastRewardReceived}
+          value={formatDate(safeReward?.lastRewardReceived) || "—"}
         />
         <Info label="Reward Points" value={safeReward.rewardPoints} />
         <Info label="Card Expire Date" value={safeReward.cardExpireDate} />
@@ -213,15 +230,3 @@ const AddPoint = () => {
 export default AddPoint;
 
 /* ================= SMALL COMPONENT ================= */
-const Info = ({ label, value, last }) => (
-  <div
-    className={`
-      flex justify-between py-4
-      font-inter text-2xl
-      ${!last ? "border-b border-black/10" : ""}
-    `}
-  >
-    <span className="font-medium">{label}:</span>
-    <span className="font-normal">{value}</span>
-  </div>
-);

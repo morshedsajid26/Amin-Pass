@@ -86,6 +86,7 @@ const Redeem = () => {
     const payload = {
       customerId: customerData.customer.id,
       customerName: customerData.customer.name,
+      customerEmail: customerData.customer.email,
       rewardHistoryId: selectedBranch.rewardHistoryId,
       branchId: selectedBranch.branchId,
       branchName: selectedBranch.branchName,

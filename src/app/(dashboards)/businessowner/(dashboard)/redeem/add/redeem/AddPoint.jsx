@@ -12,6 +12,21 @@ import { BASE_URL } from "@/src/config/api";
 import { formatDate } from "@/src/utils/formatDate";
 
 const AddPoint = () => {
+
+   const Info = ({ label, value, last }) => (
+    <div
+      className={`
+        flex justify-between py-4
+        font-inter text-2xl
+        ${!last ? "border-b border-black/10" : ""}
+      `}
+    >
+      <span className="font-medium">{label}:</span>
+      <span className="font-normal">{value}</span>
+    </div>
+  );
+
+
   const router = useRouter();
 
   /* ================= DATE ================= */
@@ -106,8 +121,8 @@ const handleClick = async () => {
       <Bredcumb />
 
       {/* ================= USER CARD (UNCHANGED) ================= */}
-      <div className="flex flex-col md:flex items-center gap-5 md:gap-25">
-        <div className="bg-white dark:bg-transparent w-full md:w-[50%] rounded-2xl py-2 px-6">
+      <div className="grid grid-cols-12 items-center gap-5 md:gap-10">
+        <div className="bg-white dark:bg-transparent col-span-12 md:col-span-8  rounded-2xl py-5 px-6">
           <div className="flex items-center gap-6">
             <Image
               src={Avatar}
@@ -121,13 +136,13 @@ const handleClick = async () => {
                 {redeemData?.customerName || "—"}
               </h2>
               <p className="font-inter font-medium text-[#000000] dark:text-white">
-                {redeemData?.branchName || ""}
+                {redeemData?.customerEmail || ""}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-[#141414] md:w-[20%] w-full rounded-2xl py-3 px-10 flex flex-col items-center">
+        <div className="bg-white dark:bg-[#141414] col-span-12 md:col-span-4  rounded-2xl py-3 px-10 flex flex-col items-center">
           <p className="font-inter font-medium text-xl dark:text-white">
             {formattedDate?.split(" ").slice(0, 1).join(" ")}
           </p>
@@ -171,7 +186,7 @@ const handleClick = async () => {
       </div>
 
       {/* ================= SUMMARY CARD (UNCHANGED) ================= */}
-      <div className="bg-white dark:bg-[#141414] rounded-4xl py-14 px-14">
+      {/* <div className="bg-white dark:bg-[#141414] rounded-4xl py-14 px-14">
         <div className="font-inter text-2xl text-[#000000] dark:text-white">
           <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/50 py-4">
             <span className="font-medium">Active Reward:</span>
@@ -208,6 +223,21 @@ const handleClick = async () => {
             <span></span>
           </div>
         </div>
+      </div> */}
+
+
+      {/* ---------- REWARD INFO ---------- */}
+      <div className="bg-white rounded-4xl py-14 px-14 mt-10">
+        <Info label="Active Reward" value={redeemData?.activeRewards} />
+        <Info label="Available Reward" value={redeemData?.availableRewards || 0} />
+        <Info
+          label="Last Reward Received"
+          value={formatDate(redeemData?.lastRewardReceived) || "—"}
+        />
+        <Info label="Reward Points" value={redeemData?.points || 0} />
+        <Info label="Card Expire Date" value={redeemData?.cardExpireDate || "-"} />
+        <Info label="Earning Rule" value={redeemData?.earningRule || "-"} />
+        <Info label="App" value={redeemData?.walletApp || "-"} last />
       </div>
     </div>
   );
