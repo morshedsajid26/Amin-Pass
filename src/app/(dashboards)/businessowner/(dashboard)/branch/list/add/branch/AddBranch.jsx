@@ -5,6 +5,7 @@ import InputField from "@/src/components/InputField";
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { BASE_URL } from "@/src/config/api";
+import toast from "react-hot-toast";
 
 const AddBranch = () => {
   const [formData, setFormData] = useState({
@@ -55,7 +56,7 @@ const AddBranch = () => {
           method: "POST",
           headers: {
             Authorization: `Bearer ${accessToken}`,
-            //   Content-Type দিয়ো না (FormData হলে)
+            
           },
           body: payload,
         }
@@ -150,9 +151,9 @@ const AddBranch = () => {
           {loading ? "Creating..." : "Create"}
         </button>
 
-        {message && (
+        {/* {message && (
           <p className="mt-4 font-inter text-sm">{message}</p>
-        )}
+        )} */}
       </div>
     </div>
   );
