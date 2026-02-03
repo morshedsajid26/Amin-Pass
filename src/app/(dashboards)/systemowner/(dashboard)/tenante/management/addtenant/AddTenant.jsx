@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { BASE_URL } from "@/src/config/api";
 import Password from "@/src/components/Password";
+import toast from "react-hot-toast";
 
 const AddTenant = () => {
   const router = useRouter();
@@ -232,9 +233,9 @@ const AddTenant = () => {
         </button>
       </div>
 
-      {message && (
+      {/* {message && (
         <p className="text-center mt-6 font-inter text-lg">{message}</p>
-      )}
+      )} */}
     </>
   );
 };
