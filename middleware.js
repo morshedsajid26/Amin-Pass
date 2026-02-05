@@ -4,7 +4,8 @@ export function middleware(request) {
   const { pathname } = request.nextUrl;
 
   /* ================= COOKIES ================= */
-  const accessToken = request.cookies.get("accessToken")?.value; // business/system
+  const businessToken = request.cookies.get("accessToken")?.value;
+const systemToken = request.cookies.get("accessToken")?.value;
   const staffToken = request.cookies.get("token")?.value;        // staff login token
   const staffStage = request.cookies.get("staffStage")?.value;  // PIN stage
 
@@ -24,7 +25,7 @@ export function middleware(request) {
     );
 
     if (isPublic) {
-      if (accessToken) {
+      if (businessToken) {
         return NextResponse.redirect(
           new URL("/businessowner/home", request.url)
         );
@@ -55,7 +56,7 @@ export function middleware(request) {
     );
 
     if (isPublic) {
-      if (accessToken) {
+      if (systemToken) {
         return NextResponse.redirect(
           new URL("/systemowner/home", request.url)
         );

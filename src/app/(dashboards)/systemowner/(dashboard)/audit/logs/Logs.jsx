@@ -1,94 +1,96 @@
 "use client";
+
 import Bredcumb from "@/src/components/Bredcumb";
-import Dropdown from "@/src/components/Dropdown";
 import Pagination from "@/src/components/Pagination";
 import Table from "@/src/components/Table";
-
 import React, { useEffect, useState } from "react";
-import { FaPlus, FaSearch } from "react-icons/fa";
-import Image from "next/image";
-import Avatar from "@/public/Avatar.png";
+import { FaSearch } from "react-icons/fa";
 import { BiExport } from "react-icons/bi";
-
+import axios from "axios";
+import { BASE_URL } from "@/src/config/api";
+import Cookies from "js-cookie";
 
 const Logs = () => {
-  const [baseOnTitle, setBaseOnTitle] = useState([]);
+  const [logs, setLogs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  
+  const [totalPages, setTotalPages] = useState(1);
+  const [search, setSearch] = useState("");
 
+  const itemsPerPage = 10;
+
+  /* ================= TABLE HEAD ================= */
   const TableHeads = [
     { Title: "Business Name", key: "name", width: "20%" },
     { Title: "Date", key: "date", width: "15%" },
     { Title: "Time", key: "time", width: "15%" },
     { Title: "Action", key: "action", width: "25%" },
     { Title: "Details", key: "details", width: "25%" },
-   
   ];
 
-  const TableRows = [
-    {
-      name: "James Carter",
-      id: "#1245",
-      date: "10/08/2025",
-      time: "10:45 AM",
-      action:"Created new offer",
-      details: "Buy 1 Get 1 Free",
-      
-    },
-    {
-      name: "James Carter",
-      id: "#1245",
-      date: "10/08/2025",
-      time: "10:45 AM",
-      action:"Created new offer",
-      details: "Buy 1 Get 1 Free",
-      
-    },
-    {
-      name: "James Carter",
-      id: "#1245",
-      date: "10/08/2025",
-      time: "10:45 AM",
-      action:"Created new offer",
-      details: "Buy 1 Get 1 Free",
-      
-    },
-    {
-      name: "James Carter",
-      id: "#1245",
-      date: "10/08/2025",
-      time: "10:45 AM",
-      action:"Created new offer",
-      details: "Buy 1 Get 1 Free",
-      
-    },
-   
-  ];
+  /* ================= FETCH LOGS ================= */
+  const fetchLogs = async () => {
+    try {
+      const token = Cookies.get("accessToken");
+      const res = await axios.get(
+        `${BASE_URL}/system-owner/audit-logs`,
+        {
+          params: {
+            page: currentPage,
+            limit: itemsPerPage,
+            search,
+          },
+          // withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const { logs, meta } = res.data.data;
+
+      const formatted = logs.map((log) => {
+        const dateObj = new Date(log.date);
+
+        return {
+          name: log.businessName,
+          date: dateObj.toLocaleDateString(),
+          time: dateObj.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+          action: log.action,
+          details: JSON.stringify(log.details),
+        };
+      });
+
+      setLogs(formatted);
+      setTotalPages(meta.totalPages);
+    } catch (error) {
+      console.error("Failed to fetch audit logs", error);
+    }
+  };
 
   useEffect(() => {
-    setBaseOnTitle(TableRows);
-  }, []);
+    fetchLogs();
+  }, [currentPage, search]);
 
-  const itemsPerPage = 10;
-
-  const totalPages = Math.ceil(baseOnTitle.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = baseOnTitle.slice(startIndex, startIndex + itemsPerPage);
-
-
+  /* ================= CSV EXPORT ================= */
   const handleExportCSV = () => {
     const headers = TableHeads.map((h) => h.Title);
-    const rows = TableRows.map((row) =>
-      TableHeads.map((h) => row[h.key]).join(",")
+
+    const rows = logs.map((row) =>
+      TableHeads.map((h) => `"${row[h.key]}"`).join(",")
     );
 
     const csvContent = [headers.join(","), ...rows].join("\n");
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const blob = new Blob([csvContent], {
+      type: "text/csv;charset=utf-8;",
+    });
 
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "logs.csv";
+    a.download = "audit_logs.csv";
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -97,36 +99,44 @@ const Logs = () => {
     <div>
       <Bredcumb />
 
-      <div className="flex flex-col md:flex-row  md:justify-between items-end md:gap-16 gap-5 ">
+      {/* ================= TOP BAR ================= */}
+      <div className="flex flex-col md:flex-row md:justify-between items-end gap-5">
 
-        <div className="relative  ">
+        {/* SEARCH */}
+        <div className="relative">
           <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             type="text"
-            className="border outline-none border-[#000000] py-3.5 px-12 w-[462px] rounded-[15px] text-[#000000] placeholder:text-[#000000] font-inter"
             placeholder="Search"
+            className="border py-3.5 px-12 w-[462px] rounded-[15px]"
           />
-          <FaSearch className=" absolute top-1/2 left-6 -translate-y-1/2 text-[#7AA3CC]" />
+          <FaSearch className="absolute top-1/2 left-6 -translate-y-1/2 text-[#7AA3CC]" />
         </div>
 
-        <div className='relative'>
-            <button 
+        {/* EXPORT */}
+        <div className="relative">
+          <button
             onClick={handleExportCSV}
-            className='font-inter font-medium text-[#000000] py-3.5 pl-15 pr-7 border-2 border-[#7AA3CC] rounded-lg'>Export to CSV</button>
-            <BiExport className='w-6 h-6 top-1/2 left-7 -translate-y-1/2 absolute' />
-          </div>
+            className="py-3.5 pl-14 pr-7 border-2 border-[#7AA3CC] rounded-lg"
+          >
+            Export to CSV
+          </button>
+          <BiExport className="absolute top-1/2 left-6 -translate-y-1/2 w-6 h-6" />
+        </div>
       </div>
 
-      <div className="overflow-auto">
-        <Table TableHeads={TableHeads} TableRows={currentItems} />
+      {/* ================= TABLE ================= */}
+      <div className="overflow-auto mt-6">
+        <Table TableHeads={TableHeads} TableRows={logs} />
       </div>
 
+      {/* ================= PAGINATION ================= */}
       <Pagination
         totalPages={totalPages}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
-
-      
     </div>
   );
 };
