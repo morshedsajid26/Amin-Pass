@@ -68,13 +68,14 @@ const Activation = () => {
         const p = json.data;
 
         setFormData({
-          planName: p.name || "",
-          price: p.price || "",
-          location: p.locationCount || "",
-          card: p.cardCount || "",
-          status: p.status || "",
-          cardTypes: p.cardTypes || [],
-        });
+  planName: p.name || "",
+  price: p.price || "",
+  location: p.features?.maxBranches || "",
+  card: p.features?.maxCards || "",
+  status: p.status || "",
+  cardTypes: p.cardTypes || [],
+});
+
       }
     } catch (err) {
       console.error(err);
@@ -88,15 +89,15 @@ const Activation = () => {
         name: formData.planName,
         price: Number(formData.price),
         locationCount: Number(formData.location),
-        cardCount: Number(formData.card),
+        features: Number(formData.maxCards),
         status: formData.status,
         cardTypes: formData.cardTypes,
       };
 
       const res = await fetch(
-        `${BASE_URL}/system-owner/plans/${selectedPlanId}`,
+        `${BASE_URL}/system-owner/plans`,
         {
-          method: "PUT",
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -122,20 +123,21 @@ const Activation = () => {
     { Title: "Action", key: "action" },
   ];
 
-  const TableRows = plans.map((p) => ({
-    name: p.name,
-    price: p.price,
-    feature: `${p.cardCount} Cards`,
-    location: `${p.locationCount} Location`,
-    action: (
-      <button
-        onClick={() => openEdit(p.id)}
-        className="bg-[#7AA3CC] py-2 px-11 rounded-full"
-      >
-        Edit
-      </button>
-    ),
-  }));
+ const TableRows = plans.map((p) => ({
+  name: p.name,
+  price: p.price,
+  feature: `${p.features?.maxCards ?? 0} Cards`,
+  location: `${p.features?.maxBranches ?? 0} Location`,
+  action: (
+    <button
+      onClick={() => openEdit(p.id)}
+      className="bg-[#7AA3CC] py-2 px-11 rounded-full"
+    >
+      Edit
+    </button>
+  ),
+}));
+
 
   return (
     <div>
