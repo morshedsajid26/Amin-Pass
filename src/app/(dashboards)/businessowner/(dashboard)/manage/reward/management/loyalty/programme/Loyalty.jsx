@@ -13,9 +13,9 @@ import { BASE_URL } from "@/src/config/api";
 /* ---------------- CARD COMPONENT ---------------- */
 const LoyaltyCard = ({ card, onDeleteClick }) => {
   return (
-    <div className="md:w-[410px] w-full">
+    <div className="md:w-[410px] w-full ">
       <div
-        className="rounded-2xl w-full p-4 shadow-md"
+        className="rounded-2xl w-full min-h-[550px] p-4 shadow-md"
         style={{ backgroundColor: card.cardBackground || "#7AA3CC" }}
       >
         {/* Header */}
@@ -90,9 +90,11 @@ const LoyaltyCard = ({ card, onDeleteClick }) => {
 
       {/* Buttons */}
       <div className="flex justify-center gap-8 mt-6">
-        <button className="border border-[#7AA3CC] py-2.5 px-15 rounded-md font-semibold text-black dark:text-white">
-          Edit
-        </button>
+        <Link href={`/businessowner/manage/reward/management/loyalty/programme/card/${card.id}`}>
+          <button className="border border-[#7AA3CC] py-2.5 px-15 rounded-md font-semibold text-black dark:text-white">
+            Edit
+          </button>
+        </Link>
 
         <button
           onClick={() => onDeleteClick(card.id)}
