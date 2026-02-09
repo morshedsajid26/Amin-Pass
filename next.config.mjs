@@ -1,17 +1,12 @@
-// /** @type {import('next').NextConfig} */
-// const nextConfig = {
-//    images: {
-//     domains: ["test13.fireai.agency"],
-//   },
-// };
-
-// export default nextConfig;
-
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
     remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "test13.fireai.agency",
+        pathname: "/**",
+      },
       {
         protocol: "https",
         hostname: "test13.fireai.agency",
@@ -22,4 +17,3 @@ const nextConfig = {
 };
 
 export default nextConfig;
-
