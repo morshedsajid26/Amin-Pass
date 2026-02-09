@@ -33,7 +33,7 @@ const systemToken = request.cookies.get("accessToken")?.value;
       return NextResponse.next();
     }
 
-    if (!accessToken) {
+    if (!businessToken) {
       return NextResponse.redirect(
         new URL("/businessowner/signin", request.url)
       );
@@ -64,7 +64,7 @@ const systemToken = request.cookies.get("accessToken")?.value;
       return NextResponse.next();
     }
 
-    if (!accessToken) {
+    if (!systemToken) {
       return NextResponse.redirect(
         new URL("/systemowner/signin", request.url)
       );
