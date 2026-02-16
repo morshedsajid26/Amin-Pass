@@ -1,11 +1,13 @@
 "use client";
 
 import Bredcumb from "@/src/components/Bredcumb";
+import Image from "next/image";
 import { BASE_URL } from "@/src/config/api";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaPlus, FaSearch } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const Reward = () => {
   const [rewards, setRewards] = useState([]);
@@ -86,7 +88,7 @@ const Reward = () => {
       setRewards((prev) =>
         prev.filter((item) => item.id !== deleteId)
       );
-
+      toast.success("Reward deleted successfully");
       closeDeleteModal();
     } catch (err) {
       console.error("Delete failed:", err);
@@ -131,6 +133,18 @@ const Reward = () => {
             className="bg-white dark:bg-[#141414] rounded-4xl py-14 px-14 mb-10 overflow-auto"
           >
             <div className="font-inter text-2xl text-[#000000] dark:text-white">
+              <div className="flex justify-between border-b border-[#000000]/10 dark:border-white py-4">
+                <span className="font-medium">Reward Logo:</span>
+                <div className="w-[50px] h-[50px] relative">
+                  <Image
+                    src={reward.rewardImage || reward.logo || "/rewardLogo.png"}
+                    alt="reward logo"
+                    fill
+                    className="object-cover rounded-full"
+                  />
+                </div>
+              </div>
+
               <div className="flex justify-between border-b border-[#000000]/10 dark:border-white py-4">
                 <span className="font-medium">Created Date:</span>
                 <span className="font-normal">

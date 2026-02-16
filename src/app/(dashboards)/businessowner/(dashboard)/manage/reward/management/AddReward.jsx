@@ -2,15 +2,17 @@
 
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import logo from "@/public/rewardLogo.png";
 import InputField from "@/src/components/InputField";
 import Cookies from "js-cookie";
 import { BASE_URL } from "@/src/config/api";
 import Dropdown from "@/src/components/Dropdown";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const AddReward = () => {
   // 🔹 ENUM SAFE STATUS
   const [rewardStatus, setRewardStatus] = useState("ACTIVE");
+  const router = useRouter();
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -18,6 +20,10 @@ const AddReward = () => {
   // 🔹 Branches
   const [branches, setBranches] = useState([]);
   const [selectedBranchId, setSelectedBranchId] = useState("");
+
+  // 🔹 Logo State
+  const [rewardImage, setRewardImage] = useState(null);
+  const [preview, setPreview] = useState(null);
 
   // 🔹 Form Data
   const [formData, setFormData] = useState({
@@ -28,7 +34,6 @@ const AddReward = () => {
     expiryDays: "",
   });
 
-  // 🔹 Input handler
   const handleChange = (key, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -48,7 +53,7 @@ const AddReward = () => {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          },
+          }
         );
 
         const json = await res.json();
@@ -75,35 +80,39 @@ const AddReward = () => {
     const businessId = Cookies.get("businessId");
 
     if (!businessId) {
-      setMessage("  Business not found");
+      setMessage("Business not found");
       setLoading(false);
       return;
     }
 
     if (!selectedBranchId) {
-      setMessage("  Please select a branch");
+      setMessage("Please select a branch");
       setLoading(false);
       return;
     }
 
     if (!formData.rewardType) {
-      setMessage("  Please select reward type");
+      setMessage("Please select reward type");
       setLoading(false);
       return;
     }
 
-    const payload = {
-      reward: formData.rewardName, 
-      rewardName: formData.rewardName,
-      rewardType: formData.rewardType,
-      earningRule: formData.earningRule,
-      earnPoint: Number(formData.earnPoint),
-      expiryDays: Number(formData.expiryDays),
-      rewardStatus: rewardStatus, 
-      isActive: rewardStatus === "ACTIVE", 
-      branchId: selectedBranchId,
-      businessId,
-    };
+    const form = new FormData();
+
+    form.append("rewardName", formData.rewardName);
+    form.append("reward", formData.rewardName);
+    form.append("rewardType", formData.rewardType);
+    form.append("earningRule", formData.earningRule);
+    form.append("earnPoint", Number(formData.earnPoint));
+    form.append("expiryDays", Number(formData.expiryDays));
+    form.append("rewardStatus", rewardStatus);
+    form.append("isActive", rewardStatus === "ACTIVE");
+    form.append("branchId", selectedBranchId);
+    form.append("businessId", businessId);
+
+    if (rewardImage) {
+      form.append("rewardImage", rewardImage); // backend field name must match
+    }
 
     try {
       const res = await fetch(
@@ -111,25 +120,26 @@ const AddReward = () => {
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`,
           },
-          body: JSON.stringify(payload),
-        },
+          body: form,
+        }
       );
 
       const data = await res.json();
 
       if (!res.ok) {
-        setMessage(data?.message || "  Reward create failed");
-        setLoading(false);
+        setMessage(data?.message || "Reward create failed");
         return;
       }
 
-      setMessage("   Reward created successfully");
+      toast.success("Reward created successfully");
+      router.push("/businessowner/manage/reward");
+      
 
-      // 🔄 Reset
+      // Reset
       setFormData({
+        rewardImage: null,
         rewardName: "",
         rewardType: "",
         earningRule: "",
@@ -138,8 +148,10 @@ const AddReward = () => {
       });
       setSelectedBranchId("");
       setRewardStatus("ACTIVE");
+      setRewardImage(null);
+      setPreview(null);
     } catch {
-      setMessage("  Something went wrong");
+      toast.err("Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -147,10 +159,32 @@ const AddReward = () => {
 
   return (
     <div className="pt-8">
-      {/* Logo */}
+      {/* Logo Upload */}
       <p className="font-inter text-xl dark:text-white">Reward Logo</p>
+
       <div className="relative md:w-[7.6%] mt-4">
-        <Image src={logo} alt="logo" />
+        <label className="cursor-pointer">
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (file) {
+                setRewardImage(file);
+                setPreview(URL.createObjectURL(file));
+              }
+            }}
+          />
+
+          <Image
+            src={preview }
+            alt="Logo"
+            width={120}
+            height={120}
+            className="rounded-xl object-cover bg-white border border-gray-300 "
+          />
+        </label>
       </div>
 
       {/* Form */}
@@ -170,10 +204,9 @@ const AddReward = () => {
           className="col-span-12 md:col-span-6"
         />
 
-        {/* Reward Type */}
         <Dropdown
           label="Reward Type"
-          labelClass={`text-xl mb-2`}
+          labelClass="text-xl mb-2"
           options={["EARN", "REDEEM", "FREE_ITEM"]}
           onSelect={(value) => handleChange("rewardType", value)}
           className="col-span-12 md:col-span-6"
@@ -195,10 +228,9 @@ const AddReward = () => {
           className="col-span-12 md:col-span-6"
         />
 
-        {/* Branch Dropdown (NAME show, ID store) */}
         <Dropdown
           label="Branch"
-          labelClass={`text-xl mb-2`}
+          labelClass="text-xl mb-2"
           options={branches.map((b) => b.name)}
           onSelect={(name) => {
             const branch = branches.find((b) => b.name === name);
@@ -217,7 +249,7 @@ const AddReward = () => {
           className="flex items-center gap-3 bg-[#CECECE] px-3 py-2 rounded-2xl cursor-pointer w-[160px]"
           onClick={() =>
             setRewardStatus((prev) =>
-              prev === "ACTIVE" ? "INACTIVE" : "ACTIVE",
+              prev === "ACTIVE" ? "INACTIVE" : "ACTIVE"
             )
           }
         >
@@ -227,15 +259,19 @@ const AddReward = () => {
             }`}
           >
             <span
-              className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full ${
-                rewardStatus === "ACTIVE" ? "translate-x-6" : "translate-x-0"
+              className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                rewardStatus === "ACTIVE"
+                  ? "translate-x-6"
+                  : "translate-x-0"
               }`}
             />
           </div>
 
           <span
             className={
-              rewardStatus === "ACTIVE" ? "text-green-700" : "text-red-500"
+              rewardStatus === "ACTIVE"
+                ? "text-green-700"
+                : "text-red-500"
             }
           >
             {rewardStatus}

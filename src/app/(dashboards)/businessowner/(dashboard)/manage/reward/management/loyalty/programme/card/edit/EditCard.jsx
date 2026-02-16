@@ -178,7 +178,7 @@ export default function EditCard({ id }) {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4 ml-1">Edit Card</h2>
+     
       <div className="flex flex-col md:flex-row gap-14 w-full mt-5">
         {/* LEFT SETTINGS */}
         <div className="md:w-1/2 space-y-8">

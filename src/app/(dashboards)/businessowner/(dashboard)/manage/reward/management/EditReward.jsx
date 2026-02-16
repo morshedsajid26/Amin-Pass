@@ -24,6 +24,10 @@ const EditReward = ({ id }) => {
   const [branches, setBranches] = useState([]);
   const [selectedBranchId, setSelectedBranchId] = useState("");
 
+  // 🔹 Logo State
+  const [rewardImage, setRewardImage] = useState(null);
+  const [preview, setPreview] = useState(null);
+
   // 🔹 Form Data
   const [formData, setFormData] = useState({
     rewardName: "",
@@ -75,7 +79,7 @@ const EditReward = ({ id }) => {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-            },
+          },
         );
         const json = await res.json();
         
@@ -90,6 +94,10 @@ const EditReward = ({ id }) => {
           });
           setRewardStatus(reward.rewardStatus || "ACTIVE");
           setSelectedBranchId(reward.branchId || "");
+          console.log("Reward details:", reward); // Debug log
+          if (reward.rewardImage || reward.logo) {
+            setPreview(reward.rewardImage || reward.logo);
+          }
         } else {
           toast.error("Failed to fetch reward details");
         }
@@ -131,18 +139,22 @@ const EditReward = ({ id }) => {
       return;
     }
 
-    const payload = {
-      reward: formData.rewardName, 
-      rewardName: formData.rewardName,
-      rewardType: formData.rewardType,
-      earningRule: formData.earningRule,
-      earnPoint: Number(formData.earnPoint),
-      expiryDays: Number(formData.expiryDays),
-      rewardStatus: rewardStatus, 
-      isActive: rewardStatus === "ACTIVE", 
-      branchId: selectedBranchId,
-      businessId,
-    };
+    const form = new FormData();
+
+    form.append("rewardName", formData.rewardName);
+    form.append("reward", formData.rewardName);
+    form.append("rewardType", formData.rewardType);
+    form.append("earningRule", formData.earningRule);
+    form.append("earnPoint", Number(formData.earnPoint));
+    form.append("expiryDays", Number(formData.expiryDays));
+    form.append("rewardStatus", rewardStatus);
+    form.append("isActive", rewardStatus === "ACTIVE");
+    form.append("branchId", selectedBranchId);
+    form.append("businessId", businessId);
+
+    if (rewardImage) {
+      form.append("rewardImage", rewardImage);
+    }
 
     try {
       const res = await fetch(
@@ -150,10 +162,9 @@ const EditReward = ({ id }) => {
         {
           method: "PATCH",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`,
           },
-          body: JSON.stringify(payload),
+          body: form,
         },
       );
 
@@ -181,8 +192,30 @@ const EditReward = ({ id }) => {
     <div className="pt-8">
       {/* Logo */}
       <p className="font-inter text-xl dark:text-white">Reward Logo</p>
+      
       <div className="relative md:w-[7.6%] mt-4">
-        <Image src={logo} alt="logo" />
+        <label className="cursor-pointer">
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (file) {
+                setRewardImage(file);
+                setPreview(URL.createObjectURL(file));
+              }
+            }}
+          />
+
+          <Image
+            src={preview || logo}
+            alt="logo"
+            width={120}
+            height={120}
+            className="rounded-xl object-cover"
+          />
+        </label>
       </div>
 
       {/* Form */}
@@ -261,7 +294,7 @@ const EditReward = ({ id }) => {
             }`}
           >
             <span
-              className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full ${
+              className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${
                 rewardStatus === "ACTIVE" ? "translate-x-6" : "translate-x-0"
               }`}
             />
