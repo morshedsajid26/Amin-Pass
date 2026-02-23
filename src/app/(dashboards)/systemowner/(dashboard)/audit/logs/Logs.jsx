@@ -59,7 +59,7 @@ const Logs = () => {
             minute: "2-digit",
           }),
           action: log.action,
-          details: JSON.stringify(log.details),
+          details: log.details.rewardName,
         };
       });
 

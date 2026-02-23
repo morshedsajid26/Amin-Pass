@@ -8,8 +8,8 @@ const layout = ({children}) => {
     const pathname = usePathname();
 
     const nav = [
-      // { name: "Notification Setting", link: "/systemowner/platform/settings" },
-       { name: "Password Setting", link: "/systemowner/platform/settings/platform/setting" },
+      { name: "Password Setting", link: "/systemowner/platform/settings/platform/setting" },
+      { name: "Geo Setting", link: "/systemowner/platform/settings" },
      
     ];
   return (
