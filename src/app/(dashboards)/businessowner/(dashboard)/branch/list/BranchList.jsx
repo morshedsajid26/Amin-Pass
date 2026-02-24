@@ -10,6 +10,7 @@ import Cookies from "js-cookie";
 import { BASE_URL } from "@/src/config/api";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 const BranchList = () => {
   const [branches, setBranches] = useState([]);
@@ -64,11 +65,14 @@ const BranchList = () => {
 
     try {
       const accessToken = Cookies.get("accessToken");
-      await axios.delete(`${BASE_URL}/business-owner/branchs/${branchToDelete.id}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+      await axios.delete(
+        `${BASE_URL}/business-owner/branchs/${branchToDelete.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         },
-      });
+      );
       toast.success("Branch deleted successfully");
       setShowDeleteModal(false);
       setBranchToDelete(null);
@@ -103,14 +107,14 @@ const BranchList = () => {
             className="text-blue-500 hover:text-blue-700 transition-colors"
             title="Edit"
           >
-            <FaEdit size={20} />
+            <FaEdit size={24} />
           </Link>
           <button
             onClick={() => handleDeleteClick(row)}
             className="text-red-500 hover:text-red-700 transition-colors cursor-pointer"
             title="Delete"
           >
-            <FaTrash size={20} />
+            <RiDeleteBin6Line size={24} />
           </button>
         </div>
       ),
@@ -121,10 +125,7 @@ const BranchList = () => {
   const itemsPerPage = 10;
   const totalPages = Math.ceil(branches.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = branches.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
+  const currentItems = branches.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <div className="relative">
@@ -141,7 +142,9 @@ const BranchList = () => {
       </Link>
 
       {loading ? (
-        <p className="text-center font-inter text-xl mt-10">Loading branches...</p>
+        <p className="text-center font-inter text-xl mt-10">
+          Loading branches...
+        </p>
       ) : (
         <div className="overflow-auto">
           <Table TableHeads={TableHeads} TableRows={currentItems} />
@@ -158,32 +161,25 @@ const BranchList = () => {
 
       {/* CUSTOM DELETE MODAL */}
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[9999]">
-          <div className="bg-white dark:bg-[#1A1A1A] p-10 rounded-3xl shadow-2xl max-w-lg w-full mx-4 border border-red-500/20">
-            <div className="text-center">
-              <div className="bg-red-100 dark:bg-red-900/30 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <FaTrash className="text-red-600 dark:text-red-400 w-8 h-8" />
-              </div>
-              <h3 className="text-3xl font-bold font-inter text-gray-900 dark:text-white mb-4">Confirm Deletion</h3>
-              <p className="text-xl text-gray-500 dark:text-gray-400 mb-10 font-inter">
-                Are you sure you want to delete <span className="font-bold text-gray-900 dark:text-white">"{branchToDelete?.branch}"</span>? This action cannot be undone.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button
-                  onClick={() => setShowDeleteModal(false)}
-                  className="px-8 py-3 rounded-xl border border-gray-300 dark:border-gray-700 text-xl font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={confirmDelete}
-                  disabled={deleting}
-                  className="px-8 py-3 rounded-xl bg-red-600 text-white text-xl font-medium hover:bg-red-700 transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-red-500/30"
-                >
-                  {deleting ? "Deleting..." : "Confirm Delete"}
-                </button>
-              </div>
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+          <div className="bg-black rounded-3xl p-10 text-center">
+            <h2 className="text-xl font-semibold text-[#F44336] mb-5">
+              Delete
+            </h2>
+            <p className="text-white mb-8">Are you sure you want to delete?</p>
+            <div className="flex justify-center gap-6">
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                className="border border-[#7AA3CC] text-white px-10 py-2 rounded-2xl"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="bg-[#F44336] text-white px-10 py-2 rounded-2xl"
+              >
+                Yes, Delete
+              </button>
             </div>
           </div>
         </div>

@@ -81,28 +81,43 @@ const AddBranch = ({ branchId }) => {
     try {
       const accessToken = Cookies.get("accessToken");
 
-      const payload = new FormData();
-      payload.append("branchName", formData.branchName);
-      payload.append("branchLocation", formData.branchLocation);
-      payload.append("staffCount", formData.staffCount);
-      payload.append("managerName", formData.managerName);
-
-      if (formData.branchImage) {
-        payload.append("branchImage", formData.branchImage);
-      }
-
+      let body;
+      let headers = {
+        Authorization: `Bearer ${accessToken}`,
+      };
       const url = branchId 
         ? `${BASE_URL}/business-owner/branchs/${branchId}`
         : `${BASE_URL}/business-owner/branchs/create`;
-      
-      const method = branchId ? "PATCH" : "POST";
+
+      let method = branchId ? "PUT" : "POST";
+
+      if (branchId && !(formData.branchImage instanceof File)) {
+        // Update without new image: Use JSON to preserve types (especially Int for staffCount)
+        headers["Content-Type"] = "application/json";
+        body = JSON.stringify({
+          name: formData.branchName,
+          address: formData.branchLocation,
+          staffCount: parseInt(formData.staffCount),
+          managerName: formData.managerName,
+        });
+      } else {
+        // Create or Update with new image: Use FormData
+        const payload = new FormData();
+        payload.append("name", formData.branchName);
+        payload.append("address", formData.branchLocation);
+        payload.append("staffCount", Number(formData.staffCount));
+        payload.append("managerName", formData.managerName);
+
+        if (formData.branchImage instanceof File) {
+          payload.append("branchImage", formData.branchImage);
+        }
+        body = payload;
+      }
 
       const res = await fetch(url, {
         method: method,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: payload,
+        headers: headers,
+        body: body,
       });
 
       const data = await res.json();
@@ -112,6 +127,7 @@ const AddBranch = ({ branchId }) => {
       }
 
       toast.success(branchId ? "Branch updated successfully" : "Branch created successfully");
+      router.push("/businessowner/branch/list");
 
       if (!branchId) {
         setFormData({
