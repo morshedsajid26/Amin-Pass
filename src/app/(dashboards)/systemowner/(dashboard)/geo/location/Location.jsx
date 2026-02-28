@@ -5,12 +5,12 @@ import Cookies from "js-cookie";
 import { Loader } from "@googlemaps/js-api-loader";
 import Bredcumb from "@/src/components/Bredcumb";
 import { FaSearch } from "react-icons/fa";
+import { BASE_URL } from "@/src/config/api";
 
 export default function Location() {
   const searchRef = useRef(null);
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]);
-  const token = Cookies.get("token");
 
   // ===============================
   // LOAD GOOGLE MAPS
@@ -47,7 +47,8 @@ export default function Location() {
 
     const fetchBranches = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/api/admin/geolocation/branches", {
+        const token = Cookies.get("accessToken");
+        const res = await fetch(`${BASE_URL}/system-owner/geo/branches`, {
           headers: {
             Accept: "application/json",
             Authorization: `Bearer ${token}`,
@@ -55,20 +56,38 @@ export default function Location() {
         });
 
         const data = await res.json();
-        console.log("Branches:", data);
+        console.log("Branches Data:", data);
 
-        if (!data.branches) return;
+        if (!data.success || !data.data) return;
 
-        // Add markers on map
-        data.branches.forEach((b) => {
+        // Clear existing markers if needed
+        markers.forEach(m => m.setMap(null));
+        setMarkers([]);
+
+        const newMarkers = data.data.map((b) => {
+          const lat = parseFloat(b.latitude);
+          const lng = parseFloat(b.longitude);
+
+          if (isNaN(lat) || isNaN(lng)) return null;
+
           const marker = new google.maps.Marker({
-            position: { lat: parseFloat(b.latitude), lng: parseFloat(b.longitude) },
+            position: { lat, lng },
             map,
-            title: b.name,
+            title: b.name || b.branchName,
           });
 
-          setMarkers((prev) => [...prev, marker]);
-        });
+          const infoWindow = new google.maps.InfoWindow({
+            content: `<div style="color: black; font-weight: bold;">${b.name || b.branchName || "Branch"}</div>`,
+          });
+
+          marker.addListener("click", () => {
+            infoWindow.open(map, marker);
+          });
+
+          return marker;
+        }).filter(m => m !== null);
+
+        setMarkers(newMarkers);
       } catch (error) {
         console.error("Branch load error:", error);
       }
@@ -85,7 +104,8 @@ export default function Location() {
 
     if (!address) return;
 
-    const res = await fetch("http://127.0.0.1:8000/api/admin/geolocation/geocode", {
+    const token = Cookies.get("accessToken");
+    const res = await fetch(`${BASE_URL}/system-owner/geo/geocode`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -123,7 +143,8 @@ export default function Location() {
 
       console.log("Clicked:", lat, lng);
 
-      const res = await fetch("http://127.0.0.1:8000/api/admin/geolocation/reverse", {
+      const token = Cookies.get("accessToken");
+      const res = await fetch(`${BASE_URL}/system-owner/geo/reverse`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
