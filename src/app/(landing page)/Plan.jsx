@@ -1,7 +1,10 @@
 "use client";
 import Container from "@/src/components/Container";
 import ToggleButton from "@/src/components/ToggleButton";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { BASE_URL } from "@/src/config/api";
+import Cookies from "js-cookie";
 
 const Card = ({ name, price, isAnnual, features, buttonText }) => {
   return (
@@ -45,57 +48,58 @@ const Card = ({ name, price, isAnnual, features, buttonText }) => {
 };
 
 
-const plans = [
-  {
-    name: "Starter",
-    monthly: 20,
-    yearly: 99,
-    features: [
-      { name: "1 active card", active: true },
-      { name: "Wallet Integration", active: true },
-      { name: "Real-time Analytics", active: true },
-      { name: "500 Customer Count", active: false },
-      { name: "Unlimited free push message", active: false },
-      { name: "Customer field names on the card", active: false },
-      { name: "Advance Reports", active: false },
-      { name: "Dedicated Support", active: false },
-    ],
-    buttonText: "Upgrade Plan",
-  },
-  {
-    name: "Grow",
-    monthly: 40,
-    yearly: 199,
-    features: [
-      { name: "5 active cards", active: true },
-      { name: "Priority Support", active: true },
-      { name: "Custom Branding", active: true },
-      { name: "Team Access", active: true },
-      { name: "Real-time Analytics", active: false },
-      { name: "Advanced Reports", active: false },
-      { name: "Unlimited free push message", active: false },
-    ],
-    buttonText: "Choose Plan",
-  },
-  {
-    name: "Business",
-    monthly: 60,
-    yearly: 299,
-    features: [
-      { name: "Unlimited cards", active: true },
-      { name: "Custom Integrations", active: true },
-      { name: "Dedicated Account Manager", active: true },
-      { name: "Team Access", active: true },
-      { name: "Priority Support", active: true },
-      { name: "Advanced Analytics", active: true },
-      { name: "On-site Training", active: true },
-    ],
-    buttonText: "Contact Sales",
-  },
-];
 
 const Plan = () => {
   const [isAnnual, setIsAnnual] = useState(false);
+  const [apiPlans, setApiPlans] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const token = Cookies.get("accessToken");
+
+        const response = await axios.get(`${BASE_URL}/business-owner/buy-subscription/available-plans`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        if (response.data?.success && Array.isArray(response.data.data)) {
+          setApiPlans(response.data.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch available plans:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPlans();
+  }, []);
+
+  const formatFeatures = (plan) => {
+    const isFree = plan.price === 0;
+    return [
+      { name: plan.maxCards === -1 ? "Unlimited active cards" : `${plan.maxCards} active card${plan.maxCards > 1 ? 's' : ''}`, active: true },
+      { name: plan.maxBranches === -1 ? "Unlimited branches" : `${plan.maxBranches} branches`, active: true },
+      { name: plan.maxStaff === -1 ? "Unlimited team access" : `${plan.maxStaff} staff members`, active: true },
+      // { name: "Wallet Integration", active: true },
+      // { name: "Real-time Analytics", active: !isFree || plan.maxCards > 1 },
+      // { name: "Advance Reports", active: plan.price > 10 },
+      // { name: "Unlimited free push message", active: plan.price > 10 },
+      // { name: "Dedicated Support", active: plan.price > 30 },
+    ];
+  };
+
+  const currentPlans = apiPlans.map((plan) => ({
+    id: plan.id,
+    name: plan.name,
+    monthly: plan.price,
+    yearly: plan.price * 12, // fallback or use the API field if available
+    features: formatFeatures(plan),
+    buttonText: plan.price === 0 ? "Start for Free" : "Upgrade Plan",
+  }));
 
   return (
     <div className="pb-25" id="offer">
@@ -111,18 +115,39 @@ const Plan = () => {
         <ToggleButton isAnnual={isAnnual} setIsAnnual={setIsAnnual} />
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-20 mt-10">
-          {plans.map((plan, i) => (
-            <Card
-              key={i}
-              name={plan.name}
-              price={isAnnual ? plan.yearly : plan.monthly}
-              isAnnual={isAnnual}
-              features={plan.features}
-              buttonText={plan.buttonText}
-            />
-          ))}
-        </div>
+        {loading ? (
+          <div className=" flex items-center justify-center  mt-10">
+            {[1, 2, 3].map((skeleton) => (
+              <div key={skeleton} className="bg-[#F7F9FB] rounded-3xl py-8 px-6 flex flex-col h-[580px] justify-between animate-pulse">
+                <div className="h-8 bg-gray-200 rounded w-1/2 mb-4"></div>
+                <div className="h-12 bg-gray-200 rounded w-1/3 mt-2 mb-4"></div>
+                <div className="space-y-6 mb-14 mt-8 flex-1">
+                  {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+                    <div key={item} className="h-6 bg-gray-200 rounded w-[85%]"></div>
+                  ))}
+                </div>
+                <div className="h-16 bg-gray-200 rounded-xl mt-auto"></div>
+              </div>
+            ))}
+          </div>
+        ) : currentPlans.length > 0 ? (
+          <div className="flex items-center justify-center  mt-10">
+            {currentPlans.map((plan, i) => (
+              <Card
+                key={plan.id || i}
+                name={plan.name}
+                price={isAnnual ? plan.yearly : plan.monthly}
+                isAnnual={isAnnual}
+                features={plan.features}
+                buttonText={plan.buttonText}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center mt-10 font-inter text-gray-500 text-lg">
+            No plans available at the moment.
+          </div>
+        )}
       </Container>
     </div>
   );
