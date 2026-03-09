@@ -12,36 +12,6 @@ export default function Location() {
   const searchRef = useRef(null);
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]);
-  const [businesses, setBusinesses] = useState([]);
-  const [selectedBusiness, setSelectedBusiness] = useState("All Businesses");
-  const [allBranches, setAllBranches] = useState([]);
-
-  // ===============================
-  // FETCH BUSINESSES (TENANTS)
-  // ===============================
-  useEffect(() => {
-    const fetchBusinesses = async () => {
-      try {
-        const token = Cookies.get("accessToken");
-        const res = await fetch(`${BASE_URL}/system-owner/tenants`, {
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const result = await res.json();
-        if (res.ok && result.data) {
-          setBusinesses(result.data.map(b => ({
-            id: b.id,
-            name: b.businessName || "Unknown Business"
-          })));
-        }
-      } catch (error) {
-        console.error("Fetch businesses error:", error);
-      }
-    };
-    fetchBusinesses();
-  }, []);
 
   // ===============================
   // LOAD GOOGLE MAPS
@@ -85,44 +55,17 @@ export default function Location() {
         });
 
         const data = await res.json();
-        if (data.success && data.data) {
-          setAllBranches(data.data);
-        }
-      } catch (error) {
-        console.error("Branch load error:", error);
-      }
-    };
+        console.log("Branches Data:", data);
 
-    fetchBranches();
-  }, []);
+        if (!data.success || !data.data) return;
 
-  // ===============================
-  // RENDER MARKERS (WITH FILTERING)
-  // ===============================
-  useEffect(() => {
-    if (!map || !allBranches.length) return;
+        // Clear existing markers if needed
+        markers.forEach(m => m.setMap(null));
+        setMarkers([]);
 
-    // Clear existing markers
-    markers.forEach((m) => m.setMap(null));
-
-    const filtered =
-      selectedBusiness === "All Businesses"
-        ? allBranches
-        : allBranches.filter((b) => {
-            const branchBizName = (
-              b.business?.businessName ||
-              b.business?.name ||
-              ""
-            )
-              .trim()
-              .toLowerCase();
-            const targetName = selectedBusiness.trim().toLowerCase();
-            return branchBizName === targetName;
-          });
-
-    const newMarkers = filtered.map((b) => {
-      const lat = parseFloat(b.latitude);
-      const lng = parseFloat(b.longitude);
+        const newMarkers = data.data.map((b) => {
+          const lat = parseFloat(b.latitude);
+          const lng = parseFloat(b.longitude);
 
       if (isNaN(lat) || isNaN(lng)) return null;
 
@@ -143,8 +86,14 @@ export default function Location() {
       return marker;
     }).filter(m => m !== null);
 
-    setMarkers(newMarkers);
-  }, [map, allBranches, selectedBusiness, businesses]);
+        setMarkers(newMarkers);
+      } catch (error) {
+        console.error("Branch load error:", error);
+      }
+    };
+
+    fetchBranches();
+  }, [map]);
 
   // ===============================
   // SEARCH → GEOCODE ADDRESS
@@ -152,32 +101,52 @@ export default function Location() {
   const handleSearch = async () => {
     const address = searchRef.current.value;
 
-    if (!address) return;
+    if (!address) {
+      setSearchCoords(null);
+      setSearchFilter("");
+      return;
+    }
+
+    // Always update text filter immediately
+    setSearchFilter(address);
 
     const token = Cookies.get("accessToken");
-    const res = await fetch(`${BASE_URL}/system-owner/geo/geocode`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ address }),
-    });
-
-    const data = await res.json();
-    console.log("Geocode result:", data);
-
-    if (data.lat && data.lng) {
-      const position = { lat: data.lat, lng: data.lng };
-
-      map.setCenter(position);
-      map.setZoom(16);
-
-      new google.maps.Marker({
-        position,
-        map,
+    try {
+      const res = await fetch(`${BASE_URL}/system-owner/geo/geocode`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ address }),
       });
+
+      const data = await res.json();
+
+      if (data.lat && data.lng) {
+        const position = { lat: data.lat, lng: data.lng };
+        setSearchCoords(position);
+
+        map.setCenter(position);
+        map.setZoom(13);
+
+        // Pin the searched location
+        new google.maps.Marker({
+          position,
+          map,
+          icon: {
+            url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+          },
+          title: "Searched Location",
+        });
+      } else {
+        // If geocode fails, just search by text
+        setSearchCoords(null);
+      }
+    } catch (error) {
+      console.error("Geocoding error:", error);
+      setSearchCoords(null);
     }
   };
 
