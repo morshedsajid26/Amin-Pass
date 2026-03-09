@@ -12,7 +12,7 @@ const ProductShow = () => {
         <motion.h3
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
+          viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.6 }}
           className='font-inter font-bold text-2xl md:text-[32px] text-center'
         >
@@ -23,7 +23,7 @@ const ProductShow = () => {
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
+            viewport={{ once: false, amount: 0.5 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className='md:w-[35%] text-center md:text-left mb-6 md:mb-0'
           >

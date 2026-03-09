@@ -19,7 +19,7 @@ const FAQ = () => {
         <motion.h3
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
+          viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.6 }}
           className='font-inter font-bold text-2xl md:text-[32px] text-center mb-8'
         >
@@ -29,7 +29,7 @@ const FAQ = () => {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: false, amount: 0.2 }}
           variants={{
             hidden: { opacity: 0 },
             visible: {

@@ -12,7 +12,7 @@ const Card = ({ name, price, isAnnual, features, buttonText, idx }) => {
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
+      viewport={{ once: false, amount: 0.1 }}
       transition={{ duration: 0.5, delay: idx * 0.15 }}
       whileHover={{ y: -10 }}
       className="bg-[#F7F9FB] rounded-3xl py-8 px-6 flex flex-col justify-between hover:shadow-xl transition-shadow duration-300 h-full border border-transparent hover:border-[#7AA3CC]/30"
@@ -110,7 +110,7 @@ const Plan = () => {
         <motion.h3
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
+          viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.6 }}
           className="font-inter font-bold text-2xl md:text-[32px] text-center"
         >
@@ -119,7 +119,7 @@ const Plan = () => {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
+          viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="font-inter text-center mt-2 mb-5 md:mb-9 text-gray-600"
         >
@@ -130,7 +130,7 @@ const Plan = () => {
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.5 }}
+          viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.4, delay: 0.3 }}
         >
           <ToggleButton isAnnual={isAnnual} setIsAnnual={setIsAnnual} />

@@ -10,7 +10,7 @@ const Surprise = () => {
         <motion.h3
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
+          viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.5 }}
           className="font-inter font-medium text-2xl md:text-[32px] text-center"
         >
@@ -19,7 +19,7 @@ const Surprise = () => {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
+          viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="font-inter text-center mb-4"
         >
@@ -28,7 +28,7 @@ const Surprise = () => {
         <motion.button
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.5 }}
+          viewport={{ once: false, amount: 0.5 }}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.5, delay: 0.3 }}
           className="font-inter font-bold py-3 px-7 bg-[#7AA3CC] rounded-2xl mb-4 hover:shadow-lg transition-transform"

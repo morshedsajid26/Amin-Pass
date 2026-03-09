@@ -21,6 +21,7 @@ const Banner = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: false, amount: 0.2 }}
             className='font-inter font-semibold text-2xl md:text-[40px] text-center md:text-left leading-tight'
           >
             Stop Losing Customers. Start Growing Loyalty with Digital Cards.
@@ -29,6 +30,7 @@ const Banner = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: false, amount: 0.2 }}
             className='font-inter md:text-xl text-[#262626] mb-8 mt-4 text-center md:text-left'
           >
             Create your free loyalty card in 2 minutes. No hardware. No hassle.
@@ -38,6 +40,7 @@ const Banner = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
+            viewport={{ once: false, amount: 0.2 }}
             className='flex items-center justify-center md:justify-start md:gap-8 gap-2'
           >
             <button className="bg-[#7AA3CC] text-[#010101] font-bold px-12 md:px-15 font-inter py-3 rounded-2xl cursor-pointer hover:scale-105 transition-transform duration-300">

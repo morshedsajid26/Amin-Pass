@@ -22,7 +22,7 @@ const FeaturedItem = () => {
                 <motion.h3
                     initial={{ opacity: 0, y: -20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.5 }}
+                    viewport={{ once: false, amount: 0.5 }}
                     transition={{ duration: 0.6 }}
                     className='font-inter font-bold text-2xl md:text-[32px] text-center'
                 >
@@ -35,7 +35,7 @@ const FeaturedItem = () => {
                             key={index}
                             initial={{ opacity: 0, scale: 0.9, y: 30 }}
                             whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.2 }}
+                            viewport={{ once: false, amount: 0.2 }}
                             transition={{ duration: 0.5, delay: index * 0.15 }}
                             className='bg-[#E9F0F5] hover:shadow-xl transition-shadow duration-300 rounded-2xl flex flex-col justify-center text-center items-center md:py-15 px-3 py-3 md:px-12'
                         >

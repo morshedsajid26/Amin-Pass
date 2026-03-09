@@ -14,7 +14,7 @@ const ReaLImpact = () => {
         <motion.h3
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
+          viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.6 }}
           className='font-inter font-bold text-2xl md:text-[32px] text-center'
         >
@@ -23,7 +23,7 @@ const ReaLImpact = () => {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
+          viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className='font-inter text-center mt-2'
         >
@@ -33,7 +33,7 @@ const ReaLImpact = () => {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: false, amount: 0.3 }}
           variants={{
             hidden: { opacity: 0 },
             visible: {
