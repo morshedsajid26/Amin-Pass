@@ -44,11 +44,11 @@ const Footer = () => {
                 </p>
                 <p className='flex items-center gap-4 font-inter font-medium md:text-xl text-[#505050] my-5' >
                     <IoLogoWhatsapp className='h-6 w-6' />
-                    +8801960678545
+                    +757 699-4478
                 </p>
                 <p className='flex items-center gap-4 font-inter font-medium md:text-xl text-[#505050]' >
                     <MdEmail className='h-6 w-6' />
-                    example@gmail.com
+                    aminpass@gmail.com
                 </p>
             </div>
 
