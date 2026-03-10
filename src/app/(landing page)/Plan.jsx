@@ -67,7 +67,7 @@ const Plan = () => {
       try {
         const token = Cookies.get("accessToken");
 
-        const response = await axios.get(`${BASE_URL}/business-owner/buy-subscription/available-plans`, {
+        const response = await axios.get(`${BASE_URL}/business-owner/buy-subscription/get-available-plans`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
