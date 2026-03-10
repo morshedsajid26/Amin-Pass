@@ -4,6 +4,7 @@ import axios from "axios";
 import { BASE_URL } from "@/src/config/api";
 import Cookies from "js-cookie";
 import { formatDate } from "@/src/utils/formatDate";
+import toast from "react-hot-toast";
 
 const Subscription = () => {
   const [currentPlan, setCurrentPlan] = useState(null);
@@ -87,12 +88,15 @@ const Subscription = () => {
       if (checkoutUrl) {
         window.location.href = checkoutUrl;
       } else {
+        toast.error("No checkout link returned. Please try again.");
         setUpgradeError("No checkout link returned. Please try again.");
         console.error("No checkout URL in response:", res.data);
       }
     } catch (err) {
       console.error("Checkout failed:", err?.response?.data || err);
-      setUpgradeError(err?.response?.data?.message || "Checkout failed. Please try again.");
+      const msg = err?.response?.data?.message || "Checkout failed. Please try again.";
+      toast.error(msg);
+      setUpgradeError(msg);
     } finally {
       setUpgrading(false);
     }

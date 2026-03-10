@@ -15,7 +15,6 @@ const AddReward = () => {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
 
   // 🔹 Branches
   const [branches, setBranches] = useState([]);
@@ -80,19 +79,19 @@ const AddReward = () => {
     const businessId = Cookies.get("businessId");
 
     if (!businessId) {
-      setMessage("Business not found");
+      toast.error("Business not found");
       setLoading(false);
       return;
     }
 
     if (!selectedBranchId) {
-      setMessage("Please select a branch");
+      toast.error("Please select a branch");
       setLoading(false);
       return;
     }
 
     if (!formData.rewardType) {
-      setMessage("Please select reward type");
+      toast.error("Please select reward type");
       setLoading(false);
       return;
     }
@@ -129,7 +128,7 @@ const AddReward = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        setMessage(data?.message || "Reward create failed");
+        toast.error(data?.message || "Reward create failed");
         return;
       }
 
@@ -151,7 +150,7 @@ const AddReward = () => {
       setRewardImage(null);
       setPreview(null);
     } catch {
-      toast.err("Something went wrong");
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -289,8 +288,6 @@ const AddReward = () => {
           {loading ? "Creating..." : "Create Reward"}
         </button>
       </div>
-
-      {message && <p className="text-center mt-6">{message}</p>}
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { BASE_URL } from "@/src/config/api";
+import toast from "react-hot-toast";
 
 const Support = () => {
   const router = useRouter();
@@ -19,7 +20,6 @@ const Support = () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
 
   const handleChange = (key, value) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
@@ -30,22 +30,21 @@ const Support = () => {
     const token = Cookies.get("accessToken");
 
     if (!businessId) {
-      setMessage("  Business ID not found");
+      toast.error("Business ID not found");
       return;
     }
 
     if (!formData.issue || !formData.date) {
-      setMessage("  Please fill all required fields");
+      toast.error("Please fill all required fields");
       return;
     }
 
-    if (!["NORMAL", "MEDIUM", "HIGH"].includes(formData.priority)) {
-      setMessage("  Invalid priority selected");
+    if (!["LOW", "MEDIUM", "HIGH"].includes(formData.priority)) {
+      toast.error("Invalid priority selected");
       return;
     }
 
     setLoading(true);
-    setMessage("");
 
     try {
       const payload = {
@@ -55,8 +54,6 @@ const Support = () => {
         priority: formData.priority,
         date: new Date(formData.date).toISOString(),
       };
-
-      console.log("SUPPORT PAYLOAD 👉", payload);
 
       const res = await fetch(
         `${BASE_URL}/business-owner/support/create`,
@@ -73,15 +70,15 @@ const Support = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        setMessage(data?.message || "  Failed to create support ticket");
+        toast.error(data?.message || "Failed to create support ticket");
         return;
       }
 
-      setMessage("   Support ticket created successfully");
+      toast.success("Support ticket created successfully");
       router.back();
     } catch (err) {
       console.error(err);
-      setMessage("  Something went wrong");
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -139,7 +136,7 @@ const Support = () => {
         </button>
       </div>
 
-      {message && <p className="text-center mt-6">{message}</p>}
+
     </div>
   );
 };

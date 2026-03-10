@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { BASE_URL } from '@/src/config/api'
+import toast from 'react-hot-toast'
 
 const Notification = () => {
   const [settings, setSettings] = useState([])
@@ -75,8 +76,10 @@ const Notification = () => {
           },
         }
       )
+      toast.success('Notification settings updated')
     } catch (err) {
       console.error('Failed to update notification setting', err)
+      toast.error('Failed to update notification settings')
       // Revert optimistic update on failure
       setSettings((prev) =>
         prev.map((item, i) =>

@@ -3,11 +3,11 @@ import InputField from "@/src/components/InputField";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import Avatar from "@/public/Avatar.png";
-import QR from "@/public/QR.png";
 import { FiEdit } from "react-icons/fi";
 import Cookies from "js-cookie";
 import { BASE_URL } from "@/src/config/api";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const Edit = () => {
   const router = useRouter();
@@ -28,7 +28,6 @@ const Edit = () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   /* ================= FETCH CURRENT PROFILE ================= */
   useEffect(() => {
@@ -85,7 +84,6 @@ const Edit = () => {
   const handleSave = async () => {
     try {
       setLoading(true);
-      setError("");
 
       const token = Cookies.get("accessToken");
       if (!token) return;
@@ -105,9 +103,7 @@ const Edit = () => {
         `${BASE_URL}/business-owner/profile/update`,
         {
           method: "PUT",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
           body: formData,
         }
       );
@@ -115,9 +111,10 @@ const Edit = () => {
       const json = await res.json();
       if (!res.ok) throw new Error(json.message);
 
+      toast.success("Profile updated successfully");
       router.push("/businessowner/platform/settings");
     } catch (err) {
-      setError(err.message || "Profile update failed");
+      toast.error(err.message || "Profile update failed");
     } finally {
       setLoading(false);
     }
@@ -200,11 +197,7 @@ const Edit = () => {
         />
       </div>
 
-      {error && (
-        <p className="text-red-500 font-inter mt-6 text-center">
-          {error}
-        </p>
-      )}
+
 
       <div className="flex justify-center">
         <button
