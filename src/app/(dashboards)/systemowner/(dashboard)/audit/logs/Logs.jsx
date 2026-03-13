@@ -24,7 +24,7 @@ const Logs = () => {
     { Title: "Date", key: "date", width: "15%" },
     { Title: "Time", key: "time", width: "15%" },
     { Title: "Action", key: "action", width: "25%" },
-    { Title: "Details", key: "details", width: "25%" },
+    // { Title: "Details", key: "details", width: "25%" },
   ];
 
   /* ================= FETCH LOGS ================= */
@@ -59,7 +59,7 @@ const Logs = () => {
             minute: "2-digit",
           }),
           action: log.action,
-          details: log.details.rewardName,
+          // details: log.details.rewardName,
         };
       });
 

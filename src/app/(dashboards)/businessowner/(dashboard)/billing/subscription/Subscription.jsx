@@ -54,6 +54,7 @@ const Subscription = () => {
         `${BASE_URL}/business-owner/buy-subscription/available-plans`,
         { headers: { Authorization: `Bearer ${token}`, Accept: "application/json" } }
       );
+      console.log("Available Plans:", res.data.data);
       if (res.data?.success && Array.isArray(res.data.data)) {
         setAvailablePlans(res.data.data);
         const first = res.data.data[0];
@@ -106,8 +107,8 @@ const Subscription = () => {
     currentPlan?.status === "ACTIVE"
       ? "text-green-600"
       : currentPlan?.status === "EXPIRED"
-      ? "text-red-500"
-      : "text-yellow-500";
+        ? "text-red-500"
+        : "text-yellow-500";
 
   return (
     <div>
@@ -170,11 +171,10 @@ const Subscription = () => {
                 <button
                   key={cycle}
                   onClick={() => setBillingCycle(cycle)}
-                  className={`flex-1 py-2 rounded-lg font-inter font-semibold text-sm transition-all cursor-pointer ${
-                    billingCycle === cycle
-                      ? "bg-[#7AA3CC] text-[#010101]"
-                      : "border border-[#7AA3CC] text-[#7AA3CC]"
-                  }`}
+                  className={`flex-1 py-2 rounded-lg font-inter font-semibold text-sm transition-all cursor-pointer ${billingCycle === cycle
+                    ? "bg-[#7AA3CC] text-[#010101]"
+                    : "border border-[#7AA3CC] text-[#7AA3CC]"
+                    }`}
                 >
                   {cycle.charAt(0) + cycle.slice(1).toLowerCase()}
                 </button>
@@ -194,11 +194,10 @@ const Subscription = () => {
                     <button
                       key={id || idx}
                       onClick={() => setSelectedPlanId(id)}
-                      className={`w-full text-left border rounded-xl px-5 py-4 font-inter transition-all cursor-pointer ${
-                        selectedPlanId === id
-                          ? "border-[#7AA3CC] bg-[#7AA3CC]/10"
-                          : "border-gray-200 dark:border-white/10"
-                      }`}
+                      className={`w-full text-left border rounded-xl px-5 py-4 font-inter transition-all cursor-pointer ${selectedPlanId === id
+                        ? "border-[#7AA3CC] bg-[#7AA3CC]/10"
+                        : "border-gray-200 dark:border-white/10"
+                        }`}
                     >
                       <p className="font-semibold text-lg dark:text-white">{plan.name}</p>
                       <p className="text-gray-500 dark:text-gray-400 text-sm">

@@ -10,6 +10,7 @@ import Avatar from "@/public/Avatar.png";
 import { FiX } from "react-icons/fi";
 import Cookies from "js-cookie";
 import { BASE_URL } from "@/src/config/api";
+import toast from "react-hot-toast";
 
 const Support = () => {
   const [tickets, setTickets] = useState([]);
@@ -27,10 +28,78 @@ const Support = () => {
     { Title: "Business Name", key: "name", width: "15%" },
     { Title: "Ticket ID", key: "id", width: "15%", render: (row) => row.displayId || row.id },
     { Title: "Date", key: "date", width: "15%" },
-    { Title: "Issue", key: "issue", width: "15%" },
+    {
+      Title: "Issue",
+      key: "issue",
+      width: "15%",
+      render: (row) => (
+        <span title={row.issue}>
+          {row.issue.length > 30 ? row.issue.slice(0, 30) + "..." : row.issue}
+        </span>
+      ),
+    },
+    {
+      Title: "Status",
+      key: "status",
+      width: "15%",
+      render: (row) => {
+        const getStatusStyles = (status) => {
+          switch (status?.toUpperCase()) {
+            case "PENDING":
+              return "bg-yellow-100 text-yellow-700 border-yellow-300";
+            case "RESOLVED":
+              return "bg-green-100 text-green-700 border-green-300";
+            case "CLOSED":
+              return "bg-gray-100 text-gray-700 border-gray-300";
+            default:
+              return "bg-gray-50 text-gray-600 border-gray-200";
+          }
+        };
+
+        return (
+          <Dropdown
+            options={["PENDING", "RESOLVED", "CLOSED"]}
+            value={row.status}
+            onSelect={(newStatus) => handleStatusChange(row.id, newStatus)}
+            inputClass={`text-center font-semibold py-1 rounded-lg border ${getStatusStyles(row.status)}`}
+            className="w-full"
+          />
+        );
+      },
+    },
     { Title: "Priority", key: "priority", width: "10%" },
     { Title: "Action", key: "action", width: "15%" },
   ];
+
+  /* ================= STATUS CHANGE ================= */
+  const handleStatusChange = async (ticketId, newStatus) => {
+    try {
+      const token = Cookies.get("accessToken");
+      const res = await fetch(
+        `${BASE_URL}/system-owner/support/${ticketId}/status`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: newStatus }),
+        }
+      );
+
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.message || "Failed to update status");
+
+      toast.success("Status updated successfully!");
+      // Refresh tickets list
+      setTickets((prev) =>
+        prev.map((t) => (t.id === ticketId ? { ...t, status: newStatus } : t))
+      );
+    } catch (err) {
+      console.error("Status update error:", err);
+      toast.error(err.message || "Something went wrong");
+    }
+  };
 
   /* ================= FETCH SUPPORT TICKETS ================= */
   useEffect(() => {
@@ -48,7 +117,10 @@ const Support = () => {
           }
         );
 
+        // console.log("Support Tickets:", res);
+
         const json = await res.json();
+        console.log("Support Tickets:", json);
         if (!res.ok) throw new Error(json.message);
 
         // helper to show only last 4 characters and prefix with '#'
@@ -69,6 +141,7 @@ const Support = () => {
               ? (item.createdAt || item.date).slice(0, 10)
               : (item.createdAt || item.date) || "—",
             issue: item.issue || item.subject || item.status || "—",
+            status: item.status || "PENDING",
             priority: item.priority || "—",
             description: item.description || item.details || "—",
             raw: item,
@@ -151,7 +224,7 @@ const Support = () => {
       </div>
 
       {/* ===== TABLE ===== */}
-      <div className="overflow-auto mt-6">
+      <div className="overflow-visible mt-6 pb-40">
         <Table TableHeads={TableHeads} TableRows={TableRows} />
       </div>
 
@@ -190,12 +263,9 @@ const Support = () => {
 
             <div className="font-inter text-2xl">
               <Detail label="Date" value={selectedTicket.date} />
+              <Detail label="Status" value={selectedTicket.status} />
               <Detail label="Priority" value={selectedTicket.priority} />
               <Detail label="Issue" value={selectedTicket.issue} />
-              <Detail
-                label="Description"
-                value={selectedTicket.description || "—"}
-              />
             </div>
           </div>
         </div>
@@ -208,8 +278,8 @@ export default Support;
 
 /* ================= SMALL COMPONENT ================= */
 const Detail = ({ label, value }) => (
-  <div className="flex justify-between border-b py-4">
-    <span className="font-medium">{label}:</span>
-    <span>{value}</span>
+  <div className="flex flex-col md:flex-row md:justify-between border-b py-4 gap-2">
+    <span className="font-medium whitespace-nowrap">{label}:</span>
+    <span className="text-left md:text-right break-words">{value}</span>
   </div>
 );

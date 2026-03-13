@@ -124,13 +124,13 @@ const Add = () => {
           className="col-span-12 md:col-span-6"
         />
 
-        <InputField
+        {/* <InputField
           label="Role"
           value={formData.role}
           onChange={(e) => handleChange("role", e.target.value)}
           inputClass="font-inter text-xl"
           className="col-span-12 md:col-span-6"
-        />
+        /> */}
 
         <InputField
           label="Staff Email"
@@ -140,7 +140,7 @@ const Add = () => {
           className="col-span-12 md:col-span-6"
         />
 
-        
+
         <Dropdown
           label="Branch"
           labelClass={`text-xl mb-2`}
@@ -159,7 +159,7 @@ const Add = () => {
           labelClass="font-inter text-xl text-black"
           inputClass="border-black py-4 rounded-2xl text-xl text-black"
           icon="text-black"
-          className="col-span-12 "
+          className="col-span-12 md:col-span-6 "
         />
       </form>
 

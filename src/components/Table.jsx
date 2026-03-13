@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Table({ TableHeads, TableRows,headClass,tableClass }) {
   return (
-    <table className={`w-full my-9 border-collapse bg-white dark:bg-[#141414] rounded-2xl overflow-hidden ${tableClass}`}>
+    <table className={`w-full my-9 border-collapse bg-white dark:bg-[#141414] rounded-2xl ${tableClass}`}>
       {/* ==== TABLE HEADER ==== */}
       <thead>
         <tr className="">
