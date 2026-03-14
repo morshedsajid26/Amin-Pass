@@ -97,7 +97,8 @@ const Subscription = () => {
       );
       const checkoutUrl = res.data?.data?.url || res.data?.url;
       if (checkoutUrl) {
-        window.location.href = checkoutUrl;
+        // window.location.href = checkoutUrl;
+        window.open(checkoutUrl, "_blank");
       } else {
         toast.error("No checkout link returned. Please try again.");
         setUpgradeError("No checkout link returned. Please try again.");
