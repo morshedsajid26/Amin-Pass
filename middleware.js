@@ -96,8 +96,10 @@ const systemToken = request.cookies.get("accessToken")?.value;
 
     const isPinLoginRoute = pathname.startsWith("/staff/login");
 
+    const hasPinCookie = request.cookies.get("hasPin")?.value;
+
     /* ❌ Not signed in at all (no tokens) */
-    if (!staffToken && !staffSignInToken && !isPublic && !isPinLoginRoute) {
+    if (!staffToken && !staffSignInToken && !isPublic) {
       return NextResponse.redirect(
         new URL("/staff/signin", request.url)
       );
@@ -106,10 +108,22 @@ const systemToken = request.cookies.get("accessToken")?.value;
     /* ✅ Only SignInToken present (Needs PIN Login or Setup) */
     if (staffSignInToken && !staffToken) {
       if (!isPinLoginRoute && !isPinSetupRoute && !isPublic) {
-        return NextResponse.redirect(
-          new URL("/staff/login", request.url)
-        );
+        if (hasPinCookie === "false") {
+          return NextResponse.redirect(new URL("/staff/platform/settings", request.url));
+        } else {
+          return NextResponse.redirect(new URL("/staff/login", request.url));
+        }
       }
+      
+      // Prevent cross-access based on hasPin status
+      if (isPinSetupRoute && hasPinCookie === "true") {
+        return NextResponse.redirect(new URL("/staff/login", request.url));
+      }
+      if (isPinLoginRoute && hasPinCookie === "false") {
+        return NextResponse.redirect(new URL("/staff/platform/settings", request.url));
+      }
+
+      return NextResponse.next();
     }
 
     /* ✅ Fully authenticated staff (Has PIN token) */

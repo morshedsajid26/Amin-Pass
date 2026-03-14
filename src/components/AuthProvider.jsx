@@ -11,8 +11,13 @@ export function AuthProvider({ children, role }) {
   const router = useRouter();
 
   useEffect(() => {
-    const name = role === "staff" ? "token" : "accessToken";
-    const t = Cookies.get(name);
+    let t = null;
+    if (role === "staff") {
+      t = Cookies.get("token") || Cookies.get("SignInToken");
+    } else {
+      t = Cookies.get("accessToken");
+    }
+    
     setToken(t || null);
 
     if (!t) {
@@ -20,7 +25,7 @@ export function AuthProvider({ children, role }) {
       else if (role === "system") router.replace("/systemowner/signin");
       else router.replace("/staff/login");
     }
-  }, [role]);
+  }, [role, router]);
 
   const logout = () => {
     if (role === "staff") Cookies.remove("token", { path: "/" });
