@@ -102,7 +102,7 @@ const Settings = () => {
           <button
             type="submit"
             disabled={updating}
-            className={`py-4 px-10 bg-[#7AA3CC] text-white rounded-xl text-xl font-medium transition-colors ${updating ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`py-4 px-10 bg-[#7AA3CC] hover: text-black rounded-xl text-xl font-medium transition-colors ${updating ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             {updating ? "Saving..." : "Save Changes"}
           </button>
