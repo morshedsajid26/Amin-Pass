@@ -97,24 +97,24 @@ export default function Location() {
           const lat = parseFloat(b.latitude);
           const lng = parseFloat(b.longitude);
 
-      if (isNaN(lat) || isNaN(lng)) return null;
+          if (isNaN(lat) || isNaN(lng)) return null;
 
-      const marker = new google.maps.Marker({
-        position: { lat, lng },
-        map,
-        title: b.name || b.branchName,
-      });
+          const marker = new google.maps.Marker({
+            position: { lat, lng },
+            map,
+            title: b.name || b.branchName,
+          });
 
-      const infoWindow = new google.maps.InfoWindow({
-        content: `<div style="color: black; font-weight: bold;">${b.name || b.branchName || "Branch"}</div>`,
-      });
+          const infoWindow = new google.maps.InfoWindow({
+            content: `<div style="color: black; font-weight: bold;">${b.name || b.branchName || "Branch"}</div>`,
+          });
 
-      marker.addListener("click", () => {
-        infoWindow.open(map, marker);
-      });
+          marker.addListener("click", () => {
+            infoWindow.open(map, marker);
+          });
 
-      return marker;
-    }).filter(m => m !== null);
+          return marker;
+        }).filter(m => m !== null);
 
         setMarkers(newMarkers);
       } catch (error) {
@@ -241,7 +241,7 @@ export default function Location() {
             <Dropdown
               label="Filter by Business"
               placeholder="All Businesses"
-              options={["All Businesses", ...businesses.map((b) => b.name)]}
+              options={["All Businesses", ...businesses.map((b) => b.businessName || b.name || "Unknown")]}
               value={selectedBusiness}
               onSelect={(val) => setSelectedBusiness(val)}
               className="w-full"
