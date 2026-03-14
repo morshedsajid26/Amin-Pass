@@ -59,6 +59,11 @@ const SignIn = () => {
         throw new Error(data.message || "Login failed");
       }
 
+      /* ===== CLEAR OLD TOKENS (PREVENTS LIVE GHOST LOGIN) ===== */
+      Cookies.remove("token", { path: "/" });
+      Cookies.remove("hasPin", { path: "/" });
+      Cookies.remove("staffStage", { path: "/" });
+
       /* ===== SAVE TOKEN ===== */
       Cookies.set("SignInToken", data?.data?.token, { path: "/" });
 

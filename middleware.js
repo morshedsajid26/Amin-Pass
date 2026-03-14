@@ -127,7 +127,7 @@ const systemToken = request.cookies.get("accessToken")?.value;
     }
 
     /* ✅ Fully authenticated staff (Has PIN token) */
-    if (staffToken && (isPublic || isPinLoginRoute || isPinSetupRoute)) {
+    if (staffToken && (isPublic || isPinLoginRoute)) {
       return NextResponse.redirect(
         new URL("/staff/customer/platform", request.url)
       );
