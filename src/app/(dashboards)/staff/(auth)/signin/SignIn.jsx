@@ -60,29 +60,20 @@ const SignIn = () => {
       }
 
       /* ===== SAVE TOKEN ===== */
-      Cookies.set("token", data?.data?.token, {
-        secure: true,
-        sameSite: "Lax",
-      });
+      Cookies.set("token", data?.data?.token, { path: "/" });
 
       /* ===== SAVE BRANCH ID ===== */
-      if (data?.data?.branchId   ) {
+      if (data?.data?.branchId) {
         localStorage.setItem("branchId", data.data.branchId);
       }
 
-      /* ===== PIN LOGIC (NO UI CHANGE) ===== */
-      const hasPin =
-        data?.data?.requirePinSetup ??
-        data?.data?.isPinSet ??
-        data?.data?.pinSet ??
-        false;
+      /* ===== PIN LOGIC ===== */
+      const requirePinSetup = data?.data?.requirePinSetup ?? false;
+      const hasPin = !requirePinSetup; // If they don't require setup, they already have a pin
 
-      Cookies.set("hasPin", String(hasPin), {
-        secure: true,
-        sameSite: "Lax",
-      });
+      Cookies.set("hasPin", String(hasPin), { path: "/" });
 
-      if (!hasPin) {
+      if (requirePinSetup) {
         toast.success("Sign in successful! Please set your PIN.");
         setTimeout(() => router.push("/staff/platform/settings"), 700);
       } else {

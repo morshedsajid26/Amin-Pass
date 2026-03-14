@@ -148,7 +148,7 @@ const GeneralSettings = () => {
       </div>
 
       {/* ✅ ONLY BUTTON IS CONDITIONAL */}
-      {hasPin && (
+      {hasPin === "false" && (
         <button
           onClick={() => setViewOpen(true)}
           className="bg-[#7AA3CC] text-[#000000] w-[40%] font-bold font-inter py-3 mt-14 rounded-lg"
