@@ -7,6 +7,7 @@ import Table from "@/src/components/Table";
 import React, { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
 import Cookies from "js-cookie";
+import toast from "react-hot-toast";
 import { BASE_URL } from "@/src/config/api";
 
 const Activation = () => {
@@ -20,33 +21,34 @@ const Activation = () => {
 
   const [formData, setFormData] = useState({
     planName: "",
-    price: "",
+    monthlyPrice: "",
+    yearlyPrice: "",
     location: "",
     card: "",
+    maxStaff: "",
     status: "",
-    cardTypes: [],
   });
 
   /* ================= FETCH ALL PLANS ================= */
-  useEffect(() => {
-    const fetchPlans = async () => {
-      try {
-        const res = await fetch(`${BASE_URL}/system-owner/plans`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  const fetchPlans = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/system-owner/plans`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-        const json = await res.json();
+      const json = await res.json();
 
-        if (res.ok) {
-          setPlans(json.data);
-        }
-      } catch (err) {
-        console.error(err);
+      if (res.ok) {
+        setPlans(json.data);
       }
-    };
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
+  useEffect(() => {
     fetchPlans();
   }, []);
 
@@ -63,18 +65,20 @@ const Activation = () => {
       });
 
       const json = await res.json();
+      console.log("Single Plan Data:", json);
 
       if (res.ok && json.data) {
         const p = json.data;
 
         setFormData({
-  planName: p.name || "",
-  price: p.price || "",
-  location: p.features?.maxBranches || "",
-  card: p.features?.maxCards || "",
-  status: p.status || "",
-  cardTypes: p.cardTypes || [],
-});
+          planName: p.name || "",
+          monthlyPrice: p.monthlyPrice || "",
+          yearlyPrice: p.yearlyPrice || "",
+          location: p.maxBranches || p.features?.maxBranches || "",
+          maxStaff: p.maxStaff || p.features?.maxStaff || "",
+          card: p.maxCards || p.features?.maxCards || "",
+          status: p.status || "",
+        });
 
       }
     } catch (err) {
@@ -87,37 +91,41 @@ const Activation = () => {
     try {
       const payload = {
         name: formData.planName,
-        price: Number(formData.price),
-        locationCount: Number(formData.location),
-        features: Number(formData.maxCards),
-        status: formData.status,
-        cardTypes: formData.cardTypes,
+        monthlyPrice: Number(formData.monthlyPrice),
+        yearlyPrice: Number(formData.yearlyPrice),
+        maxBranches: Number(formData.location),
+        maxStaff: Number(formData.maxStaff),
+        maxCards: Number(formData.card),
       };
 
-      const res = await fetch(
-        `${BASE_URL}/system-owner/plans`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+      const res = await fetch(`${BASE_URL}/system-owner/plans/${selectedPlanId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
 
       if (res.ok) {
+        toast.success("Plan updated successfully");
         setViewOpen(false);
+        fetchPlans();
+      } else {
+        const errorData = await res.json();
+        toast.error(errorData.message || "Failed to update plan");
       }
     } catch (err) {
       console.error(err);
+      toast.error("An error occurred while updating the plan");
     }
   };
 
   /* ================= TABLE ================= */
   const TableHeads = [
     { Title: "Plan Name", key: "name" },
-    { Title: "Price", key: "price" },
+    { Title: "Monthly Price", key: "monthlyPrice" },
+    { Title: "Yearly Price", key: "yearlyPrice" },
     { Title: "Feature", key: "feature" },
     { Title: "Location", key: "location" },
     { Title: "Action", key: "action" },
@@ -125,7 +133,8 @@ const Activation = () => {
 
  const TableRows = plans.map((p) => ({
   name: p.name,
-  price: p.price,
+  monthlyPrice: p.monthlyPrice,
+  yearlyPrice: p.yearlyPrice,
   feature: `${p.features?.maxCards ?? 0} Cards`,
   location: `${p.features?.maxBranches ?? 0} Location`,
   action: (
@@ -159,25 +168,35 @@ const Activation = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-8">
-              <Dropdown
-                label="Select Plan"
-                labelClass={`text-xl mb-2 font-inter `}
-                placeholder={formData.planName}
-                options={["Starter", "Grow", "Business"]}
-                inputClass={`border p-4 rounded-xl`}
-              />
-
               <InputField
-                label="Price"
-                type="number"
-                value={formData.price}
+                label="Plan Name"
+                value={formData.planName}
                 onChange={(e) =>
-                  setFormData({ ...formData, price: e.target.value })
+                  setFormData({ ...formData, planName: e.target.value })
                 }
               />
 
               <InputField
-                label="Location"
+                label="Monthly Price"
+                type="number"
+                value={formData.monthlyPrice}
+                onChange={(e) =>
+                  setFormData({ ...formData, monthlyPrice: e.target.value })
+                }
+              />
+
+              <InputField
+                label="Yearly Price"
+                type="number"
+                value={formData.yearlyPrice}
+                onChange={(e) =>
+                  setFormData({ ...formData, yearlyPrice: e.target.value })
+                }
+              />
+
+              <InputField
+                label="Max Branches"
+                type="number"
                 value={formData.location}
                 onChange={(e) =>
                   setFormData({ ...formData, location: e.target.value })
@@ -185,21 +204,20 @@ const Activation = () => {
               />
 
               <InputField
-                label="Card"
-                value={formData.card}
+                label="Max Staff"
+                type="number"
+                value={formData.maxStaff}
                 onChange={(e) =>
-                  setFormData({ ...formData, card: e.target.value })
+                  setFormData({ ...formData, maxStaff: e.target.value })
                 }
               />
 
-              <Dropdown
-                label="Plan Status"
-                placeholder={formData.status}
-                labelClass={`text-xl mb-2 font-inter `}
-                options={["Active", "Inactive"]}
-                inputClass={`border p-4 rounded-xl`}
-                onSelect={(v) =>
-                  setFormData({ ...formData, status: v })
+              <InputField
+                label="Max Cards"
+                type="number"
+                value={formData.card}
+                onChange={(e) =>
+                  setFormData({ ...formData, card: e.target.value })
                 }
               />
             </div>
