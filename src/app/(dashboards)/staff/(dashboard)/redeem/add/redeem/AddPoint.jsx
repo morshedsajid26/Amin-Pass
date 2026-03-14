@@ -148,10 +148,10 @@ const AddPoint = () => {
             />
             <div>
               <h2 className="font-inter text-2xl font-medium text-[#000000] dark:text-white">
-                {safeCustomer?.customerName || "—"}
+                {safeCustomer?.name || "—"}
               </h2>
               <p className="font-inter font-medium text-[#000000] dark:text-white">
-                {safeCustomer?.customerEmail || ""}
+                {safeCustomer?.email || ""}
               </p>
             </div>
           </div>
