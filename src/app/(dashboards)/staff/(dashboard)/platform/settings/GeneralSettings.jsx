@@ -42,7 +42,7 @@ const GeneralSettings = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = Cookies.get("SignInToken") || Cookies.get("token");
+        const token = Cookies.get("token");
         if (!token) return;
 
         const res = await fetch(`${BASE_URL}/staff/settings`, {
