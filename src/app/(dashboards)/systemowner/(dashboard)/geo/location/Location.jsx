@@ -13,6 +13,12 @@ export default function Location() {
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]);
 
+  // Missing States
+  const [businesses, setBusinesses] = useState([]);
+  const [selectedBusiness, setSelectedBusiness] = useState("All Businesses");
+  const [searchCoords, setSearchCoords] = useState(null);
+  const [searchFilter, setSearchFilter] = useState("");
+
   // ===============================
   // LOAD GOOGLE MAPS
   // ===============================
@@ -38,6 +44,30 @@ export default function Location() {
 
       setMap(mapInstance);
     });
+  }, []);
+
+  // ===============================
+  // FETCH BUSINESSES (TENANTS)
+  // ===============================
+  useEffect(() => {
+    const fetchBusinesses = async () => {
+      try {
+        const token = Cookies.get("accessToken");
+        const res = await fetch(`${BASE_URL}/system-owner/tenants`, {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await res.json();
+        if (data.success) {
+          setBusinesses(data.data || []);
+        }
+      } catch (error) {
+        console.error("Fetch businesses error:", error);
+      }
+    };
+    fetchBusinesses();
   }, []);
 
   // ===============================
