@@ -41,9 +41,15 @@ const SignIn = () => {
     console.log("data",data);
 
     if (res.ok) {
-      toast.success("Login successful!");
-      Cookies.set("accessToken", data.data.accessToken);
-      router.push("/systemowner/home");
+      if (data?.data?.user?.role === "SYSTEM_OWNER") {
+        toast.success("Login successful!");
+        Cookies.set("accessToken", data.data.accessToken);
+        router.push("/systemowner/home");
+      } else {
+        const msg = "Access denied. System Owner role required.";
+        setMessage(msg);
+        toast.error(msg);
+      }
     } else {
       const msg = data.message || "Login failed";
       setMessage(msg);

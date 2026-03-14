@@ -37,10 +37,14 @@ const SignIn = () => {
       console.log("data",data);
   
       if (res.ok) {
-        Cookies.set("accessToken", data.data.accessToken);
-        Cookies.set("businessId", data.data.businessId);
-        toast.success("Login successful!");
-        router.push("/businessowner/home");
+        if (data?.data?.user?.role === "BUSINESS_OWNER") {
+          Cookies.set("accessToken", data.data.accessToken);
+          Cookies.set("businessId", data.data.businessId);
+          toast.success("Login successful!");
+          router.push("/businessowner/home");
+        } else {
+          toast.error("Access denied. Business Owner role required.");
+        }
       } else {
         toast.error(data.message || "Login failed");
       }
