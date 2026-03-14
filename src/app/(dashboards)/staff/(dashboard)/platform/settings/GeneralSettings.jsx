@@ -42,7 +42,7 @@ const GeneralSettings = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = Cookies.get("token");
+        const token = Cookies.get("SignInToken") || Cookies.get("token");
         if (!token) return;
 
         const res = await fetch(`${BASE_URL}/staff/settings`, {
@@ -82,7 +82,7 @@ const GeneralSettings = () => {
       setLoading(true);
       setError("");
 
-      const token = Cookies.get("token");
+      const token = Cookies.get("SignInToken") || Cookies.get("token");
       if (!token) {
         setError("Unauthorized");
         return;
@@ -118,6 +118,7 @@ const GeneralSettings = () => {
       toast.success("PIN set successfully! Please log in again.");
       setTimeout(() => {
         Cookies.remove("token");
+        Cookies.remove("SignInToken");
         Cookies.remove("staffStage");
         Cookies.remove("hasPin");
         window.location.href = "/staff/login";

@@ -6,8 +6,8 @@ export function middleware(request) {
   /* ================= COOKIES ================= */
   const businessToken = request.cookies.get("accessToken")?.value;
 const systemToken = request.cookies.get("accessToken")?.value;
-  const staffToken = request.cookies.get("token")?.value;        // staff login token
-  const staffStage = request.cookies.get("staffStage")?.value;  // PIN stage
+  const staffToken = request.cookies.get("token")?.value;             // Final staff PIN token
+  const staffSignInToken = request.cookies.get("SignInToken")?.value; // Initial staff login token
 
   /* ======================================================
      BUSINESS OWNER
@@ -77,7 +77,6 @@ const systemToken = request.cookies.get("accessToken")?.value;
   if (pathname.startsWith("/staff")) {
     const publicRoutes = [
       "/staff/signin",     // email + password
-      "/staff/login",      // PIN login
       "/staff/forgotpin",
       "/staff/otp",
       "/staff/newpin",
@@ -85,7 +84,6 @@ const systemToken = request.cookies.get("accessToken")?.value;
 
     const pinSetupRoutes = [
       "/staff/platform/settings",
-      // "/staff/customer/platform/settings",
     ];
 
     const isPublic = publicRoutes.some((route) =>
@@ -96,34 +94,26 @@ const systemToken = request.cookies.get("accessToken")?.value;
       pathname.startsWith(route)
     );
 
-    /* ❌ Not signed in */
-    if (!staffToken && !isPublic) {
+    const isPinLoginRoute = pathname.startsWith("/staff/login");
+
+    /* ❌ Not signed in at all (no tokens) */
+    if (!staffToken && !staffSignInToken && !isPublic && !isPinLoginRoute) {
       return NextResponse.redirect(
         new URL("/staff/signin", request.url)
       );
     }
 
-    /* ✅ Signed in BUT PIN NOT VERIFIED */
-    if (staffToken && staffStage !== "PIN_VERIFIED") {
-      // allow only PIN related pages
-      if (
-        !pathname.startsWith("/staff/login") &&
-        !isPinSetupRoute &&
-        !pathname.startsWith("/staff/otp") &&
-        !pathname.startsWith("/staff/newpin")
-      ) {
+    /* ✅ Only SignInToken present (Needs PIN Login or Setup) */
+    if (staffSignInToken && !staffToken) {
+      if (!isPinLoginRoute && !isPinSetupRoute && !isPublic) {
         return NextResponse.redirect(
           new URL("/staff/login", request.url)
         );
       }
     }
 
-    /* ✅ Fully authenticated staff */
-    if (
-      staffToken &&
-      staffStage === "PIN_VERIFIED" &&
-      isPublic
-    ) {
+    /* ✅ Fully authenticated staff (Has PIN token) */
+    if (staffToken && (isPublic || isPinLoginRoute || isPinSetupRoute)) {
       return NextResponse.redirect(
         new URL("/staff/customer/platform", request.url)
       );

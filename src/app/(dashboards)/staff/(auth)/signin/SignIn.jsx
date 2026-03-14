@@ -60,7 +60,7 @@ const SignIn = () => {
       }
 
       /* ===== SAVE TOKEN ===== */
-      Cookies.set("token", data?.data?.token, { path: "/" });
+      Cookies.set("SignInToken", data?.data?.token, { path: "/" });
 
       /* ===== SAVE BRANCH ID ===== */
       if (data?.data?.branchId) {
