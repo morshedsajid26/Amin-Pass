@@ -12,6 +12,16 @@ const nextConfig = {
         hostname: "test13.fireai.agency",
         pathname: "/**",
       },
+      {
+        protocol: "http",
+        hostname: "api.aminpass.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "api.aminpass.com",
+        pathname: "/**",
+      },
     ],
   },
 };

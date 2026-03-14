@@ -29,7 +29,12 @@ const Subscription = () => {
         const token = Cookies.get("accessToken");
         const response = await axios.get(
           `${BASE_URL}/business-owner/buy-subscription/current-plan`,
-          { headers: { Authorization: `Bearer ${token}`, Accept: "application/json" } }
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Accept: "application/json",
+            },
+          },
         );
         if (response.data?.success) setCurrentPlan(response.data.data);
         else setError("Could not load subscription information.");
@@ -52,7 +57,12 @@ const Subscription = () => {
       const token = Cookies.get("accessToken");
       const res = await axios.get(
         `${BASE_URL}/business-owner/buy-subscription/available-plans`,
-        { headers: { Authorization: `Bearer ${token}`, Accept: "application/json" } }
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        },
       );
       console.log("Available Plans:", res.data.data);
       if (res.data?.success && Array.isArray(res.data.data)) {
@@ -83,7 +93,7 @@ const Subscription = () => {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       const checkoutUrl = res.data?.data?.url || res.data?.url;
       if (checkoutUrl) {
@@ -95,7 +105,8 @@ const Subscription = () => {
       }
     } catch (err) {
       console.error("Checkout failed:", err?.response?.data || err);
-      const msg = err?.response?.data?.message || "Checkout failed. Please try again.";
+      const msg =
+        err?.response?.data?.message || "Checkout failed. Please try again.";
       toast.error(msg);
       setUpgradeError(msg);
     } finally {
@@ -119,7 +130,9 @@ const Subscription = () => {
         </h3>
 
         {loading ? (
-          <div className="font-inter text-xl dark:text-gray-400">Loading subscription details...</div>
+          <div className="font-inter text-xl dark:text-gray-400">
+            Loading subscription details...
+          </div>
         ) : error ? (
           <div className="font-inter text-xl text-red-500">{error}</div>
         ) : currentPlan ? (
@@ -134,17 +147,22 @@ const Subscription = () => {
             </div>
             <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/10 py-4">
               <span className="font-medium">Renewal Date:</span>
-              <span className="font-normal">{formatDate(currentPlan.renewalDate)}</span>
+              <span className="font-normal">
+                {formatDate(currentPlan.renewalDate)}
+              </span>
             </div>
             <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/10 py-4">
               <span className="font-medium">Status:</span>
               <span className={`font-semibold capitalize ${statusColor}`}>
-                {currentPlan.status.charAt(0) + currentPlan.status.slice(1).toLowerCase()}
+                {currentPlan.status.charAt(0) +
+                  currentPlan.status.slice(1).toLowerCase()}
               </span>
             </div>
           </div>
         ) : (
-          <div className="font-inter text-xl text-red-500">No active subscription found.</div>
+          <div className="font-inter text-xl text-red-500">
+            No active subscription found.
+          </div>
         )}
 
         <div className="flex justify-center items-center gap-12 mt-15">
@@ -171,10 +189,11 @@ const Subscription = () => {
                 <button
                   key={cycle}
                   onClick={() => setBillingCycle(cycle)}
-                  className={`flex-1 py-2 rounded-lg font-inter font-semibold text-sm transition-all cursor-pointer ${billingCycle === cycle
-                    ? "bg-[#7AA3CC] text-[#010101]"
-                    : "border border-[#7AA3CC] text-[#7AA3CC]"
-                    }`}
+                  className={`flex-1 py-2 rounded-lg font-inter font-semibold text-sm transition-all cursor-pointer ${
+                    billingCycle === cycle
+                      ? "bg-[#7AA3CC] text-[#010101]"
+                      : "border border-[#7AA3CC] text-[#7AA3CC]"
+                  }`}
                 >
                   {cycle.charAt(0) + cycle.slice(1).toLowerCase()}
                 </button>
@@ -194,14 +213,19 @@ const Subscription = () => {
                     <button
                       key={id || idx}
                       onClick={() => setSelectedPlanId(id)}
-                      className={`w-full text-left border rounded-xl px-5 py-4 font-inter transition-all cursor-pointer ${selectedPlanId === id
-                        ? "border-[#7AA3CC] bg-[#7AA3CC]/10"
-                        : "border-gray-200 dark:border-white/10"
-                        }`}
+                      className={`w-full text-left border rounded-xl px-5 py-4 font-inter transition-all cursor-pointer ${
+                        selectedPlanId === id
+                          ? "border-[#7AA3CC] bg-[#7AA3CC]/10"
+                          : "border-gray-200 dark:border-white/10"
+                      }`}
                     >
-                      <p className="font-semibold text-lg dark:text-white">{plan.name}</p>
+                      <p className="font-semibold text-lg dark:text-white">
+                        {plan.name}
+                      </p>
                       <p className="text-gray-500 dark:text-gray-400 text-sm">
-                        ${plan.price} / month
+                        {billingCycle === "MONTHLY"
+                          ? `$${plan.monthlyPrice} / month`
+                          : `$${plan.yearlyPrice} / year`}
                       </p>
                     </button>
                   );
@@ -210,12 +234,17 @@ const Subscription = () => {
             )}
 
             {upgradeError && (
-              <p className="text-red-500 font-inter text-sm mb-4">{upgradeError}</p>
+              <p className="text-red-500 font-inter text-sm mb-4">
+                {upgradeError}
+              </p>
             )}
 
             <div className="flex gap-4">
               <button
-                onClick={() => { setModalOpen(false); setUpgradeError(null); }}
+                onClick={() => {
+                  setModalOpen(false);
+                  setUpgradeError(null);
+                }}
                 className="flex-1 border border-gray-300 dark:border-white/20 dark:text-white font-inter font-semibold py-3 rounded-xl cursor-pointer"
               >
                 Cancel
