@@ -125,7 +125,7 @@ const Reward = () => {
       {loading ? (
         <p className="text-center text-xl font-inter">Loading...</p>
       ) : filteredRewards.length === 0 ? (
-        <p className="text-center text-xl font-inter">No reward found</p>
+        <p className="text-center text-xl font-inter text-black dark:text-white">No reward found</p>
       ) : (
         filteredRewards.map((reward) => (
           <div

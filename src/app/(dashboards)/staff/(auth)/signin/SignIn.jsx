@@ -68,8 +68,11 @@ const SignIn = () => {
       }
 
       /* ===== PIN LOGIC ===== */
-      const requirePinSetup = data?.data?.requirePinSetup ?? false;
-      const hasPin = !requirePinSetup; // If they don't require setup, they already have a pin
+      const isPinSet = data?.data?.isPinSet ?? data?.data?.pinSet ?? false;
+      const requirePinSetup = data?.data?.requirePinSetup ?? !isPinSet;
+
+      // They have a PIN if 'isPinSet' is true or if they are NOT required to set one up.
+      const hasPin = isPinSet || !requirePinSetup;
 
       Cookies.set("hasPin", String(hasPin), { path: "/" });
 

@@ -167,7 +167,7 @@ const Add = () => {
       <div className="flex justify-center items-center gap-2 md:gap-12 mt-10 md:mt-15">
         <button
           onClick={() => router.back()}
-          className="border border-[#7AA3CC] font-semibold text-xl py-3 px-20 rounded-lg"
+          className="border border-[#7AA3CC] text-black dark:text-white font-semibold text-xl py-3 px-20 rounded-lg"
         >
           Close
         </button>
@@ -175,7 +175,7 @@ const Add = () => {
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="bg-[#7AA3CC] font-semibold text-xl py-3 px-20 rounded-lg disabled:opacity-50"
+          className="bg-[#7AA3CC] text-black font-semibold text-xl py-3 px-20 rounded-lg disabled:opacity-50"
         >
           {loading ? "Creating..." : "Create"}
         </button>
