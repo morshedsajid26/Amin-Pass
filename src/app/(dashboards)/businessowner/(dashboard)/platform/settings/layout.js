@@ -9,7 +9,7 @@ const layout = ({ children }) => {
 
   const nav = [
     { name: "General", link: "/businessowner/platform/settings" },
-    { name: "Notification", link: "/businessowner/platform/settings/notification/settings" },
+    // { name: "Notification", link: "/businessowner/platform/settings/notification/settings" },
   ];
 
   return (

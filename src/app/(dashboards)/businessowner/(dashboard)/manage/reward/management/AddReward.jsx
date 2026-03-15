@@ -177,8 +177,8 @@ const AddReward = () => {
           />
 
           <Image
-            src={preview }
-            alt="Logo"
+            src={preview}
+            alt={`Reward Logo`}
             width={120}
             height={120}
             className="rounded-xl object-cover bg-white border border-gray-300 "

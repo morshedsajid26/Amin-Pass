@@ -3,87 +3,49 @@ import Pagination from "@/src/components/Pagination";
 import { usePathname } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { FiX } from "react-icons/fi";
+import axios from "axios";
+import { BASE_URL } from "@/src/config/api";
+import Cookies from "js-cookie";
+import toast from "react-hot-toast";
 
 const Notification = () => {
-  const [baseOnTitle, setBaseOnTitle] = useState([]);
+  const [notifications, setNotifications] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [popOpen,setPopOpen]= useState(false);
-
-  const pageItems = [
-    {
-      message:
-        "A staff member has requested to void a transaction of +50 points for customer +8801xxxx. Review and approve if valid.",
-      time: "2025-01-10T10:00:00",
-    },
-    {
-      message:
-        "A staff member has requested to void a transaction of +50 points for customer +8801xxxx. Review and approve if valid.",
-      time: "2025-01-10T11:00:00",
-    },
-   
-    {
-      message:
-        "A staff member has requested to void a transaction of +50 points for customer +8801xxxx. Review and approve if valid.",
-      time: "2024-01-10T12:00:00",
-    },
-    {
-      message:
-        "A staff member has requested to void a transaction of +50 points for customer +8801xxxx. Review and approve if valid.",
-      time: "2025-01-10T10:00:00",
-    },
-    {
-      message:
-        "A staff member has requested to void a transaction of +50 points for customer +8801xxxx. Review and approve if valid.",
-      time: "2025-01-10T11:00:00",
-    },
-   
-    {
-      message:
-        "A staff member has requested to void a transaction of +50 points for customer +8801xxxx. Review and approve if valid.",
-      time: "2024-01-10T12:00:00",
-    },
-    {
-      message:
-        "A staff member has requested to void a transaction of +50 points for customer +8801xxxx. Review and approve if valid.",
-      time: "2025-01-10T10:00:00",
-    },
-    {
-      message:
-        "A staff member has requested to void a transaction of +50 points for customer +8801xxxx. Review and approve if valid.",
-      time: "2025-01-10T11:00:00",
-    },
-   
-    {
-      message:
-        "A staff member has requested to void a transaction of +50 points for customer +8801xxxx. Review and approve if valid.",
-      time: "2024-01-10T12:00:00",
-    },
-    {
-      message:
-        "A staff member has requested to void a transaction of +50 points for customer +8801xxxx. Review and approve if valid.",
-      time: "2025-01-10T10:00:00",
-    },
-    {
-      message:
-        "A staff member has requested to void a transaction of +50 points for customer +8801xxxx. Review and approve if valid.",
-      time: "2025-01-10T11:00:00",
-    },
-   
-    {
-      message:
-        "A staff member has requested to void a transaction of +50 points for customer +8801xxxx. Review and approve if valid.",
-      time: "2024-01-10T12:00:00",
-    },
-  ];
-
-  // Set data for pagination
-  useEffect(() => {
-    setBaseOnTitle(pageItems);
-  }, []);
+  const [popOpen, setPopOpen] = useState(false);
+  const [selectedNotification, setSelectedNotification] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const pathname = usePathname();
   const pathParts = (pathname || "/").split("/").filter(Boolean);
 
+  // fetch notifications
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const token = Cookies.get("accessToken");
+
+        const res = await axios.get(
+          `${BASE_URL}/business-owner/notifications/history`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setNotifications(res?.data?.data || []);
+      } catch (error) {
+        console.error("Notification fetch error:", error);
+        toast.error("Error loading notifications.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNotifications();
+  }, []);
+
+  // time ago function
   function timeAgo(timestamp) {
     if (!timestamp) return "";
 
@@ -101,82 +63,74 @@ const Notification = () => {
     return `${diffDay} days ago`;
   }
 
-  // Pagination setup
+  // pagination
   const itemsPerPage = 10;
-  const totalPages = Math.ceil(baseOnTitle.length / itemsPerPage);
+  const totalPages = Math.ceil(notifications.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = baseOnTitle.slice(startIndex, startIndex + itemsPerPage);
+  const currentItems = notifications.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   return (
     <div className="w-full p-7 bg-white dark:bg-[#141414] overflow-x-auto rounded-[10px]">
       {/* Header */}
       <div className="flex items-center gap-[14px]">
-        <h3 className="text-[#333333] dark:text-white  text-xl font-inter font-semibold capitalize">
+        <h3 className="text-[#333333] dark:text-white text-xl font-inter font-semibold capitalize">
           {pathParts[1] || "Notifications"}
         </h3>
       </div>
 
-      {/* Total Notifications */}
+      {/* Total */}
       <div>
         <p className="text-[#333333] dark:text-white text-[16px] font-inter font-semibold mt-[21px]">
-          Total {baseOnTitle.length} Notifications
+          Total {notifications.length} Notifications
         </p>
       </div>
 
+      {/* Loading */}
+      {loading && (
+        <p className="text-center mt-10 text-gray-500">Loading notifications...</p>
+      )}
+
       {/* Notification List */}
-      <div className="mt-6">
-        {currentItems.map((item, index) => (
-          <div
-            key={index}
-            className="w-full hover:bg-[#CCDCE9] dark:hover:bg-[#212121] transition-all duration-300 py-3 md:px-[25px] c"
-          >
-            <div 
-             onClick={() => setPopOpen(true)}
-            className="w-full flex items-center justify-between  cursor-pointer">
-              <p className="md:w-[80%] text-[#333333] dark:text-white  text-[16px] font-inter font-semibold">
-                {item.message}
-              </p>
+      {!loading && (
+        <div className="mt-6">
+          {currentItems.map((item, index) => (
+            <div
+              key={index}
+              className="w-full hover:bg-[#CCDCE9] dark:hover:bg-[#212121] transition-all duration-300 py-3 md:px-[25px]"
+            >
+              <div
+                onClick={() => {
+                  setSelectedNotification(item);
+                  setPopOpen(true);
+                }}
+                className="w-full flex items-center justify-between cursor-pointer"
+              >
+                <p className="md:w-[80%] text-[#333333] dark:text-white text-[16px] font-inter font-semibold">
+                  {item?.message}
+                </p>
 
-              <p className="md:w-[10%] flex justify-end text-[#5C5C5C] dark:text-white  text-[16px] font-inter whitespace-nowrap">
-                {timeAgo(item.time)}
-              </p>
+                <p className="md:w-[10%] flex justify-end text-[#5C5C5C] dark:text-white text-[16px] font-inter whitespace-nowrap">
+                  {timeAgo(item?.createdAt)}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Pagination */}
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
-
-    {popOpen && (
-        <div className="fixed inset-0  bg-[#D9D9D9]/80 flex items-center justify-center z-50 ">
-          <div className="bg-white rounded-4xl py-14 px-14 md:w-[30%] w-[80%]  ">
-
-            <div className="flex justify-end mb-5 ">
-                <FiX 
-                onClick={() => setPopOpen(false)}
-                className="h-8 w-8 cursor-pointer"/>
-            </div>
-            
-        <p className="font-inter font-medium">A staff member has requested to void a transaction of +50 points for customer +8801xxxx.</p>
-
-            <div className="flex justify-center items-center gap-12 mt-10">
-              <button 
-               
-              className="border border-[#7AA3CC] text-[#010101] font-medium  font-inter py-3  px-12 rounded-lg cursor-pointer ">
-               Approve
-              </button>
-              <button className="bg-[#ED4539] border border-[#7AA3CC] text-[#010101] font-medium   font-inter py-3 px-12 rounded-lg cursor-pointer ">
-                Reject
-              </button>
-            </div>
-          </div>
+          ))}
         </div>
       )}
+
+      {/* Pagination */}
+     
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+     
+
+     
     </div>
   );
 };
