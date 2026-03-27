@@ -75,10 +75,11 @@ const GeneralSettings = () => {
       {/* ===== INFO ===== */}
       <div className="font-inter text-xl dark:text-white text-[#000000] mt-10">
         <Info label="Shop Name" value={profile?.name} />
-        <Info label="Shop Address" value={profile?.owner?.address} />
+        <Info label="Shop Address" value={profile?.address} />
         <Info label="Owner Name" value={profile?.owner?.name} />
         <Info label="Owner Email" value={profile?.owner?.email} />
         <Info label="Owner Number" value={profile?.owner?.phone} />
+        {/* <Info label="Qr Code" value={profile?.qrCode} /> */}
 
         {/* <div className="flex justify-between py-4">
           <span className="font-medium">Qr Code:</span>
@@ -88,12 +89,12 @@ const GeneralSettings = () => {
 
       {/* ===== ACTIONS ===== */}
       <div className="flex items-center gap-10 justify-center">
-        {/* <Link href="/businessowner/platform/settings/qR/code">
+        <Link href="/businessowner/platform/settings/qR/code">
           <button className="border-[#7AA3CC] border text-[#000000] dark:text-white px-10 font-bold font-inter py-3 mt-14 rounded-lg flex items-center gap-2">
             <LuImport className="w-6 h-6" />
             QR Code
           </button>
-        </Link> */}
+        </Link>
 
         <Link href="/businessowner/platform/settings/edit/settings">
           <button className="bg-[#7AA3CC] text-[#000000] font-bold font-inter py-3 px-10 mt-14 rounded-lg">

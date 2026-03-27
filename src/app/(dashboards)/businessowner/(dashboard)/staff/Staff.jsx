@@ -236,10 +236,10 @@ export default Staff;
 
 const Modal = ({ title, children, onClose }) => (
   <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-    <div className="bg-white rounded-3xl p-10 w-[90%] md:w-[50%]">
+    <div className="bg-white dark:bg-black rounded-3xl p-10 w-[90%] md:w-[50%]">
       <div className="flex justify-between mb-6">
-        <h3 className="text-2xl font-semibold">{title}</h3>
-        <FiX onClick={onClose} className="w-6 h-6 cursor-pointer" />
+        <h3 className="text-2xl font-semibold text-black dark:text-white">{title}</h3>
+        <FiX onClick={onClose} className="w-6 h-6 cursor-pointer text-black dark:text-white " />
       </div>
       <div className="space-y-4 text-xl">{children}</div>
     </div>
@@ -247,9 +247,9 @@ const Modal = ({ title, children, onClose }) => (
 );
 
 const Info = ({ label, value }) => (
-  <div className="flex justify-between border-b py-3">
-    <span className="font-medium">{label}:</span>
-    <span>{value}</span>
+  <div className="flex justify-between border-b border-[#000000]/10 dark:border-white/10 py-3">
+    <span className="font-medium text-black dark:text-white">{label}:</span>
+    <span className="text-black dark:text-white">{value}</span>
   </div>
 );
 
