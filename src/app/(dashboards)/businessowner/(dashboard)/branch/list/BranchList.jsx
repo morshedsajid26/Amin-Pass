@@ -11,6 +11,7 @@ import { BASE_URL } from "@/src/config/api";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { MdQrCode } from "react-icons/md";
 
 const BranchList = () => {
   const [branches, setBranches] = useState([]);
@@ -21,6 +22,29 @@ const BranchList = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [branchToDelete, setBranchToDelete] = useState(null);
   const [deleting, setDeleting] = useState(false);
+
+  // QR Modal
+  const [qrModal, setQrModal] = useState({ open: false, url: "", name: "" });
+  const [downloading, setDownloading] = useState(false);
+
+  // DOWNLOAD QR AS BLOB (fixes cross-origin) ----------
+  const downloadQr = async (url, name) => {
+    try {
+      setDownloading(true);
+      const res = await fetch(url);
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = `${name}-qr.png`;
+      link.click();
+      URL.revokeObjectURL(blobUrl);
+    } catch (err) {
+      toast.error("Failed to download QR code");
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   // FETCH BRANCHES -----------------------------------
   const fetchBranches = async () => {
@@ -43,6 +67,7 @@ const BranchList = () => {
           location: item.address || "-",
           staffs: item.staffCount,
           manager: item.managerName || "N/A",
+          qrCodeUrl: item.branchQrCodeUrl || null,
         }));
         setBranches(rows);
       }
@@ -92,14 +117,34 @@ const BranchList = () => {
 
   // TABLE HEADS
   const TableHeads = [
-    { Title: "Branch Name", key: "branch", width: "20%" },
-    { Title: "Branch Location", key: "location", width: "20%" },
-    { Title: "Number of Staff", key: "staffs", width: "20%" },
-    { Title: "Manager Name", key: "manager", width: "20%" },
+    { Title: "Branch Name", key: "branch", width: "18%" },
+    { Title: "Branch Location", key: "location", width: "18%" },
+    { Title: "Number of Staff", key: "staffs", width: "15%" },
+    { Title: "Manager Name", key: "manager", width: "18%" },
+    {
+      Title: "QR Code",
+      key: "qrCode",
+      width: "15%",
+      render: (row) => (
+        <div className="flex justify-center">
+          <button
+            onClick={() =>
+              setQrModal({ open: true, url: row.qrCodeUrl, name: row.branch })
+            }
+            className="flex items-center gap-1 border border-[#7AA3CC] text-[#005FA8]
+              dark:text-[#7AA3CC] font-inter text-sm font-semibold
+              px-4 py-1.5 rounded-lg hover:bg-[#7AA3CC]/10 transition-colors"
+          >
+            <MdQrCode size={16} />
+            View
+          </button>
+        </div>
+      ),
+    },
     {
       Title: "Action",
       key: "action",
-      width: "20%",
+      width: "16%",
       render: (row) => (
         <div className="flex justify-center gap-4">
           <Link
@@ -181,6 +226,60 @@ const BranchList = () => {
                 Yes, Delete
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* QR CODE MODAL */}
+      {qrModal.open && (
+        <div
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+          onClick={() => setQrModal({ open: false, url: "", name: "" })}
+        >
+          <div
+            className="bg-white dark:bg-[#1a1a1a] rounded-3xl p-10 text-center shadow-2xl max-w-sm w-full mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="text-xl font-semibold dark:text-white mb-2 font-inter">
+              {qrModal.name}
+            </h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 font-inter mb-6">
+              Branch QR Code
+            </p>
+
+            {qrModal.url ? (
+              <img
+                src={qrModal.url}
+                alt="Branch QR Code"
+                className="w-56 h-56 mx-auto object-contain"
+              />
+            ) : (
+              <div className="w-56 h-56 mx-auto flex items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl">
+                <p className="text-gray-400 dark:text-gray-500 font-inter text-sm">
+                  QR Code not available
+                </p>
+              </div>
+            )}
+
+            {qrModal.url && (
+              <button
+                onClick={() => downloadQr(qrModal.url, qrModal.name)}
+                disabled={downloading}
+                className="mt-6 inline-block bg-[#7AA3CC] text-[#010101]
+                  font-semibold font-inter py-2 px-8 rounded-lg text-sm
+                  disabled:opacity-60 cursor-pointer"
+              >
+                {downloading ? "Downloading..." : "Download"}
+              </button>
+            )}
+
+            <button
+              onClick={() => setQrModal({ open: false, url: "", name: "" })}
+              className="mt-4 block mx-auto text-sm text-gray-400 dark:text-gray-500
+                hover:text-gray-600 font-inter"
+            >
+              Close
+            </button>
           </div>
         </div>
       )}

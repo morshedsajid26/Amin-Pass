@@ -145,7 +145,23 @@ const GeneralSettings = () => {
         <Info label="Role" value={profile?.role} />
         <Info label="Assigned Location" value={profile?.branchName} />
         <Info label="Email" value={profile?.email} />
-        <Info label="Phone Number" value={profile?.phone} last />
+        <Info label="Phone Number" value={profile?.phone} />
+
+        {/* Branch QR Code Image */}
+        <div className="flex justify-between items-center py-4">
+          <span className="font-medium">Branch QR Code:</span>
+          {profile?.branch?.branchQrCodeUrl ? (
+            <img
+              src={profile.branch.branchQrCodeUrl}
+              alt="Branch QR Code"
+              width={100}
+              height={100}
+              className="object-contain rounded-lg"
+            />
+          ) : (
+            <span className="text-gray-400 text-base">Not available</span>
+          )}
+        </div>
       </div>
 
       {/* ✅ ONLY BUTTON IS CONDITIONAL */}
