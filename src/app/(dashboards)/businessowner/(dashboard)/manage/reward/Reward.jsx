@@ -127,9 +127,9 @@ const Reward = () => {
       ) : filteredRewards.length === 0 ? (
         <p className="text-center text-xl font-inter text-black dark:text-white">No reward found</p>
       ) : (
-        filteredRewards.map((reward) => (
+        filteredRewards.map((reward, idx) => (
           <div
-            key={reward.id}
+            key={reward.id ?? idx}
             className="bg-white dark:bg-[#141414] rounded-4xl py-14 px-14 mb-10 overflow-auto"
           >
             <div className="font-inter text-2xl text-[#000000] dark:text-white">

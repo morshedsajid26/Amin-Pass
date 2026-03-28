@@ -213,9 +213,9 @@ const Loyalty = () => {
         <p className="text-center font-inter">No cards found</p>
       ) : (
         <div className="flex flex-wrap gap-8">
-          {cards.map((card) => (
+          {cards.map((card, idx) => (
             <LoyaltyCard
-              key={card.id}
+              key={card.id ?? idx}
               card={card}
               onDeleteClick={openDeleteModal}
             />

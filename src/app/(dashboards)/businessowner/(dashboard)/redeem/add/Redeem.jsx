@@ -228,9 +228,9 @@ const Redeem = () => {
           </h2>
 
           <div className="space-y-3">
-            {customerData.rewardHistories.map((item) => (
+            {customerData.rewardHistories.map((item, idx) => (
               <label
-                key={item.id}
+                key={item.id ?? idx}
                 className={`flex items-center gap-3 border p-3 rounded cursor-pointer
                   dark:text-white text-[#010101] font-inter
                   ${selectedBranch?.rewardHistoryId === item.id ? "border-[#005FA8]" : ""}`}
