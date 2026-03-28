@@ -67,6 +67,20 @@ button {
   cursor: pointer;
 }
 
+/* QR Camera scanner line animation */
+@keyframes scan-line {
+  0%   { top: 0%; }
+  50%  { top: calc(100% - 2px); }
+  100% { top: 0%; }
+}
+.animate-scan-line {
+  animation: scan-line 2s ease-in-out infinite;
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+}
+
 *{
   font-family: var(--font-inter);
 }
