@@ -96,7 +96,7 @@ const Redeem = () => {
       }
       setCustomerData(data.data);
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     } finally {
       setLoading(false);
     }
@@ -147,7 +147,7 @@ const Redeem = () => {
                 value={scanValue}
                 onChange={handleScanChange}
                 onKeyDown={handleScanKeyDown}
-                placeholder="Scanner er sathe scan koro..."
+                placeholder="Scan with Scanner"
                 className="pl-12 pr-4 py-4 border-2 border-[#7AA3CC] rounded-xl
                   outline-none text-xl font-bold text-[#005FA8]
                   w-[340px] tracking-widest font-inter
