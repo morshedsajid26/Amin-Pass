@@ -98,8 +98,8 @@ const Plan = () => {
   const currentPlans = apiPlans.map((plan) => ({
     id: plan.id,
     name: plan.name,
-    monthly: plan.price,
-    yearly: plan.price * 12, // fallback or use the API field if available
+    monthly: plan.monthlyPrice,
+    yearly: plan.yearlyPrice,
     features: formatFeatures(plan),
     buttonText: plan.price === 0 ? "Start for Free" : "Upgrade Plan",
   }));
