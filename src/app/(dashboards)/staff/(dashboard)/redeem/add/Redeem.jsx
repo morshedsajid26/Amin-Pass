@@ -8,6 +8,7 @@ import { FiX } from "react-icons/fi";
 
 import Bredcumb from "@/src/components/Bredcumb";
 import { BASE_URL } from "@/src/config/api";
+import toast from "react-hot-toast";
 
 const QR_REGION_ID = "staff-qr-camera-region";
 
@@ -192,7 +193,7 @@ const Redeem = () => {
 
       router.push("/staff/redeem/add/redeem");
     } catch (err) {
-      setError(err.message);
+     toast.error(err.message);
     } finally {
       setLoading(false);
     }
@@ -252,9 +253,7 @@ const Redeem = () => {
         </button>
       </div>
 
-      {error && (
-        <p className="text-red-500 mt-6 font-inter">{error}</p>
-      )}
+      
 
       {/* ===== CAMERA MODAL ===== */}
       {cameraOpen && (
