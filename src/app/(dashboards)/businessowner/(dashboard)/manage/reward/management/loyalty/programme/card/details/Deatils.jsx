@@ -114,7 +114,7 @@ const Deatils = () => {
               </span>
             </label>
 
-            <label className="flex items-center gap-3 cursor-pointer">
+            {/* <label className="flex items-center gap-3 cursor-pointer">
               <input
                 type="radio"
                 name="barcode"
@@ -125,7 +125,7 @@ const Deatils = () => {
               <span className="text-lg font-inter dark:text-white">
                 Bar Code
               </span>
-            </label>
+            </label> */}
           </div>
 
           {/* Reward Program */}
