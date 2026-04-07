@@ -15,6 +15,8 @@ const AddReward = () => {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
 
   // 🔹 Branches
   const [branches, setBranches] = useState([]);
@@ -102,7 +104,7 @@ const AddReward = () => {
     form.append("reward", formData.rewardName);
     form.append("rewardType", formData.rewardType);
     form.append("earningRule", formData.earningRule);
-    form.append("earnPoint", Number(formData.earnPoint));
+    form.append("rewardPoints", Number(formData.rewardPoints));
     form.append("expiryDays", Number(formData.expiryDays));
     form.append("rewardStatus", rewardStatus);
     form.append("isActive", rewardStatus === "ACTIVE");
@@ -115,7 +117,7 @@ const AddReward = () => {
 
     try {
       const res = await fetch(
-        `${BASE_URL}/business-owner/earn-reward/create`,
+        `${BASE_URL}/business-owner/redeem-reward/create`,
         {
           method: "POST",
           headers: {
@@ -142,7 +144,7 @@ const AddReward = () => {
         rewardName: "",
         rewardType: "",
         earningRule: "",
-        earnPoint: "",
+        rewardPoints: "",
         expiryDays: "",
       });
       setSelectedBranchId("");
@@ -222,8 +224,8 @@ const AddReward = () => {
         <InputField
           label="Earn Point"
           type="number"
-          value={formData.earnPoint}
-          onChange={(e) => handleChange("earnPoint", e.target.value)}
+          value={formData.rewardPoints}
+          onChange={(e) => handleChange("rewardPoints", e.target.value)}
           className="col-span-12 md:col-span-6"
         />
 

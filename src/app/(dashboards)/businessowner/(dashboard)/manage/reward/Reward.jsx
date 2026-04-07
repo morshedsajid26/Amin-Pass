@@ -29,7 +29,7 @@ const Reward = () => {
         const accessToken = Cookies.get("accessToken");
 
         const res = await fetch(
-          `${BASE_URL}/business-owner/earn-reward/all`,
+          `${BASE_URL}/business-owner/redeem-reward/all`,
           {
             method: "GET",
             headers: {
@@ -76,7 +76,7 @@ const Reward = () => {
       const token = Cookies.get("accessToken");
 
       await fetch(
-        `${BASE_URL}/business-owner/earn-reward/${deleteId}`,
+        `${BASE_URL}/business-owner/redeem-reward/${deleteId}`,
         {
           method: "DELETE",
           headers: {

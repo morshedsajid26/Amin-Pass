@@ -74,7 +74,7 @@ const EditReward = ({ id }) => {
       if (!id) return;
       try {
         const res = await fetch(
-          `${BASE_URL}/business-owner/earn-reward/${id}`,
+          `${BASE_URL}/business-owner/redeem-reward/${id}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -158,7 +158,7 @@ const EditReward = ({ id }) => {
 
     try {
       const res = await fetch(
-        `${BASE_URL}/business-owner/earn-reward/${id}`,
+        `${BASE_URL}/business-owner/redeem-reward/${id}`,
         {
           method: "PATCH",
           headers: {
